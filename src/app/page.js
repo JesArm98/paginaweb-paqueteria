@@ -1,11 +1,13 @@
 import Alianzas from "@/ui/sections/Alianzas/Alianzas";
-import { Box } from "@mui/material";
+import SeccionCrema from "@/ui/sections/SeccionCrema/SeccionCrema";
+import SeccionNegra from "@/ui/sections/SeccionNegra/SeccionNegra";
+
 
 export default function Home() {
   return (
     <>
-    <Box sx={{minHeight:"100vh"}}></Box>
-    
+      <SeccionCrema />
+      <SeccionNegra />
       <Alianzas />
     </>
   );
