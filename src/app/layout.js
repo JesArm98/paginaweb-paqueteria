@@ -22,7 +22,7 @@ export const metadata = {
     title: "Myllos",
     description:
       "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
-    url: "https://tvnportal--portal-v2-f9832.us-central1.hosted.app/",
+    url: "https://myllos.netlify.app/",
     type: "website",
     images: [
       {
