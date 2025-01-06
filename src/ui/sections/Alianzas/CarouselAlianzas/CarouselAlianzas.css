@@ -1,0 +1,23 @@
+.carousel-image {
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.carousel-image:hover {
+  filter: none;
+}
+
+.carousel-container {
+  width: 100%;
+}
+
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image {
+  width: 160px;
+  height: 63px;
+}
