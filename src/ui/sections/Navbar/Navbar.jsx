@@ -16,10 +16,10 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const handleScroll = useCallback(() => {
-    const stickyPoint = window.innerHeight * 0.08;
+    const stickyPoint = window.innerHeight * 0;
     setSticky(window.scrollY >= stickyPoint);
 
-    const backGroundPointThreshold = window.innerHeight * 0.08;
+    const backGroundPointThreshold = window.innerHeight * 0;
     setBackGroundPoint(window.scrollY >= backGroundPointThreshold);
   }, []);
 
