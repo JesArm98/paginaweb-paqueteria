@@ -24,18 +24,9 @@ export default function SeccionCrema() {
         />
       </Head>
 
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Paquetería Rápida
-          </Typography>
-          <Button color="inherit">Cotizar</Button>
-        </Toolbar>
-      </AppBar>
-
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
         {/* Hero Section */}
-        <Box textAlign="center" sx={{ py: 6 }}>
+        <Box textAlign="center" sx={{ py: 15 }}>
           <Typography variant="h2" gutterBottom>
             Entrega segura, rápida y confiable
           </Typography>

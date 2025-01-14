@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Container } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 
 export const metadata = {
   title: "Terminos y condiciones de servicio",

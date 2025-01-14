@@ -76,7 +76,7 @@ const Navbar = () => {
             width={74.25}
             height={74.25}
             src="/images/Navbar/Group.svg"
-            alt="TuvanosaLogo"
+            alt="Myllos Logo"
           />
         </Link>
         <Link href="/" passHref>

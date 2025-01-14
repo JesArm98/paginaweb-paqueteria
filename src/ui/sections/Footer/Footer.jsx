@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Box, Button, Grid } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
-// import MapaTuvanosa from "../MapaTuvanosa/MapaTuvanosa";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -37,7 +36,7 @@ const Footer = () => {
             <Button sx={{ display: { xs: "none", md: "flex" } }}>
               <Image
                 src="/images/Footer/logo_tuvanosa.svg"
-                alt="Logo Tuvanosa - Volver a Inicio"
+                alt="Logo Myllos - Volver a Inicio"
                 width={1000}
                 height={760}
                 style={{ maxHeight: "138px", width: "auto" }}
@@ -331,7 +330,6 @@ const Footer = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-
               width: { xs: "100%", md: "100%" },
               height: "80%",
             }}
@@ -442,37 +440,6 @@ const Footer = () => {
                   style={{ width: "25px", height: "25px" }}
                 />
               </Button>
-              {/* <Button
-                variant="outlined"
-                onClick={() => handleNavigation("contacto")}
-                sx={{
-                  textTransform: "none",
-
-                  color: "#FFFFFF",
-                  transition: "background-color 0.3s ease",
-                  borderColor: "transparent",
-                  borderRadius: "30px",
-                  height: "40px",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.31)",
-                    borderColor: "#FFFFFF",
-                    borderWidth: "1px",
-                    borderStyle: "solid",
-                    transform: "scale(0.90)",
-                    transition: "transform 0.2s ease, filter 0.2s ease",
-                  },
-                }}
-                aria-label="Boton para contacto"
-              >
-                <MailOutlineIcon
-                  sx={{
-                    fontSize: "32px",
-                    alignItems: "center",
-                    color: "white",
-                    display: "flex",
-                  }}
-                />
-              </Button> */}
             </Box>
             <Box
               sx={{
@@ -517,13 +484,6 @@ const Footer = () => {
           </Button>
         </Box>
       </Grid>
-      {/* {open && (
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="lg">
-          <DialogContent sx={{ padding: 0, width: "100%" }}>
-            <MapaTuvanosa />
-          </DialogContent>
-        </Dialog>
-      )} */}
     </Grid>
   );
 };
