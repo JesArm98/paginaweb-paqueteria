@@ -50,7 +50,7 @@ const Navbar = () => {
         display: "flex",
         justifyContent: "space-between",
         backgroundColor:
-          pathname === "/aviso-de-privacidad"
+          pathname !== "/"
             ? "black"
             : backGroundPoint
             ? "black"
