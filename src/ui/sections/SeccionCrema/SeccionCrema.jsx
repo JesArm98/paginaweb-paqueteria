@@ -12,18 +12,11 @@ import {
   Toolbar,
 } from "@mui/material";
 import Head from "next/head";
+import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
 
 export default function SeccionCrema() {
   return (
     <>
-      <Head>
-        <title>Servicio de Paquetería</title>
-        <meta
-          name="description"
-          content="Entrega segura, rápida y confiable."
-        />
-      </Head>
-
       <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
         {/* Hero Section */}
         <Box textAlign="center" sx={{ py: 15 }}>
@@ -48,8 +41,8 @@ export default function SeccionCrema() {
                     {beneficio}
                   </Typography>
                   <Typography>
-                    Nuestro servicio de paquetería asegura{" "}
-                    {beneficio.toLowerCase()} en cada entrega.
+                    Nuestro servicio de paquetería asegura {beneficio} en cada
+                    entrega.
                   </Typography>
                 </CardContent>
               </Card>
@@ -72,8 +65,7 @@ export default function SeccionCrema() {
                         {servicio}
                       </Typography>
                       <Typography>
-                        Descubre más sobre nuestro servicio de{" "}
-                        {servicio.toLowerCase()}.
+                        Descubre más sobre nuestro servicio de {servicio}.
                       </Typography>
                     </CardContent>
                   </Card>
@@ -109,42 +101,7 @@ export default function SeccionCrema() {
         </Box>
 
         {/* Cotización */}
-        <Box sx={{ textAlign: "center", mb: 6 }}>
-          <Typography variant="h4" gutterBottom>
-            Cotiza tu Envío
-          </Typography>
-          <Box
-            component="form"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 2,
-            }}
-          >
-            <TextField
-              label="Origen"
-              variant="outlined"
-              fullWidth
-              sx={{ maxWidth: 400 }}
-            />
-            <TextField
-              label="Destino"
-              variant="outlined"
-              fullWidth
-              sx={{ maxWidth: 400 }}
-            />
-            <TextField
-              label="Peso (kg)"
-              variant="outlined"
-              fullWidth
-              sx={{ maxWidth: 400 }}
-            />
-            <Button variant="contained" size="large">
-              Calcular Precio
-            </Button>
-          </Box>
-        </Box>
+        <CotizacionEnvios />
       </Container>
     </>
   );
