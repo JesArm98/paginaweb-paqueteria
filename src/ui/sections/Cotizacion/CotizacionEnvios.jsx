@@ -21,8 +21,23 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CotizacionResultados from "./CotizacionResultados";
+import { useEmail } from "@/context/EmailContext";
 
 const CotizacionEnvios = () => {
+  const {
+    emailConfirmado,
+    setEmailConfirmado,
+    emailUsuario,
+    setEmailUsuario,
+    mostrarResultados,
+    setMostrarResultados,
+  } = useEmail();
+
+  // Mover los estados al principio
+  // const [mostrarResultados, setMostrarResultados] = useState(false);
+  const [proveedorSeleccionado, setProveedorSeleccionado] = useState(null);
+
   // Estados
   const [step, setStep] = useState(0);
   const [packageCount, setPackageCount] = useState(1);
@@ -31,10 +46,30 @@ const CotizacionEnvios = () => {
   const [coloniasOrigen, setColoniasOrigen] = useState([]);
   const [coloniasDestino, setColoniasDestino] = useState([]);
 
+  // Nuevo estado para tipo de envío
+  const [shippingType, setShippingType] = useState("");
+
+  // Opciones de tipo de envío
+  const shippingTypes = [
+    { value: "caja", label: "Caja" },
+    { value: "sobre", label: "Sobre (máx. 1kg)" },
+    { value: "tarima", label: "Tarima" },
+  ];
+
   // Definición de pasos y tamaños estándar
   const steps = isMultiPackage
-    ? Array.from({ length: packageCount }, (_, index) => `Paquete ${index + 1}`)
-    : ["Detalles del Paquete"];
+    ? Array.from(
+        { length: packageCount },
+        (_, index) =>
+          `${
+            shippingType === "sobre"
+              ? "Sobre"
+              : shippingType === "tarima"
+              ? "Tarima"
+              : "Caja"
+          } ${index + 1}`
+      )
+    : ["Detalles del Envío"];
 
   // Opciones dinámicas para las medidas
   const [dynamicSizes, setDynamicSizes] = useState([
@@ -63,6 +98,7 @@ const CotizacionEnvios = () => {
     defaultValues: {
       origen: "",
       destino: "",
+      tipoEnvio: null,
       packages: Array.from({ length: 1 }, () => ({ size: "", peso: "" })),
     },
   });
@@ -73,12 +109,25 @@ const CotizacionEnvios = () => {
 
   // Función de envío del formulario
   const onSubmit = (data) => {
-    setQuoteData(data);
-    alert(JSON.stringify(data, null, 2));
-    reset();
-    setStep(0);
-    setIsMultiPackage(false);
-    setPackageCount(1);
+    // Formatear los datos del origen y destino
+    const formattedData = {
+      ...data,
+      origen: data.origen, // Mantener el objeto completo
+      destino: data.destino, // Mantener el objeto completo
+      packages: Array.isArray(data.packages) ? data.packages : [data.packages],
+    };
+
+    setQuoteData(formattedData);
+    setMostrarResultados(true);
+  };
+
+  const handleModificarCotizacion = () => {
+    setMostrarResultados(false);
+  };
+
+  const handleSelectProveedor = (proveedor) => {
+    setProveedorSeleccionado(proveedor);
+    // Aquí puedes agregar la lógica adicional que necesites
   };
 
   // Función para manejar los cambios en los autocompletados
@@ -89,38 +138,59 @@ const CotizacionEnvios = () => {
           `https://api.pktuno.mx/Api/Cobertura/${value}`
         );
         if (field === "origen") {
-          setColoniasOrigen(response.data || []); // Actualizamos colonias del origen
+          setColoniasOrigen(response.data || []);
+          // Si estamos regresando de una cotización, mantener el valor completo
+          if (quoteData?.origen) {
+            onChange(response.data.find((col) => col.cp === value) || value);
+          } else {
+            onChange(value);
+          }
         } else if (field === "destino") {
-          setColoniasDestino(response.data || []); // Actualizamos colonias del destino
+          setColoniasDestino(response.data || []);
+          // Si estamos regresando de una cotización, mantener el valor completo
+          if (quoteData?.destino) {
+            onChange(response.data.find((col) => col.cp === value) || value);
+          } else {
+            onChange(value);
+          }
         }
-        onChange(value); // Actualizamos el valor del input
       } catch (error) {
         console.error("Error fetching data:", error);
-        onChange(""); // En caso de error, limpiamos el valor
+        onChange("");
       }
     } else {
-      onChange(value || ""); // Validamos que el valor sea válido
+      onChange(value || "");
     }
   };
 
   // Observar cambios en el formulario en tiempo real
   const formData = watch();
 
-  useEffect(() => {
-    // Solo actualizamos si es necesario
-    if (JSON.stringify(quoteData) !== JSON.stringify(formData)) {
-      setQuoteData(formData);
-    }
-  }, [formData]);
-
   console.log(formData);
+
+  // Renderizar el componente de resultados si mostrarResultados es true
+  if (mostrarResultados && quoteData) {
+    return (
+      <CotizacionResultados
+        cotizacionData={quoteData}
+        onModificarCotizacion={() => {
+          setMostrarResultados(false);
+        }}
+        onSelectProveedor={handleSelectProveedor}
+        emailConfirmado={emailConfirmado}
+        setEmailConfirmado={setEmailConfirmado}
+        emailUsuario={emailUsuario}
+        setEmailUsuario={setEmailUsuario}
+      />
+    );
+  }
 
   return (
     <Box
       sx={{
         textAlign: "center",
         mb: 6,
-        width: { xs: "90%" },
+        width: { xs: "95%" },
         display: "flex",
         alignContent: "center",
         flexDirection: "column",
@@ -135,6 +205,7 @@ const CotizacionEnvios = () => {
             <Controller
               name="origen"
               control={control}
+              defaultValue={quoteData?.origen?.cp || ""}
               render={({ field: { onChange, value } }) => (
                 <Autocomplete
                   freeSolo
@@ -143,37 +214,24 @@ const CotizacionEnvios = () => {
                     borderRadius: "8px",
                     "& .MuiOutlinedInput-root": { borderRadius: "15px" },
                   }}
-                  value={
-                    typeof value === "string" && value !== ""
-                      ? value
-                      : coloniasOrigen.find(
-                          (option) =>
-                            `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}` ===
-                            value
-                        ) || null
-                  } // Aseguramos que el valor inicial esté en el formato correcto
-                  getOptionLabel={(option) =>
-                    typeof option === "string"
-                      ? option
-                      : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
-                  }
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.clave}>
-                      {`${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`}
-                    </li>
-                  )}
+                  value={value}
                   onInputChange={(e, newValue) => {
-                    // Manejamos el cambio del texto manualmente
                     if (/^\d+$/.test(newValue) || newValue === "") {
                       handleAutocompleteChange("origen", newValue, onChange);
                     }
                   }}
                   onChange={(e, newValue) => onChange(newValue)}
+                  getOptionLabel={(option) =>
+                    typeof option === "string"
+                      ? option
+                      : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                  }
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label="Origen"
                       variant="outlined"
+                      defaultValue={quoteData?.origen?.cp || ""}
                       fullWidth
                       helperText="Ingrese CP origen"
                     />
@@ -186,6 +244,7 @@ const CotizacionEnvios = () => {
             <Controller
               name="destino"
               control={control}
+              defaultValue={quoteData?.destino?.cp || ""}
               render={({ field: { onChange, value } }) => (
                 <Autocomplete
                   freeSolo
@@ -194,37 +253,24 @@ const CotizacionEnvios = () => {
                     borderRadius: "8px",
                     "& .MuiOutlinedInput-root": { borderRadius: "15px" },
                   }}
-                  value={
-                    typeof value === "string" && value !== ""
-                      ? value
-                      : coloniasDestino.find(
-                          (option) =>
-                            `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}` ===
-                            value
-                        ) || null
-                  }
+                  value={value}
                   onInputChange={(e, newValue) => {
-                    // Manejamos el cambio del texto manualmente
                     if (/^\d+$/.test(newValue) || newValue === "") {
                       handleAutocompleteChange("destino", newValue, onChange);
                     }
                   }}
+                  onChange={(e, newValue) => onChange(newValue)}
                   getOptionLabel={(option) =>
                     typeof option === "string"
                       ? option
                       : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
                   }
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.clave}>
-                      {`${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`}
-                    </li>
-                  )}
-                  onChange={(e, newValue) => onChange(newValue)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label="Destino"
                       variant="outlined"
+                      defaultValue={quoteData?.destino?.cp || ""}
                       fullWidth
                       helperText="Ingrese CP destino"
                     />
@@ -234,48 +280,288 @@ const CotizacionEnvios = () => {
             />
           </Grid>
 
-          {/* Número de Paquetes */}
-          <Grid item xs={12} md={6}>
-          <TextField
-  label="Número de Paquetes"
-  type="number"
-  value={packageCount}
-  onChange={(e) => {
-    const newValue = Math.max(Number(e.target.value), 1); // Asegura que el mínimo sea 1
-    setPackageCount(newValue);
-    setIsMultiPackage(newValue > 1);
-  }}
-  sx={{
-    borderRadius: "8px",
-    "& .MuiOutlinedInput-root": { borderRadius: "15px" },
-  }}
-  inputProps={{ step: "1", min: "1" }} // Esto asegura que el mínimo sea 1 a nivel de input
-  variant="outlined"
-  fullWidth
-  helperText="Ingrese número de paquetes"
-/>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
+          {/* Agregar selector de tipo de envío */}
+          <Grid item xs={12} md={formData.tipoEnvio === null ? 12 : 6}>
             <Controller
-              name={`packages[${step}].peso`}
+              name="tipoEnvio"
               control={control}
               render={({ field }) => (
                 <TextField
-                  label="Peso (kg)"
-                  type="number"
+                  select
+                  label="Tipo de Envío"
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    setShippingType(e.target.value);
+                    setPackageCount(1);
+                    setIsMultiPackage(false);
+                    setStep(0);
+                  }}
                   sx={{
                     borderRadius: "8px",
                     "& .MuiOutlinedInput-root": { borderRadius: "15px" },
                   }}
-                  inputProps={{ step: "0.01", min: "0" }}
-                  {...field}
                   fullWidth
-                  helperText="Ingrese peso de paquete"
-                />
+                  helperText="Selecciona tu tipo de envío"
+                >
+                  {shippingTypes.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               )}
             />
           </Grid>
+
+          {/* Mostrar campos adicionales solo si se ha seleccionado un tipo de envío */}
+          {shippingType && (
+            <>
+              {/* Campo de cantidad (modificado según el tipo) */}
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label={`Número de ${
+                    shippingType === "sobre"
+                      ? "sobres"
+                      : shippingType === "tarima"
+                      ? "tarimas"
+                      : "cajas"
+                  }`}
+                  type="number"
+                  value={packageCount}
+                  onChange={(e) => {
+                    const newValue = Math.max(Number(e.target.value), 1);
+                    setPackageCount(newValue);
+                    setIsMultiPackage(newValue > 1);
+                  }}
+                  sx={{
+                    borderRadius: "8px",
+                    "& .MuiOutlinedInput-root": { borderRadius: "15px" },
+                  }}
+                  inputProps={{ step: "1", min: "1" }}
+                  variant="outlined"
+                  fullWidth
+                  helperText={`Ingrese número de ${
+                    shippingType === "sobre"
+                      ? "sobres"
+                      : shippingType === "tarima"
+                      ? "tarimas"
+                      : "cajas"
+                  }`}
+                />
+              </Grid>
+
+              {/* Campo de peso (con restricción para sobres) */}
+              <Grid
+                item
+                xs={12}
+                md={shippingType === "sobre" ? 12 : isMultiPackage ? 12 : 6}
+              >
+                <Controller
+                  name={`packages[${step}].peso`}
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      label="Peso (kg)"
+                      type="number"
+                      {...field}
+                      inputProps={{
+                        step: "0.01",
+                        min: "0",
+                        max: shippingType === "sobre" ? "1" : undefined,
+                      }}
+                      sx={{
+                        borderRadius: "8px",
+                        "& .MuiOutlinedInput-root": { borderRadius: "15px" },
+                      }}
+                      fullWidth
+                      helperText={
+                        shippingType === "sobre"
+                          ? "Máximo 1 kg para sobres"
+                          : "Ingrese peso"
+                      }
+                    />
+                  )}
+                />
+              </Grid>
+
+              {/* Mostrar selector de tamaño solo para cajas y tarimas */}
+              {(shippingType === "caja" || shippingType === "tarima") && (
+                <Grid item xs={12} md={isMultiPackage ? 12 : 6}>
+                  <Controller
+                    name={`packages[${step}].size`}
+                    control={control}
+                    render={({ field: { onChange, value } }) => {
+                      return (
+                        <>
+                          <TextField
+                            select
+                            label="Tamaño"
+                            value={value}
+                            sx={{
+                              borderRadius: "8px",
+                              "& .MuiOutlinedInput-root": {
+                                borderRadius: "15px",
+                              },
+                            }}
+                            control={control}
+                            onChange={(e) => onChange(e.target.value)}
+                            fullWidth
+                            helperText={
+                              <span
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <span>
+                                  Como conocer el tamaño de tu paquete
+                                </span>
+                                <Tooltip
+                                  title={
+                                    <div>
+                                      <img
+                                        src="/images/Box.jpg"
+                                        alt="Ejemplo"
+                                        style={{
+                                          maxWidth: "600px",
+                                          height: "auto",
+                                          display: "flex",
+                                          justifyContent: "center",
+                                        }}
+                                      />
+                                    </div>
+                                  }
+                                >
+                                  <IconButton size="small">
+                                    <InfoIcon fontSize="small" />
+                                  </IconButton>
+                                </Tooltip>
+                              </span>
+                            }
+                          >
+                            {dynamicSizes.map((option) => (
+                              <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+
+                          {/* Si se selecciona "manual", renderizamos inputs para ingresar dimensiones */}
+                          {value === "manual" && (
+                            <Grid container spacing={2} mt={2}>
+                              <Grid item xs={4}>
+                                <Controller
+                                  name={`packages[${step}].customWidth`}
+                                  control={control}
+                                  render={({ field }) => (
+                                    <TextField
+                                      {...field}
+                                      label="Ancho (cm)"
+                                      type="number"
+                                      inputProps={{ min: 0 }}
+                                      fullWidth
+                                      sx={{
+                                        borderRadius: "8px",
+                                        "& .MuiOutlinedInput-root": {
+                                          borderRadius: "15px",
+                                        },
+                                      }}
+                                    />
+                                  )}
+                                />
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Controller
+                                  name={`packages[${step}].customHeight`}
+                                  control={control}
+                                  render={({ field }) => (
+                                    <TextField
+                                      {...field}
+                                      label="Altura (cm)"
+                                      type="number"
+                                      inputProps={{ min: 0 }}
+                                      fullWidth
+                                      sx={{
+                                        borderRadius: "8px",
+                                        "& .MuiOutlinedInput-root": {
+                                          borderRadius: "15px",
+                                        },
+                                      }}
+                                    />
+                                  )}
+                                />
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Controller
+                                  name={`packages[${step}].customLength`}
+                                  control={control}
+                                  render={({ field }) => (
+                                    <TextField
+                                      {...field}
+                                      label="Largo (cm)"
+                                      type="number"
+                                      inputProps={{ min: 0 }}
+                                      fullWidth
+                                      sx={{
+                                        borderRadius: "8px",
+                                        "& .MuiOutlinedInput-root": {
+                                          borderRadius: "15px",
+                                        },
+                                      }}
+                                    />
+                                  )}
+                                />
+                              </Grid>
+
+                              {/* Botón para guardar las medidas ingresadas manualmente */}
+                              <Grid item xs={12}>
+                                <Button
+                                  variant="outlined"
+                                  color="primary"
+                                  sx={{
+                                    borderRadius: "20px",
+                                    textTransform: "none",
+                                    display: "flex",
+                                  }}
+                                  onClick={() => {
+                                    const width = watch(
+                                      `packages[${step}].customWidth`
+                                    );
+                                    const height = watch(
+                                      `packages[${step}].customHeight`
+                                    );
+                                    const length = watch(
+                                      `packages[${step}].customLength`
+                                    );
+
+                                    if (width && height && length) {
+                                      saveCustomSize(
+                                        width,
+                                        height,
+                                        length,
+                                        onChange
+                                      );
+                                    } else {
+                                      alert(
+                                        "Por favor, complete todas las medidas."
+                                      );
+                                    }
+                                  }}
+                                >
+                                  Guardar tamaño
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          )}
+                        </>
+                      );
+                    }}
+                  />
+                </Grid>
+              )}
+            </>
+          )}
 
           {/* Stepper */}
           {isMultiPackage && (
@@ -300,164 +586,6 @@ const CotizacionEnvios = () => {
               </Stepper>
             </Grid>
           )}
-
-          {/* Tamaño y Peso */}
-          <Grid item xs={12} md={12}>
-            <Controller
-              name={`packages[${step}].size`}
-              control={control}
-              render={({ field: { onChange, value } }) => {
-                return (
-                  <>
-                    <TextField
-                      select
-                      label="Tamaño"
-                      value={value}
-                      sx={{
-                        borderRadius: "8px",
-                        "& .MuiOutlinedInput-root": { borderRadius: "15px" },
-                      }}
-                      control={control}
-                      onChange={(e) => onChange(e.target.value)}
-                      fullWidth
-                      helperText={
-                        <span style={{ display: "flex", alignItems: "center" }}>
-                          <span>Como conocer el tamaño de tu paquete</span>
-                          <Tooltip
-                            title={
-                              <div>
-                                <img
-                                  src="/images/Box.jpg"
-                                  alt="Ejemplo"
-                                  style={{
-                                    maxWidth: "600px",
-                                    height: "auto",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                  }}
-                                />
-                              </div>
-                            }
-                          >
-                            <IconButton size="small">
-                              <InfoIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                        </span>
-                      }
-                    >
-                      {dynamicSizes.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-
-                    {/* Si se selecciona "manual", renderizamos inputs para ingresar dimensiones */}
-                    {value === "manual" && (
-                      <Grid container spacing={2} mt={2}>
-                        <Grid item xs={4}>
-                          <Controller
-                            name={`packages[${step}].customWidth`}
-                            control={control}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                label="Ancho (cm)"
-                                type="number"
-                                inputProps={{ min: 0 }}
-                                fullWidth
-                                sx={{
-                                  borderRadius: "8px",
-                                  "& .MuiOutlinedInput-root": {
-                                    borderRadius: "15px",
-                                  },
-                                }}
-                              />
-                            )}
-                          />
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Controller
-                            name={`packages[${step}].customHeight`}
-                            control={control}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                label="Altura (cm)"
-                                type="number"
-                                inputProps={{ min: 0 }}
-                                fullWidth
-                                sx={{
-                                  borderRadius: "8px",
-                                  "& .MuiOutlinedInput-root": {
-                                    borderRadius: "15px",
-                                  },
-                                }}
-                              />
-                            )}
-                          />
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Controller
-                            name={`packages[${step}].customLength`}
-                            control={control}
-                            render={({ field }) => (
-                              <TextField
-                                {...field}
-                                label="Largo (cm)"
-                                type="number"
-                                inputProps={{ min: 0 }}
-                                fullWidth
-                                sx={{
-                                  borderRadius: "8px",
-                                  "& .MuiOutlinedInput-root": {
-                                    borderRadius: "15px",
-                                  },
-                                }}
-                              />
-                            )}
-                          />
-                        </Grid>
-
-                        {/* Botón para guardar las medidas ingresadas manualmente */}
-                        <Grid item xs={12}>
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            sx={{
-                              borderRadius: "20px",
-                              textTransform: "none",
-                              display: "flex",
-                            }}
-                            onClick={() => {
-                              const width = watch(
-                                `packages[${step}].customWidth`
-                              );
-                              const height = watch(
-                                `packages[${step}].customHeight`
-                              );
-                              const length = watch(
-                                `packages[${step}].customLength`
-                              );
-
-                              if (width && height && length) {
-                                saveCustomSize(width, height, length, onChange);
-                              } else {
-                                alert("Por favor, complete todas las medidas.");
-                              }
-                            }}
-                          >
-                            Guardar tamaño
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    )}
-                  </>
-                );
-              }}
-            />
-          </Grid>
         </Grid>
 
         {/* Botones de Navegación y Envío */}

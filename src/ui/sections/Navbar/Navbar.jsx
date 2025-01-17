@@ -49,12 +49,13 @@ const Navbar = () => {
       sx={{
         display: "flex",
         justifyContent: "space-between",
-        backgroundColor:
-          pathname !== "/"
-            ? "black"
-            : backGroundPoint
-            ? "black"
-            : "transparent",
+        backgroundColor: "black",
+        zIndex: 10,
+        //pathname !== "/"
+        //? "black"
+        //: backGroundPoint
+        //? "black"
+        //: "transparent",
         transition: "background-color 0.5s ease-in-out",
       }}
       className={`navbar ${isSticky ? "sticky" : ""}`}
@@ -108,7 +109,7 @@ const Navbar = () => {
                 cursor: "pointer",
               }}
             >
-              ESPECIALIDADES
+              SERVICIOS{" "}
             </Typography>
           </Button>
         </Link>

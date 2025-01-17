@@ -8,6 +8,8 @@ import Link from "next/link";
 const Footer = () => {
   const [open, setOpen] = useState(false);
 
+  const añoActual = new Date().getFullYear();
+
   // const handleClose = useCallback(() => {
   //   setOpen(false);
   // }, []);
@@ -110,7 +112,7 @@ const Footer = () => {
                   },
                 }}
               >
-                Especialidades
+                Servicios
               </Button>
             </Link>
             <Button
@@ -480,7 +482,7 @@ const Footer = () => {
               cursor: "pointer",
             }}
           >
-            © 2025 Paqueteria todos los derechos reservados
+            © {añoActual} Myllos todos los derechos reservados
           </Button>
         </Box>
       </Grid>

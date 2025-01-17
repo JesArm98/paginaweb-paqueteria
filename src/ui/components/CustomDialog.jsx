@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import {
@@ -46,6 +46,11 @@ const CustomDialog = ({
       open={open}
       maxWidth={width}
       fullWidth
+      sx={{
+        "& .MuiDialog-paper": {
+          borderRadius: "20px",
+        },
+      }}
       TransitionComponent={Transition}
       TransitionProps={{
         direction: transitionDirection,
