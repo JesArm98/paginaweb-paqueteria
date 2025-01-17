@@ -12,8 +12,8 @@ import {
   AppBar,
   Toolbar,
 } from "@mui/material";
-import Head from "next/head";
-import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
+//import Head from "next/head";
+//import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
 import ShippingHero from "../ShippingHero/ShippingHero";
 
 export default function SeccionCrema() {
@@ -95,7 +95,7 @@ export default function SeccionCrema() {
         </Box>
 
         {/* Cotización */}
-        <CotizacionEnvios />
+        {/* <CotizacionEnvios /> */}
       </Container>
     </>
   );
