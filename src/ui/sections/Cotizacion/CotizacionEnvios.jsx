@@ -236,22 +236,24 @@ const CotizacionEnvios = () => {
 
           {/* Número de Paquetes */}
           <Grid item xs={12} md={6}>
-            <TextField
-              label="Número de Paquetes"
-              type="number"
-              value={packageCount}
-              onChange={(e) => {
-                setPackageCount(Number(e.target.value));
-                setIsMultiPackage(Number(e.target.value) > 1);
-              }}
-              sx={{
-                borderRadius: "8px",
-                "& .MuiOutlinedInput-root": { borderRadius: "15px" },
-              }}
-              variant="outlined"
-              fullWidth
-              helperText="Ingrese número de paquetes"
-            />
+          <TextField
+  label="Número de Paquetes"
+  type="number"
+  value={packageCount}
+  onChange={(e) => {
+    const newValue = Math.max(Number(e.target.value), 1); // Asegura que el mínimo sea 1
+    setPackageCount(newValue);
+    setIsMultiPackage(newValue > 1);
+  }}
+  sx={{
+    borderRadius: "8px",
+    "& .MuiOutlinedInput-root": { borderRadius: "15px" },
+  }}
+  inputProps={{ step: "1", min: "1" }} // Esto asegura que el mínimo sea 1 a nivel de input
+  variant="outlined"
+  fullWidth
+  helperText="Ingrese número de paquetes"
+/>
           </Grid>
 
           <Grid item xs={12} md={6}>
