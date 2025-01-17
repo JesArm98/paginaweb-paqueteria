@@ -434,7 +434,6 @@ const CotizacionEnvios = () => {
                               borderRadius: "20px",
                               textTransform: "none",
                               display: "flex",
-                              flexDire,
                             }}
                             onClick={() => {
                               const width = watch(
