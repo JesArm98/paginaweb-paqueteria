@@ -14,23 +14,16 @@ import {
 } from "@mui/material";
 import Head from "next/head";
 import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
+import ShippingHero from "../ShippingHero/ShippingHero";
 
 export default function SeccionCrema() {
   return (
     <>
+        <Box textAlign="center" sx={{ py: 10 }}>
+<ShippingHero/>
+        </Box>
       <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
         {/* Hero Section */}
-        <Box textAlign="center" sx={{ py: 15 }}>
-          <Typography variant="h2" gutterBottom>
-            Entrega segura, rápida y confiable
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            Llevamos tus paquetes a donde quieras y cuando quieras.
-          </Typography>
-          <Button variant="contained" size="large" sx={{ mt: 3 }}>
-            Cotiza tu envío ahora
-          </Button>
-        </Box>
 
         {/* Beneficios */}
         <Grid container spacing={4} sx={{ mb: 6 }}>

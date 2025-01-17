@@ -120,8 +120,6 @@ const CotizacionEnvios = () => {
       sx={{
         textAlign: "center",
         mb: 6,
-        py: 15,
-        px: 3,
         width: { xs: "90%" },
         display: "flex",
         alignContent: "center",
@@ -129,11 +127,6 @@ const CotizacionEnvios = () => {
         margin: "auto",
       }}
     >
-      {/* Título */}
-      <Typography variant="h4" gutterBottom mb={5}>
-        Cotiza tu envio
-      </Typography>
-
       {/* Formulario */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3} justifyContent="center">
