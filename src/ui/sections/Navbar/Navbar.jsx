@@ -7,13 +7,14 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import debounce from "lodash.debounce";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import MobileNav from "@/ui/sections/Navbar/MobileNav";
 
 const Navbar = () => {
   const [isSticky, setSticky] = useState(false);
-  const [backGroundPoint, setBackGroundPoint] = useState(false);
-  const pathname = usePathname();
+  // const [backGroundPoint, setBackGroundPoint] = useState(false);
+  // const pathname = usePathname();
+  const router = useRouter();
 
   const handleScroll = useCallback(() => {
     const stickyPoint = window.innerHeight * 0;
@@ -22,14 +23,6 @@ const Navbar = () => {
     const backGroundPointThreshold = window.innerHeight * 0;
     setBackGroundPoint(window.scrollY >= backGroundPointThreshold);
   }, []);
-
-  useEffect(() => {
-    const debouncedHandleScroll = debounce(handleScroll);
-    window.addEventListener("scroll", debouncedHandleScroll);
-    return () => {
-      window.removeEventListener("scroll", debouncedHandleScroll);
-    };
-  }, [handleScroll]);
 
   const handleNavigation = (id) => {
     setTimeout(() => {
@@ -43,6 +36,28 @@ const Navbar = () => {
       }
     }, 600);
   };
+
+  const handleSocioClick = () => {
+    // Primero establecer el tipo en localStorage
+    localStorage.setItem("contactType", "socio");
+
+    // Usar handleNavigation que ya tiene la lógica de scroll suave
+    handleNavigation("contacto");
+
+    // Disparar el evento después de un pequeño delay para asegurar que el scroll terminó
+    setTimeout(() => {
+      const event = new Event("contactTypeChange");
+      window.dispatchEvent(event);
+    }, 700); // Un poco más que el timeout de handleNavigation
+  };
+
+  useEffect(() => {
+    const debouncedHandleScroll = debounce(handleScroll);
+    window.addEventListener("scroll", debouncedHandleScroll);
+    return () => {
+      window.removeEventListener("scroll", debouncedHandleScroll);
+    };
+  }, [handleScroll]);
 
   return (
     <Box
@@ -115,7 +130,7 @@ const Navbar = () => {
         </Link>
         <Link href="/" passHref>
           <Button
-            onClick={() => handleNavigation("sucursal")}
+            onClick={handleSocioClick}
             sx={{
               display: { xs: "none", md: "flex" },
               color: "#FFFFFF",
@@ -142,7 +157,7 @@ const Navbar = () => {
                 cursor: "pointer",
               }}
             >
-              SUCURSALES
+              ¿QUIERES SER SOCIO?
             </Typography>
           </Button>
         </Link>

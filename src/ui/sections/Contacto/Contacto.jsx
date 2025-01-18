@@ -10,13 +10,13 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const contactOptions = [
   { value: "sugerencia", label: "Sugerencias o quejas" },
   {
-    value: "proveedor",
-    label: "¿Quieres ser nuestro proveedor?",
+    value: "socio",
+    label: "¿Quieres ser nuestro socio?",
   },
   { value: "cotizaciones", label: "Cotizaciones" },
 ];
@@ -100,6 +100,33 @@ function ContactForm() {
     mode: "onChange",
   });
 
+  // Detectar el parámetro type en la URL al montar el componente
+  useEffect(() => {
+    const handleContactTypeChange = () => {
+      try {
+        const contactType = localStorage.getItem("contactType");
+        if (contactType === "socio") {
+          setValue("Tipo", "socio", { shouldValidate: true });
+          localStorage.removeItem("contactType");
+        }
+      } catch (error) {
+        console.error("Error al manejar el tipo de contacto:", error);
+      }
+    };
+
+    // Ejecutar una vez al montar
+    handleContactTypeChange();
+
+    // Agregar el event listener
+    window.addEventListener("contactTypeChange", handleContactTypeChange);
+
+    return () => {
+      window.removeEventListener("contactTypeChange", handleContactTypeChange);
+      // Limpiar localStorage al desmontar por si acaso
+      localStorage.removeItem("contactType");
+    };
+  }, [setValue]);
+
   const selectedTipo = useWatch({
     control,
     name: "Tipo",
@@ -143,6 +170,7 @@ function ContactForm() {
 
   return (
     <Box
+      id="contacto"
       component="form"
       noValidate
       autoComplete="off"
@@ -249,7 +277,7 @@ function ContactForm() {
                 }}
                 onChange={(e) => {
                   field.onChange(e);
-                  if (e.target.value === "proveedor") {
+                  if (e.target.value === "c") {
                     setValue("Sucursal", "Matriz");
                   }
                 }}
@@ -274,7 +302,7 @@ function ContactForm() {
             return (
               <TextField
                 {...field}
-                label={selectedTipo === "proveedor" ? "RFC*" : "Nombre*"}
+                label={selectedTipo === "socio" ? "RFC*" : "Nombre*"}
                 helperText={
                   hasError
                     ? errors.Nombre.message
@@ -319,7 +347,7 @@ function ContactForm() {
           }}
         />
         <>
-          {selectedTipo === "proveedor" && (
+          {selectedTipo === "socio" && (
             <Controller
               name="RazonSocial"
               control={control}
