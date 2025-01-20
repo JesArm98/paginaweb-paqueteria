@@ -44,6 +44,16 @@ const preguntas = [
     respuesta:
       "Sí, ofrecemos servicio de recolección a domicilio sin costo adicional en la mayoría de las zonas urbanas. Programa tu recolección con al menos 24 horas de anticipación.",
   },
+  {
+    pregunta: "¿Cuál es la diferencia entre FTL y LTL?",
+    respuesta:
+      "FTL (Full Truck Load) es cuando rentas el camión completo para tu carga. LTL (Less Than Truck Load) es cuando compartes el espacio del camión con otros clientes, ideal para cargas menores.",
+  },
+  {
+    pregunta: "¿Qué documentación necesito para envíos FTL?",
+    respuesta:
+      "Necesitarás: carta porte, factura comercial, lista de empaque y seguro de carga. Para materiales especiales pueden requerirse permisos adicionales.",
+  },
 ];
 
 const FAQ = () => {

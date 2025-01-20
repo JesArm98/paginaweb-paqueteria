@@ -52,7 +52,10 @@ const RastreoEnvios = () => {
               Rastrea tu Envío
             </Typography>
             <Typography variant="h6" color="text.secondary">
-              Ingresa tu número de guía para conocer el estado de tu envío
+              Rastrea tus envíos FTL, LTL o paquetería en tiempo real
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 1, mb: 4, color: "#6b7280" }}>
+              Monitorea el estado de tu carga las 24 horas del día
             </Typography>
           </Box>
 

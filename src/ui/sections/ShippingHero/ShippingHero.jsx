@@ -258,8 +258,6 @@ const ShippingHero = () => {
         <CotizacionEnvios />
       </CustomDialog>
 
-      {console.log(emailConfirmado)}
-
       {/* Background decoration */}
       <Box
         position="absolute"

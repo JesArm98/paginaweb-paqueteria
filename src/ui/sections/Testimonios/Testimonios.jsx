@@ -1,129 +1,140 @@
-"use client";
-
 import React from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  Avatar,
-  Rating,
-} from "@mui/material";
+import { Box, Typography, Card, Avatar, Rating } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const testimonios = [
   {
-    nombre: "Ana García",
+    nombre: "Juan Pérez",
     cargo: "Gerente de Logística",
-    empresa: "Comercial MX",
+    empresa: "Industrias Manufactureras XYZ",
     comentario:
-      "Excelente servicio y tiempos de entrega. Han sido un socio clave en nuestra operación.",
+      "Su servicio FTL ha sido fundamental para nuestra cadena de suministro. La puntualidad y el cuidado de la carga son excepcionales.",
     rating: 5,
   },
   {
-    nombre: "Carlos Ruiz",
-    cargo: "Director Comercial",
-    empresa: "Distribuidora Norte",
+    nombre: "María González",
+    cargo: "Directora de Operaciones",
+    empresa: "Distribuidora Nacional",
     comentario:
-      "La mejor opción para envíos urgentes. Su atención al cliente es excepcional.",
+      "El servicio LTL nos permite optimizar costos manteniendo la calidad del servicio. Su sistema de rastreo es excelente.",
     rating: 5,
   },
   {
-    nombre: "Laura Méndez",
-    cargo: "E-commerce Manager",
-    empresa: "Fashion Store",
+    nombre: "Carlos Rodríguez",
+    cargo: "Gerente de E-commerce",
+    empresa: "Tiendas Online MX",
     comentario:
-      "Gracias a su eficiencia, hemos podido expandir nuestro negocio a nivel nacional.",
+      "Su servicio de paquetería ha sido clave para el crecimiento de nuestro e-commerce. Las entregas siempre a tiempo.",
     rating: 5,
   },
+  // Puedes agregar más testimonios aquí
 ];
 
 const Testimonios = () => {
   return (
-    <Box sx={{ py: 8, backgroundColor: "#f8fafc" }}>
-      <Container>
-        <Box sx={{ textAlign: "center", mb: 6 }}>
-          <Typography
-            variant="h2"
-            sx={{
-              fontWeight: "bold",
-              mb: 2,
-              background: "linear-gradient(45deg, #007bff, #007bff99)",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Lo que dicen nuestros clientes
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{ color: "#6b7280", maxWidth: "800px", mx: "auto" }}
-          >
-            Historias de éxito de quienes confían en nosotros
-          </Typography>
-        </Box>
+    <Box sx={{ py: 8, px: 4, backgroundColor: "white" }}>
+      <Typography
+        variant="h2"
+        sx={{
+          textAlign: "center",
+          mb: 6,
+          color: "#07417B",
+          fontWeight: 700,
+        }}
+      >
+        Lo que dicen nuestros clientes
+      </Typography>
 
-        <Grid container spacing={4}>
-          {testimonios.map((testimonio, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Card
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        spaceBetween={30}
+        loop={true}
+        slidesPerView={{ xs: 1, sm: 2, md: 3 }}
+        pagination={{ clickable: true }}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+        }}
+        style={{ padding: "20px 10px 50px 10px" }}
+      >
+        {testimonios.map((testimonio, index) => (
+          <SwiperSlide key={index}>
+            <Card
+              sx={{
+                p: 3,
+                borderRadius: "15px",
+                height: "100%",
+                minHeight: "300px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+                transition: "transform 0.3s ease-in-out",
+                "&:hover": {
+                  transform: "translateY(-10px)",
+                },
+              }}
+            >
+              <Avatar
                 sx={{
-                  height: "100%",
-                  borderRadius: "20px",
-                  transition: "transform 0.3s ease-in-out",
-                  "&:hover": {
-                    transform: "translateY(-10px)",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-                  },
+                  width: 80,
+                  height: 80,
+                  mb: 2,
+                  backgroundColor: "#07417B",
                 }}
               >
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
-                    p: 4,
-                  }}
-                >
-                  <Avatar
-                    sx={{
-                      width: 80,
-                      height: 80,
-                      mb: 2,
-                      backgroundColor: "#007bff",
-                    }}
-                  >
-                    {testimonio.nombre.charAt(0)}
-                  </Avatar>
-                  <Rating value={testimonio.rating} readOnly sx={{ mb: 2 }} />
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      mb: 3,
-                      color: "#4b5563",
-                      fontStyle: "italic",
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    "{testimonio.comentario}"
-                  </Typography>
-                  <Typography variant="h6" sx={{ color: "#1a1a1a" }}>
-                    {testimonio.nombre}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {testimonio.cargo}
-                  </Typography>
-                  <Typography variant="subtitle2" color="primary">
-                    {testimonio.empresa}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+                {testimonio.nombre.charAt(0)}
+              </Avatar>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 600,
+                  textAlign: "center",
+                }}
+              >
+                {testimonio.nombre}
+              </Typography>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                sx={{
+                  mb: 2,
+                  textAlign: "center",
+                }}
+              >
+                {testimonio.cargo} en {testimonio.empresa}
+              </Typography>
+              <Rating value={testimonio.rating} readOnly sx={{ mb: 2 }} />
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontStyle: "italic",
+                  color: "#666",
+                }}
+              >
+                "{testimonio.comentario}"
+              </Typography>
+            </Card>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Box>
   );
 };
