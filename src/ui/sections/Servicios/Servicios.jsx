@@ -40,33 +40,29 @@ const servicios = [
       "Capacidad hasta 24 tarimas",
     ],
   },
-  {
-    titulo: "Paquetería",
-    descripcion:
-      "Servicio especializado para el envío de paquetes individuales o múltiples. Soluciones flexibles que se adaptan a tus necesidades de envío.",
-    icon: <InventoryIcon sx={{ fontSize: 60, color: "#007bff" }} />,
-    caracteristicas: [
-      "Envíos desde 1kg",
-      "Cobertura nacional",
-      "Múltiples niveles de servicio",
-      "Recolección a domicilio",
-    ],
-  },
+  //  {
+  //    titulo: "Paquetería",
+  //    descripcion:
+  //      "Servicio especializado para el envío de paquetes individuales o múltiples. Soluciones flexibles que se adaptan a tus necesidades de envío.",
+  //    icon: <InventoryIcon sx={{ fontSize: 60, color: "#007bff" }} />,
+  //    caracteristicas: [
+  //      "Envíos desde 1kg",
+  //      "Cobertura nacional",
+  //      "Múltiples niveles de servicio",
+  //      "Recolección a domicilio",
+  //    ],
+  //  },
 ];
 
 const Servicios = () => {
   const router = useRouter();
 
   const handleNavigation = (servicio) => {
-    // Navegar a la sección de contacto con un parámetro
-    router.push("/#contacto?type=socio");
-    // Dar tiempo al DOM para actualizarse
-    setTimeout(() => {
-      const contactoSection = document.getElementById("contacto");
-      if (contactoSection) {
-        contactoSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
+    if (servicio === "LTL (Less Than Truckload)") {
+      router.push("/servicios/ltl");
+    } else if (servicio === "FTL (Full Truck Load)") {
+      router.push("/servicios/ftl");
+    }
   };
 
   return (
@@ -79,8 +75,8 @@ const Servicios = () => {
       <Container>
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Typography
-            variant="h2"
             sx={{
+              fontSize: "2.5rem",
               fontWeight: "bold",
               mb: 2,
               background: "linear-gradient(45deg, #007bff, #007bff99)",
@@ -91,8 +87,12 @@ const Servicios = () => {
             Servicios disponibles
           </Typography>
           <Typography
-            variant="h5"
-            sx={{ color: "#6b7280", maxWidth: "800px", mx: "auto" }}
+            sx={{
+              color: "#6b7280",
+              maxWidth: "800px",
+              mx: "auto",
+              fontSize: "1.2rem",
+            }}
           >
             Soluciones integrales de logística adaptadas a tus necesidades
           </Typography>
@@ -100,10 +100,12 @@ const Servicios = () => {
 
         <Grid container spacing={4}>
           {servicios.map((servicio, index) => (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid item xs={12} md={6} key={index}>
               <Card
                 sx={{
                   height: "100%",
+                  width: "70%",
+                  margin: "auto",
                   display: "flex",
                   flexDirection: "column",
                   borderRadius: "20px",
@@ -134,9 +136,7 @@ const Servicios = () => {
                     {servicio.icon}
                   </Box>
                   <Typography
-                    variant="h5"
-                    component="h3"
-                    sx={{ mb: 2, fontWeight: "bold" }}
+                    sx={{ mb: 2, fontWeight: "bold", fontSize: "1.5rem" }}
                   >
                     {servicio.titulo}
                   </Typography>
@@ -188,7 +188,7 @@ const Servicios = () => {
                         },
                       }}
                     >
-                      Solicitar información
+                      Más información
                     </Button>
                   </Box>
                 </CardContent>

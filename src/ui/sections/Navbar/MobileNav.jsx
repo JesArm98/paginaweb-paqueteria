@@ -112,15 +112,6 @@ const MobileNav = () => {
     { name: "Servicios", href: "#Servicios" },
     { name: "Sucursales", href: "#sucursal" },
     { name: "Tienda", href: "/tienda" },
-    {
-      name: "Bolsa de Trabajo",
-      href: "https://tuvanosa.pandape.computrabajo.com/",
-    },
-    {
-      name: "Proveedores",
-      href: "https://portal.tuvanosa.net/proveedores/inicio",
-    },
-    { name: "Clientes", href: "https://portal.tuvanosa.net/clientes/inicio" },
   ];
 
   const menuItems2 = [

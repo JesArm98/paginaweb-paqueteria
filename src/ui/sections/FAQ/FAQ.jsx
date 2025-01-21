@@ -9,15 +9,22 @@ import {
   Card,
   CardContent,
   IconButton,
+  Button,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useRouter } from "next/navigation";
 
-const preguntas = [
+const preguntasPrincipales = [
   {
-    pregunta: "¿Cuál es el tiempo estimado de entrega?",
+    pregunta: "¿Cuál es la diferencia entre FTL y LTL?",
     respuesta:
-      "Los tiempos de entrega varían según la ruta y el tipo de servicio seleccionado. Para envíos locales, el tiempo estimado es de 24-48 horas. Para envíos nacionales, puede tomar entre 2-5 días hábiles. Ofrecemos opciones express para entregas más rápidas.",
+      "FTL (Full Truck Load) es cuando rentas el camión completo para tu carga. LTL (Less Than Truck Load) es cuando compartes el espacio del camión con otros clientes, ideal para cargas menores y más económico.",
+  },
+  {
+    pregunta: "¿Qué documentación necesito para envíos?",
+    respuesta:
+      "Para envíos básicos: carta porte y factura comercial. Para FTL/LTL adicional: lista de empaque y seguro de carga. Para materiales especiales pueden requerirse permisos adicionales.",
   },
   {
     pregunta: "¿Cómo puedo rastrear mi envío?",
@@ -25,39 +32,15 @@ const preguntas = [
       "Puedes rastrear tu envío en tiempo real a través de nuestra plataforma web ingresando tu número de guía. También recibirás actualizaciones por correo electrónico sobre el estado de tu envío.",
   },
   {
-    pregunta: "¿Qué tipo de mercancía puedo enviar?",
+    pregunta: "¿Cuáles son los tiempos estimados de entrega?",
     respuesta:
-      "Manejamos una amplia variedad de mercancías, incluyendo paquetería general, documentos, mercancía delicada y carga pesada. Sin embargo, hay restricciones para materiales peligrosos y artículos prohibidos por la ley.",
-  },
-  {
-    pregunta: "¿Ofrecen seguro para los envíos?",
-    respuesta:
-      "Sí, todos nuestros envíos incluyen un seguro básico. Adicionalmente, ofrecemos opciones de seguro ampliado para envíos de alto valor o que requieran protección adicional.",
-  },
-  {
-    pregunta: "¿Cuál es el proceso de reclamación?",
-    respuesta:
-      "En caso de cualquier incidente, nuestro proceso de reclamación es simple y eficiente. Contáctanos dentro de las primeras 24 horas del incidente y nuestro equipo de atención al cliente te guiará durante todo el proceso.",
-  },
-  {
-    pregunta: "¿Realizan recolección a domicilio?",
-    respuesta:
-      "Sí, ofrecemos servicio de recolección a domicilio sin costo adicional en la mayoría de las zonas urbanas. Programa tu recolección con al menos 24 horas de anticipación.",
-  },
-  {
-    pregunta: "¿Cuál es la diferencia entre FTL y LTL?",
-    respuesta:
-      "FTL (Full Truck Load) es cuando rentas el camión completo para tu carga. LTL (Less Than Truck Load) es cuando compartes el espacio del camión con otros clientes, ideal para cargas menores.",
-  },
-  {
-    pregunta: "¿Qué documentación necesito para envíos FTL?",
-    respuesta:
-      "Necesitarás: carta porte, factura comercial, lista de empaque y seguro de carga. Para materiales especiales pueden requerirse permisos adicionales.",
+      "FTL: 24-72 horas según destino. LTL: 2-5 días hábiles. Paquetería: 24-48 horas en envíos locales, 2-5 días en nacionales. Ofrecemos opciones express para entregas más rápidas.",
   },
 ];
 
 const FAQ = () => {
   const [expandedId, setExpandedId] = useState(null);
+  const router = useRouter();
 
   const handleExpandClick = (id) => {
     setExpandedId(expandedId === id ? null : id);
@@ -81,15 +64,14 @@ const FAQ = () => {
           </Typography>
           <Typography
             variant="h5"
-            sx={{ color: "#6b7280", maxWidth: "800px", mx: "auto" }}
+            sx={{ color: "#6b7280", maxWidth: "800px", mx: "auto", mb: 4 }}
           >
-            Encuentra respuestas a las dudas más comunes sobre nuestros
-            servicios
+            Resolvemos tus dudas más comunes
           </Typography>
         </Box>
 
         <Grid container spacing={3}>
-          {preguntas.map((pregunta, index) => (
+          {preguntasPrincipales.map((pregunta, index) => (
             <Grid item xs={12} md={6} key={index}>
               <Card
                 sx={{
@@ -160,7 +142,28 @@ const FAQ = () => {
             </Grid>
           ))}
         </Grid>
-      </Container>
+      </Container>{" "}
+      <Button
+        variant="outlined"
+        onClick={() => router.push("/preguntas-frecuentes")}
+        sx={{
+          borderRadius: "20px",
+          textTransform: "none",
+          borderColor: "#007bff",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "auto",
+          marginTop: "30px",
+          color: "#007bff",
+          "&:hover": {
+            borderColor: "#0056b3",
+            backgroundColor: "#f0f9ff",
+          },
+        }}
+      >
+        Ver más preguntas frecuentes
+      </Button>
     </Box>
   );
 };

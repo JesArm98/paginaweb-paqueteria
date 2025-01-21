@@ -6,19 +6,19 @@ import CountUp from "react-countup";
 
 const stats = [
   {
-    valor: 50000,
+    valor: 500000,
     sufijo: "+",
-    texto: "Envíos Mensuales",
+    texto: "Toneladas Transportadas",
   },
   {
     valor: 98,
     sufijo: "%",
-    texto: "Satisfacción",
+    texto: "Entregas a Tiempo",
   },
   {
-    valor: 32,
-    sufijo: "",
-    texto: "Ciudades",
+    valor: 150,
+    sufijo: "+",
+    texto: "Unidades de Transporte",
   },
   {
     valor: 15,

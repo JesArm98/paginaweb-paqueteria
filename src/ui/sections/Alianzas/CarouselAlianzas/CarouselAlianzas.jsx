@@ -6,57 +6,27 @@ import "slick-carousel/slick/slick-theme.css";
 import "./CarouselAlianzas.css";
 
 // Imports de logos con rutas relativas
-const logo1 = "/images/Carrousel/logoDanfos.svg";
-const logo2 = "/images/Carrousel/logo-alfalaval.svg";
-const logo3 = "/images/Carrousel/aquestria.svg";
-const logo4 = "/images/Carrousel/emerson.svg";
-const logo5 = "/images/Carrousel/genebre.svg";
-const logo6 = "/images/Carrousel/jw.svg";
-const logo7 = "/images/Carrousel/logo_walworth.svg";
-const logo8 = "/images/Carrousel/miura.svg";
-const logo9 = "/images/Carrousel/pexgol.svg";
-const logo10 = "/images/Carrousel/rizzotto.svg";
-const logo11 = "/images/Carrousel/rotoplas_logo.svg";
-const logo12 = "/images/Carrousel/sulzer.svg";
-const logo13 = "/images/Carrousel/teadit.svg";
-const logo14 = "/images/Carrousel/tenaris.svg";
-const logo15 = "/images/Carrousel/wago-1.svg";
+const logo1 = "/images/Carrousel/ups.jpeg";
+const logo2 = "/images/Carrousel/pmm-paqueteria-mensajeria.jpeg";
+const logo3 = "/images/Carrousel/fedex.jpeg";
+const logo4 = "/images/Carrousel/estafeta.jpeg";
+const logo5 = "/images/Carrousel/dhl.jpeg";
+const logo6 = "/images/Carrousel/paquetexpress.jpeg";
+const logo7 = "/images/Carrousel/j&t-express.jpeg";
+const logo8 = "/images/Carrousel/99-minutor.jpeg";
 import Image from "next/image";
 
-const logos = [
-  logo1,
-  logo2,
-  logo3,
-  logo4,
-  logo5,
-  logo6,
-  logo7,
-  logo8,
-  logo9,
-  logo10,
-  logo11,
-  logo12,
-  logo13,
-  logo14,
-  logo15,
-];
+const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8];
 
 const names = [
-  "Danfos",
-  "Alfalaval",
-  "Aquestia",
-  "Emerson",
-  "Genebre",
-  "notiene",
-  "Walworth",
-  "Miuraboiler",
-  "Pexgol",
-  "Rizzotto",
-  "Rotoplas",
-  "Sulzer",
-  "Teadit",
-  "Tenaris",
-  "Wago",
+  "UPS",
+  "PMM Paqueteria + Mensajeria",
+  "FedEx",
+  "Estafeta",
+  "DHL",
+  "Paquetexpress",
+  "J&T Express",
+  "99 Minutos",
 ];
 
 const ImageCarousel = () => {

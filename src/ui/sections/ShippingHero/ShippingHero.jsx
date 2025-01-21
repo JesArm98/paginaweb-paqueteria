@@ -1,12 +1,7 @@
 "use client";
 
 import CustomDialog from "@/ui/components/CustomDialog";
-import {
-  ArrowForward,
-  LocalShipping,
-  Shield,
-  Timer,
-} from "@mui/icons-material";
+import { ArrowForward, Shield, Timer } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -18,7 +13,6 @@ import {
 import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
 import { useState } from "react";
 import Image from "next/image";
-import CotizacionResultados from "../Cotizacion/CotizacionResultados";
 import { useEmail } from "@/context/EmailContext";
 
 const ShippingHero = () => {
@@ -39,8 +33,13 @@ const ShippingHero = () => {
         border: "1px solid red",
       }}
     >
-      <Box className="container" position="relative" mx="5%">
-        <Grid container spacing={4} py={{ xs: 6, md: 10 }}>
+      <Box className="container" position="relative" mx={{ xs: "0", md: "5%" }}>
+        <Grid
+          container
+          spacing={4}
+          py={{ xs: 0, md: 10 }}
+          mt={{ xs: 10, md: 0 }}
+        >
           {/* Left Column - Content */}
           <Grid
             item
@@ -48,7 +47,7 @@ const ShippingHero = () => {
             md={6}
             display="flex"
             flexDirection="column"
-            sx={{ justifyContent: "start" }}
+            sx={{ justifyContent: "end" }}
             gap={4}
           >
             <Box>
@@ -57,7 +56,7 @@ const ShippingHero = () => {
                 fontWeight="bold"
                 textAlign={"center"}
                 sx={{
-                  fontSize: { xs: "2.5rem", sm: "3rem", md: "3.2rem" },
+                  fontSize: { xs: "1.5rem", md: "2.7rem" },
                   lineHeight: "1.2",
                 }}
               >
@@ -68,7 +67,7 @@ const ShippingHero = () => {
                     background: "linear-gradient(to right, #007bff, #007bff99)",
                     WebkitBackgroundClip: "text",
                     color: "transparent",
-                    fontSize: { xs: "2.5rem", sm: "3rem", md: "3.2rem" },
+                    fontSize: { xs: "1.5rem", md: "2.7rem" },
                   }}
                 >
                   instantánea
@@ -76,10 +75,13 @@ const ShippingHero = () => {
               </Typography>
               <Typography
                 variant="body1"
-                textAlign={"center"}
+                textAlign={{ xs: "justify", sm: "center" }}
                 sx={{
                   color: "#6b7280",
                   fontSize: { xs: "1rem", md: "1.8rem" },
+                  maxWidth: { xs: "80%", md: "100%" },
+                  margin: { xs: "auto", md: "0" },
+                  mt: { xs: 2, md: 0 },
                 }}
               >
                 Calcula el costo de tus envíos en segundos. Servicio rápido,
@@ -90,7 +92,14 @@ const ShippingHero = () => {
             {/* Features */}
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <Card sx={{ backgroundColor: "#f8fafc", boxShadow: 1 }}>
+                <Card
+                  sx={{
+                    backgroundColor: "#f8fafc",
+                    boxShadow: 1,
+                    width: { xs: "50%", md: "80%" },
+                    margin: "auto",
+                  }}
+                >
                   <CardContent display="flex" alignItems="center" gap={2}>
                     <Box
                       sx={{
@@ -122,7 +131,14 @@ const ShippingHero = () => {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Card sx={{ backgroundColor: "#f8fafc", boxShadow: 1 }}>
+                <Card
+                  sx={{
+                    backgroundColor: "#f8fafc",
+                    boxShadow: 1,
+                    width: { xs: "50%", md: "80%" },
+                    margin: "auto",
+                  }}
+                >
                   <CardContent display="flex" alignItems="center" gap={2}>
                     <Box
                       sx={{
@@ -196,7 +212,7 @@ const ShippingHero = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "end",
             }}
           >
             {/* Efecto de resplandor */}
@@ -210,7 +226,7 @@ const ShippingHero = () => {
                   "linear-gradient(to bottom right, #007bff33, #ffffff)",
                 filter: "blur(60px)",
                 top: "50%",
-                left: "50%",
+                left: "75%",
                 transform: "translate(-50%, -50%)",
               }}
             />

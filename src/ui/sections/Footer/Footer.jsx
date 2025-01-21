@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,25 +23,43 @@ const Footer = () => {
       container
       sx={{ padding: 0, margin: 0, height: "100%", backgroundColor: "#1B1C3C" }}
     >
-      <Grid item xs={12} md={2} sx={{ height: "85%" }}>
+      <Grid
+        item
+        xs={12}
+        md={2}
+        sx={{
+          height: "85%",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            cursor: "pointer",
+            width: "100%",
             padding: 2,
-            height: "100%",
           }}
         >
           <Link href="/#headerTVN">
-            <Button sx={{ display: { xs: "none", md: "flex" } }}>
+            <Button
+              sx={{
+                display: { xs: "none", md: "flex" },
+                padding: 0,
+                minWidth: "auto",
+              }}
+            >
               <Image
-                src="/images/Footer/logo_tuvanosa.svg"
+                src="/images/myllos-logo.jpeg"
                 alt="Logo Myllos - Volver a Inicio"
-                width={1000}
-                height={760}
-                style={{ maxHeight: "138px", width: "auto" }}
+                width={150}
+                height={114}
+                style={{
+                  objectFit: "contain",
+                  width: "100%",
+                  height: "auto",
+                }}
               />
             </Button>
           </Link>
@@ -115,28 +133,6 @@ const Footer = () => {
                 Servicios
               </Button>
             </Link>
-            <Button
-              id="contacto"
-              sx={{
-                textTransform: "none",
-
-                color: "#FFFFFF",
-                transition: "background-color 0.3s ease",
-                borderColor: "transparent",
-                borderRadius: "30px",
-                height: "40px",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.31)",
-                  borderColor: "#FFFFFF",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                  transform: "scale(0.90)",
-                  transition: "transform 0.2s ease, filter 0.2s ease",
-                },
-              }}
-            >
-              Sucursales
-            </Button>
 
             <Link href="/tienda">
               <Button
@@ -159,6 +155,37 @@ const Footer = () => {
                 }}
               >
                 Tienda
+              </Button>
+            </Link>
+            <Link href="/preguntas-frecuentes" passHref>
+              <Button
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  color: "#FFFFFF",
+                  padding: "8px 16px",
+                  transition: "background-color 0.3s ease",
+                  borderColor: "transparent",
+                  borderRadius: "30px",
+                  height: "40px",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.31)",
+                    borderColor: "#FFFFFF",
+                    transform: "scale(0.90)",
+                  },
+                }}
+              >
+                <Typography
+                  variant="h2"
+                  className="nav-text"
+                  sx={{
+                    fontSize: "1.1875em",
+                    fontWeight: "500",
+                    cursor: "pointer",
+                    textTransform: "none",
+                  }}
+                >
+                  Preguntas frecuentes
+                </Typography>
               </Button>
             </Link>
           </Box>
@@ -261,7 +288,7 @@ const Footer = () => {
               </Button>
             </Link>
             <Link
-              href="https://tuvanosa.pandape.computrabajo.com/"
+              href="/terminos-y-condiciones"
               target="_blank"
               rel="noopener noreferrer"
               sx={{ textDecoration: "none" }}
@@ -269,7 +296,6 @@ const Footer = () => {
               <Button
                 sx={{
                   textTransform: "none",
-
                   color: "#FFFFFF",
                   transition: "background-color 0.3s ease",
                   borderColor: "transparent",
@@ -285,7 +311,7 @@ const Footer = () => {
                   },
                 }}
               >
-                Bolsa de trabajo
+                Terminos y condiciones
               </Button>
             </Link>
             <Link

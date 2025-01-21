@@ -88,10 +88,11 @@ const Navbar = () => {
       >
         <Link href="/">
           <Image
+            style={{ borderRadius: "20px" }}
             className="LogoNavbar"
             width={74.25}
             height={74.25}
-            src="/images/Navbar/Group.svg"
+            src="/images/myllos-logo-notext.jpeg"
             alt="Myllos Logo"
           />
         </Link>
