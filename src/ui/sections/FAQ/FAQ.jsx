@@ -108,6 +108,7 @@ const FAQ = () => {
                       {pregunta.pregunta}
                     </Typography>
                     <IconButton
+                      aria-label="Expandir pregunta"
                       sx={{
                         color: expandedId === index ? "#007bff" : "#6b7280",
                         transform:
@@ -146,6 +147,7 @@ const FAQ = () => {
       <Button
         variant="outlined"
         onClick={() => router.push("/preguntas-frecuentes")}
+        aria-label="Ver más preguntas frecuentes"
         sx={{
           borderRadius: "20px",
           textTransform: "none",

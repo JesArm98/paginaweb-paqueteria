@@ -131,6 +131,7 @@ const Navbar = () => {
         </Link>
         <Link href="/" passHref>
           <Button
+            aria-label="¿Quieres ser socio?"
             onClick={handleSocioClick}
             sx={{
               display: { xs: "none", md: "flex" },
@@ -165,6 +166,7 @@ const Navbar = () => {
 
         <Link href="/tienda" passHref>
           <Button
+            aria-label="Tienda"
             sx={{
               display: { xs: "none", md: "flex" },
               color: "#FFFFFF",
@@ -227,6 +229,7 @@ const Navbar = () => {
           }}
         >
           <Button
+            aria-label="Facebook"
             variant="outlined"
             href="https://www.facebook.com/tuvanosaMX"
             target="_blank"
@@ -254,6 +257,7 @@ const Navbar = () => {
             />
           </Button>
           <Button
+            aria-label="Instagram"
             variant="outlined"
             href="https://www.instagram.com/tuvanosa.mx?igsh=bTVjYTBpdmNmbm9h"
             target="_blank"
@@ -272,7 +276,6 @@ const Navbar = () => {
                 },
               },
             }}
-            aria-label="Boton para redirigir a la red social Instagram"
           >
             <InstagramIcon
               sx={{
@@ -284,6 +287,7 @@ const Navbar = () => {
             />
           </Button>
           <Button
+            aria-label="LinkedIn"
             variant="outlined"
             href="https://www.linkedin.com/company/tuberias-y-valvulas-del-noroeste-sa-de-cv/mycompany/"
             target="_blank"
@@ -311,6 +315,7 @@ const Navbar = () => {
           </Button>
           <Link href="/#contacto" passHref>
             <Button
+              aria-label="Botón para contacto"
               sx={{
                 color: "#FFFFFF",
                 borderColor: "none",
@@ -325,7 +330,6 @@ const Navbar = () => {
                   },
                 },
               }}
-              aria-label="Botón para contacto"
             >
               <MailOutlineIcon
                 sx={{

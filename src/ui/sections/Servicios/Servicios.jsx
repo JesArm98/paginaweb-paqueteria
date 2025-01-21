@@ -177,6 +177,7 @@ const Servicios = () => {
                   </Box>
                   <Box sx={{ mt: 3 }}>
                     <Button
+                      aria-label="Más información"
                       variant="contained"
                       onClick={() => handleNavigation(servicio.titulo)}
                       sx={{

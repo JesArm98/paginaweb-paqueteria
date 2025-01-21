@@ -168,10 +168,10 @@ const MobileNav = () => {
     <>
       {/* Botón para abrir el menú */}
       <IconButton
+        aria-label="Abrir menú"
         onClick={toggleMenu}
         size="large"
         sx={{ color: "white", position: "absolute", right: 12 }}
-        aria-label="Toggle menu"
       >
         <MenuIcon sx={{ fontSize: 40 }} />
       </IconButton>
@@ -197,6 +197,7 @@ const MobileNav = () => {
         >
           {/* Botón de cerrar en esquina superior derecha */}
           <IconButton
+            aria-label="Cerrar menú"
             onClick={toggleMenu}
             sx={{
               position: "absolute",
@@ -232,6 +233,7 @@ const MobileNav = () => {
               <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
                 {menuItems2.map((item, index) => (
                   <IconButton
+                    aria-label="Red social"
                     key={index}
                     href={item.href}
                     sx={{ color: "white" }}

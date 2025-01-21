@@ -109,6 +109,7 @@ function LTLPage() {
 
             <Link href="/#headerTVN">
               <Button
+                aria-label="Solicitar cotización"
                 variant="contained"
                 size="large"
                 sx={{

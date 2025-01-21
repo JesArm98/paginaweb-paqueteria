@@ -108,6 +108,7 @@ function FTLPage() {
 
             <Link href="/#contacto">
               <Button
+                aria-label="Solicitar cotización"
                 variant="contained"
                 size="large"
                 sx={{

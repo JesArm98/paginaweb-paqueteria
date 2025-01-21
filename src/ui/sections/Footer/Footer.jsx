@@ -42,8 +42,9 @@ const Footer = () => {
             padding: 2,
           }}
         >
-          <Link href="/#headerTVN">
+          <Link href="/">
             <Button
+              aria-label="Logo Myllos - Volver a Inicio"
               sx={{
                 display: { xs: "none", md: "flex" },
                 padding: 0,
@@ -87,8 +88,9 @@ const Footer = () => {
               height: "100%",
             }}
           >
-            <Link href="/#headerTVN">
+            <Link href="/">
               <Button
+                aria-label="Volver a Inicio"
                 sx={{
                   textTransform: "none",
 
@@ -110,8 +112,9 @@ const Footer = () => {
                 Nosotros
               </Button>
             </Link>
-            <Link href="/#Coordinaciones">
+            <Link href="/#servicios">
               <Button
+                aria-label="Servicios"
                 sx={{
                   textTransform: "none",
 
@@ -159,6 +162,7 @@ const Footer = () => {
             </Link>
             <Link href="/preguntas-frecuentes" passHref>
               <Button
+                aria-label="Preguntas frecuentes"
                 sx={{
                   display: { xs: "none", md: "flex" },
                   color: "#FFFFFF",
@@ -294,6 +298,7 @@ const Footer = () => {
               sx={{ textDecoration: "none" }}
             >
               <Button
+                aria-label="Terminos y condiciones"
                 sx={{
                   textTransform: "none",
                   color: "#FFFFFF",
@@ -320,6 +325,7 @@ const Footer = () => {
               sx={{ textDecoration: "none" }}
             >
               <Button
+                aria-label="Aviso de privacidad"
                 sx={{
                   textTransform: "none",
 
@@ -373,6 +379,7 @@ const Footer = () => {
               }}
             >
               <Button
+                aria-label="Facebook"
                 variant="outlined"
                 component="a"
                 href="https://www.facebook.com/tuvanosaMX"
@@ -404,6 +411,7 @@ const Footer = () => {
                 />
               </Button>
               <Button
+                aria-label="Instagram"
                 variant="outlined"
                 component="a"
                 href="https://www.instagram.com/tuvanosa.mx?igsh=bTVjYTBpdmNmbm9h"
@@ -426,7 +434,6 @@ const Footer = () => {
                     transition: "transform 0.2s ease, filter 0.2s ease",
                   },
                 }}
-                aria-label="Boton para redirigir a la red social Instagram"
               >
                 <InstagramIcon
                   sx={{
@@ -438,6 +445,7 @@ const Footer = () => {
                 />
               </Button>
               <Button
+                aria-label="LinkedIn"
                 variant="outlined"
                 component="a"
                 href="https://www.linkedin.com/company/tuvanosamx/"
@@ -500,6 +508,7 @@ const Footer = () => {
           }}
         >
           <Button
+            aria-label="Derechos reservados"
             sx={{
               textTransform: "none",
               color: "#fff",

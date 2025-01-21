@@ -177,6 +177,7 @@ const ShippingHero = () => {
               sx={{ flexDirection: "row", justifyContent: "space-evenly" }}
             >
               <Button
+                aria-label="Cotizar envío"
                 onClick={() => setOpenDialog(true)}
                 variant="contained"
                 color="primary"

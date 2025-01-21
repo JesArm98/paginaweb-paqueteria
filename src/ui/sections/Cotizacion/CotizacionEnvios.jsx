@@ -433,7 +433,10 @@ const CotizacionEnvios = () => {
                                     </div>
                                   }
                                 >
-                                  <IconButton size="small">
+                                  <IconButton
+                                    size="small"
+                                    aria-label="Ayuda tamaño"
+                                  >
                                     <InfoIcon fontSize="small" />
                                   </IconButton>
                                 </Tooltip>
@@ -517,6 +520,7 @@ const CotizacionEnvios = () => {
                               {/* Botón para guardar las medidas ingresadas manualmente */}
                               <Grid item xs={12}>
                                 <Button
+                                  aria-label="Guardar tamaño"
                                   variant="outlined"
                                   color="primary"
                                   sx={{
@@ -600,6 +604,7 @@ const CotizacionEnvios = () => {
         >
           {isMultiPackage && step > 0 && (
             <Button
+              aria-label="Volver"
               startIcon={<ArrowBackIcon />}
               onClick={handleBack}
               variant="outlined"
@@ -609,10 +614,11 @@ const CotizacionEnvios = () => {
                 borderColor: "red",
                 textTransform: "none",
               }}
-            ></Button>
+            />
           )}
           {isMultiPackage && step < packageCount - 1 && (
             <Button
+              aria-label="Siguiente"
               endIcon={<ArrowForwardIcon />}
               onClick={handleNext}
               variant="contained"
@@ -629,6 +635,7 @@ const CotizacionEnvios = () => {
           )}
           {!isMultiPackage || step === packageCount - 1 ? (
             <Button
+              aria-label="Realizar cotización"
               type="submit"
               variant="contained"
               color="success"
