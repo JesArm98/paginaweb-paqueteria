@@ -193,13 +193,9 @@ const Cobertura = () => {
                     />
                   </ListItem>
                   {index < beneficios.length - 1 && (
-                    <Divider
-                      variant="inset"
-                      component="li"
-                      sx={{
-                        borderColor: "#e5e7eb",
-                      }}
-                    />
+                    <ListItem disablePadding>
+                      <Divider sx={{ width: "100%", borderColor: "#e5e7eb" }} />
+                    </ListItem>
                   )}
                 </React.Fragment>
               ))}

@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Typography, Container } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 
 export const metadata = {
   title: "Aviso de privacidad",
@@ -51,7 +58,7 @@ function AvisoPrivacidadPage() {
       </Typography>
 
       <Typography variant="body1" component="p">
-        <strong>[Nombre de la empresa]</strong> (en adelante, “La Empresa”), con
+        <strong>[Nombre de la empresa]</strong> (en adelante, "La Empresa"), con
         domicilio en [dirección completa], en cumplimiento con la Ley Federal de
         Protección de Datos Personales en Posesión de los Particulares, pone a
         su disposición este Aviso de Privacidad para informarle sobre cómo
@@ -70,16 +77,26 @@ function AvisoPrivacidadPage() {
         Al utilizar nuestros servicios o interactuar con nuestro sitio web,
         podemos recopilar la siguiente información personal:
       </Typography>
-      <Box component="ul" sx={{ pl: 4 }}>
-        <li>Nombre completo.</li>
-        <li>Dirección de envío y recolección.</li>
-        <li>Número de teléfono y correo electrónico.</li>
-        <li>Información fiscal (RFC y/o CURP).</li>
-        <li>
-          Detalles de envíos (origen, destino, valor declarado, contenido).
-        </li>
-        <li>Métodos de pago y datos de facturación.</li>
-      </Box>
+      <List sx={{ listStyleType: "disc", pl: 4 }}>
+        <ListItem>
+          <ListItemText primary="Nombre completo." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Dirección de envío y recolección." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Número de teléfono y correo electrónico." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Información fiscal (RFC y/o CURP)." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Detalles de envíos (origen, destino, valor declarado, contenido)." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Métodos de pago y datos de facturación." />
+        </ListItem>
+      </List>
 
       <Typography
         variant="h6"
@@ -91,19 +108,23 @@ function AvisoPrivacidadPage() {
       <Typography variant="body1" component="p">
         Los datos que recopilamos se utilizan para las siguientes finalidades:
       </Typography>
-      <Box component="ul" sx={{ pl: 4 }}>
-        <li>
-          Proveer los servicios de paquetería, transporte y logística
-          contratados.
-        </li>
-        <li>Confirmar y dar seguimiento a los envíos realizados.</li>
-        <li>Emitir comprobantes fiscales.</li>
-        <li>Notificar sobre cambios en nuestros servicios o promociones.</li>
-        <li>
-          Cumplir con requerimientos legales relacionados con el transporte de
-          carga TFL y LFL.
-        </li>
-      </Box>
+      <List>
+        <ListItem>
+          <ListItemText primary="Proveer los servicios de paquetería, transporte y logística contratados." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Confirmar y dar seguimiento a los envíos realizados." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Emitir comprobantes fiscales." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Notificar sobre cambios en nuestros servicios o promociones." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Cumplir con requerimientos legales relacionados con el transporte de carga TFL y LFL." />
+        </ListItem>
+      </List>
       <Typography variant="body1" component="p">
         Si no desea que sus datos se utilicen para fines promocionales, puede
         solicitarlo enviando un correo electrónico a [correo electrónico de
@@ -135,14 +156,14 @@ function AvisoPrivacidadPage() {
       <Typography variant="body1" component="p">
         La Empresa podrá compartir sus datos personales en los siguientes casos:
       </Typography>
-      <Box component="ul" sx={{ pl: 4 }}>
-        <li>Con autoridades competentes que lo requieran legalmente.</li>
-        <li>
-          Con proveedores y socios logísticos que contribuyan al cumplimiento
-          del servicio solicitado (por ejemplo, mensajería o plataformas
-          tecnológicas).
-        </li>
-      </Box>
+      <List>
+        <ListItem>
+          <ListItemText primary="Con autoridades competentes que lo requieran legalmente." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Con proveedores y socios logísticos que contribuyan al cumplimiento del servicio solicitado (por ejemplo, mensajería o plataformas tecnológicas)." />
+        </ListItem>
+      </List>
       <Typography variant="body1" component="p">
         Nos comprometemos a no vender, alquilar o transferir sus datos
         personales a terceros no relacionados con el servicio.
@@ -161,11 +182,17 @@ function AvisoPrivacidadPage() {
         enviar una solicitud al correo electrónico [correo electrónico de
         contacto] con los siguientes documentos:
       </Typography>
-      <Box component="ul" sx={{ pl: 4 }}>
-        <li>Identificación oficial.</li>
-        <li>Descripción clara del derecho que desea ejercer.</li>
-        <li>Datos de contacto para darle seguimiento a su solicitud.</li>
-      </Box>
+      <List>
+        <ListItem>
+          <ListItemText primary="Identificación oficial." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Descripción clara del derecho que desea ejercer." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Datos de contacto para darle seguimiento a su solicitud." />
+        </ListItem>
+      </List>
 
       <Typography
         variant="h6"
@@ -205,11 +232,17 @@ function AvisoPrivacidadPage() {
         Si tiene dudas o comentarios sobre este Aviso de Privacidad, puede
         contactarnos a través de:
       </Typography>
-      <Box component="ul" sx={{ pl: 4 }}>
-        <li>Correo electrónico: [correo electrónico de contacto].</li>
-        <li>Teléfono: [número de contacto].</li>
-        <li>Dirección: [dirección completa].</li>
-      </Box>
+      <List>
+        <ListItem>
+          <ListItemText primary="Correo electrónico: [correo electrónico de contacto]." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Teléfono: [número de contacto]." />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Dirección: [dirección completa]." />
+        </ListItem>
+      </List>
 
       <Typography
         variant="body2"
