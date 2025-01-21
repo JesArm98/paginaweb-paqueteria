@@ -111,7 +111,7 @@ const MobileNav = () => {
     { name: "Nosotros", href: "#headerTVN" },
     { name: "Servicios", href: "#Servicios" },
     { name: "Sucursales", href: "#sucursal" },
-    { name: "Tienda", href: "/tienda" },
+    // { name: "Tienda", href: "/tienda" },
   ];
 
   const menuItems2 = [

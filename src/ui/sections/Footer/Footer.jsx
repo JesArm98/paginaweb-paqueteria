@@ -137,6 +137,7 @@ const Footer = () => {
               </Button>
             </Link>
 
+            {/*
             <Link href="/tienda">
               <Button
                 sx={{
@@ -160,6 +161,8 @@ const Footer = () => {
                 Tienda
               </Button>
             </Link>
+          */}
+
             <Link href="/preguntas-frecuentes" passHref>
               <Button
                 aria-label="Preguntas frecuentes"

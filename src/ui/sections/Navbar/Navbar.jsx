@@ -129,7 +129,7 @@ const Navbar = () => {
             </Typography>
           </Button>
         </Link>
-        <Link href="/" passHref>
+        <Link href="/#contacto" passHref>
           <Button
             aria-label="¿Quieres ser socio?"
             onClick={handleSocioClick}
@@ -163,7 +163,7 @@ const Navbar = () => {
             </Typography>
           </Button>
         </Link>
-
+        {/*
         <Link href="/tienda" passHref>
           <Button
             aria-label="Tienda"
@@ -209,6 +209,7 @@ const Navbar = () => {
             </Typography>
           </Button>
         </Link>
+*/}
       </Box>
 
       <Box
