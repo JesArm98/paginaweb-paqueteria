@@ -6,6 +6,7 @@ import {
   MenuItem,
   Box,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -184,35 +185,33 @@ function ContactForm() {
         overflow: "hidden",
       }}
     >
-      <h1
-        style={{
-          marginTop: "48px",
+      <Typography
+        sx={{
           color: "#07417B",
-          fontSize: " 2.25em",
-          width: "80%",
-          marginLeft: "10%",
-          marginRight: "10%",
+          fontSize: { xs: "1.5rem", md: "2.25em" },
+          width: { xs: "90%", md: "80%" },
+          margin: "auto",
           textAlign: "center",
           fontWeight: 700,
         }}
       >
         Tu satisfacción es nuestra prioridad.
-      </h1>
-      <h2
-        style={{
+      </Typography>
+      <Typography
+        sx={{
           fontWeight: "300",
           width: {
-            xs: "80%",
+            xs: "90%",
             md: "60%",
           },
-          fontSize: "20px",
-          textAlign: "center",
+          fontSize: { xs: "1rem", md: "20px" },
+          textAlign: { xs: "justify", md: "center" },
         }}
       >
         Estamos aquí para responder tus preguntas sobre nuestros servicios,
         atender tus quejas o proporcionarte cotizaciones. ¡Estamos listos para
         ayudarte!
-      </h2>
+      </Typography>
       <p>Los campos marcados con * son obligatorios.</p>
       <div
         style={{

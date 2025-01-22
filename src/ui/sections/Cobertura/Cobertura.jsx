@@ -53,17 +53,23 @@ const ciudadesPrincipales = [
 
 const Cobertura = () => {
   return (
-    <Box sx={{ py: 8, px: 4, backgroundColor: "#f8fafc" }}>
+    <Box
+      sx={{
+        py: { xs: 4, md: 8 },
+        px: { xs: 2, md: 4 },
+        backgroundColor: "#f8fafc",
+      }}
+    >
       <Typography
         variant="h2"
         sx={{
           textAlign: "center",
-          mb: 6,
+          mb: { xs: 4, md: 6 },
           background: "linear-gradient(45deg, #007bff, #007bff99)",
           WebkitBackgroundClip: "text",
           color: "transparent",
           fontWeight: 700,
-          fontSize: { xs: "2rem", md: "2.5rem" },
+          fontSize: { xs: "1.5rem", md: "2.5rem" },
         }}
       >
         Nuestra Cobertura
@@ -86,7 +92,7 @@ const Cobertura = () => {
           >
             <Box
               position="relative"
-              height={400}
+              height={{ xs: "150px", md: "400px" }}
               sx={{
                 "& img": {
                   transition: "transform 0.3s ease-in-out",
@@ -109,26 +115,29 @@ const Cobertura = () => {
         <Grid item xs={12} md={6}>
           <Box sx={{ height: "100%" }}>
             <Typography
-              variant="h4"
               gutterBottom
               sx={{
                 background: "linear-gradient(45deg, #007bff, #007bff99)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
                 fontWeight: 600,
-                mb: 3,
+                mb: { xs: 2, md: 3 },
+                fontSize: { xs: "1.5rem", md: "2.5rem" },
+                textAlign: "center",
               }}
             >
               Presencia Nacional
             </Typography>
 
             <Typography
-              paragraph
               sx={{
-                mb: 4,
+                mb: { xs: 3, md: 4 },
                 color: "#6b7280",
-                fontSize: "1.1rem",
+                fontSize: { xs: "1rem", md: "1.1rem" },
                 lineHeight: 1.7,
+                width: { xs: "90%" },
+                margin: "auto",
+                textAlign: { xs: "justify" },
               }}
             >
               Contamos con una sólida red logística que nos permite ofrecer
@@ -142,6 +151,9 @@ const Cobertura = () => {
                 <React.Fragment key={beneficio.titulo}>
                   <ListItem
                     sx={{
+                      display: "flex",
+                      border: "1px solid #e5e7eb",
+                      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
                       py: 2,
                       transition: "all 0.3s ease-in-out",
                       borderRadius: "10px",
@@ -208,8 +220,10 @@ const Cobertura = () => {
                   background: "linear-gradient(45deg, #007bff, #007bff99)",
                   WebkitBackgroundClip: "text",
                   color: "transparent",
-                  mb: 2,
+                  mb: { xs: 2, md: 3 },
                   fontWeight: 600,
+                  fontSize: { xs: "1.2rem", md: "1.5rem" },
+                  textAlign: "center",
                 }}
               >
                 Ciudades Principales

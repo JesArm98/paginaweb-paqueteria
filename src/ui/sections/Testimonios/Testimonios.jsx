@@ -30,19 +30,33 @@ const testimonios = [
       "Su servicio de paquetería ha sido clave para el crecimiento de nuestro e-commerce. Las entregas siempre a tiempo.",
     rating: 5,
   },
+  {
+    nombre: "Juan Pérez",
+    cargo: "Gerente de Logística",
+    empresa: "Industrias Manufactureras XYZ",
+    comentario:
+      "Su servicio FTL ha sido fundamental para nuestra cadena de suministro. La puntualidad y el cuidado de la carga son excepcionales.",
+    rating: 5,
+  },
   // Puedes agregar más testimonios aquí
 ];
 
 const Testimonios = () => {
   return (
-    <Box sx={{ py: 8, px: 4, backgroundColor: "white" }}>
+    <Box
+      sx={{
+        py: { xs: 4, md: 8 },
+        px: { xs: 2, md: 4 },
+        backgroundColor: "white",
+      }}
+    >
       <Typography
-        variant="h2"
         sx={{
           textAlign: "center",
-          mb: 6,
+          mb: { xs: 4, md: 6 },
           color: "#07417B",
           fontWeight: 700,
+          fontSize: { xs: "1.5rem", md: "2.5rem" },
         }}
       >
         Lo que dicen nuestros clientes

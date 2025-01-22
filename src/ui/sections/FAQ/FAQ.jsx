@@ -47,12 +47,12 @@ const FAQ = () => {
   };
 
   return (
-    <Box sx={{ py: 8, backgroundColor: "#ffffff" }}>
+    <Box sx={{ py: { xs: 4, md: 8 }, backgroundColor: "#ffffff" }}>
       <Container>
-        <Box sx={{ textAlign: "center", mb: 6 }}>
+        <Box sx={{ textAlign: "center", mb: { xs: 4, md: 6 } }}>
           <Typography
-            variant="h2"
             sx={{
+              fontSize: { xs: "1.5rem", md: "2.5rem" },
               fontWeight: "bold",
               mb: 2,
               background: "linear-gradient(45deg, #007bff, #007bff99)",
@@ -63,8 +63,13 @@ const FAQ = () => {
             Preguntas Frecuentes
           </Typography>
           <Typography
-            variant="h5"
-            sx={{ color: "#6b7280", maxWidth: "800px", mx: "auto", mb: 4 }}
+            sx={{
+              color: "#6b7280",
+              maxWidth: "800px",
+              mx: "auto",
+              mb: 4,
+              fontSize: { xs: "1rem", md: "1.2rem" },
+            }}
           >
             Resolvemos tus dudas más comunes
           </Typography>
@@ -97,9 +102,9 @@ const FAQ = () => {
                     }}
                   >
                     <Typography
-                      variant="h6"
                       sx={{
                         fontWeight: "500",
+                        fontSize: { xs: "1rem", md: "1.2rem" },
                         color: expandedId === index ? "#007bff" : "#1a1a1a",
                         transition: "color 0.3s ease",
                         flex: 1,
@@ -127,12 +132,12 @@ const FAQ = () => {
                     }}
                   >
                     <Typography
-                      variant="body1"
                       sx={{
                         color: "#6b7280",
                         lineHeight: 1.7,
                         opacity: expandedId === index ? 1 : 0,
                         transition: "opacity 0.3s ease-in-out",
+                        fontSize: { xs: "0.8rem", md: "1rem" },
                       }}
                     >
                       {pregunta.respuesta}

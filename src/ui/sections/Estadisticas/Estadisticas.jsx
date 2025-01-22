@@ -46,13 +46,13 @@ const Estadisticas = () => {
                   sx={{
                     fontWeight: "bold",
                     mb: 1,
-                    fontSize: { xs: "2rem", md: "3rem" },
+                    fontSize: { xs: "1.2rem", md: "3rem" },
                   }}
                 >
-                  <CountUp end={stat.valor} duration={2.5} />
+                  <CountUp end={stat.valor} duration={5} />
                   {stat.sufijo}
                 </Typography>
-                <Typography variant="h6">{stat.texto}</Typography>
+                <Typography variant="h7">{stat.texto}</Typography>
               </Box>
             </Grid>
           ))}

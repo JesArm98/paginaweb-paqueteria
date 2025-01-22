@@ -5,11 +5,11 @@ const Alianzas = () => {
   return (
     <Box
       sx={{
-        height: "340px",
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
         backgroundColor: "#FFFFFF",
+        mb: { xs: 4, md: 8 },
       }}
     >
       <Typography
@@ -17,7 +17,7 @@ const Alianzas = () => {
         sx={{
           marginTop: "48px",
           color: "#07417B",
-          fontSize: "2.25em",
+          fontSize: { xs: "1.5rem", md: "2.25em" },
           fontWeight: 700,
         }}
       >

@@ -1,7 +1,13 @@
 "use client";
 
 import CustomDialog from "@/ui/components/CustomDialog";
-import { ArrowForward, Shield, Timer } from "@mui/icons-material";
+import {
+  ArrowForward,
+  Shield,
+  Timer,
+  Person as PersonIcon,
+  Calculate as CalculateIcon,
+} from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -14,10 +20,31 @@ import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
 import { useState } from "react";
 import Image from "next/image";
 import { useEmail } from "@/context/EmailContext";
+import { useRouter } from "next/navigation";
 
 const ShippingHero = () => {
+  const router = useRouter();
   const { emailConfirmado, emailUsuario, mostrarResultados } = useEmail();
   const [openDialog, setOpenDialog] = useState(false);
+  const [openSeleccionModal, setOpenSeleccionModal] = useState(false);
+
+  const handleCotizarClick = () => {
+    setOpenSeleccionModal(true);
+  };
+
+  const handleCotizarAqui = () => {
+    setOpenSeleccionModal(false);
+    setOpenDialog(true);
+  };
+
+  const handleCotizarAsesor = () => {
+    setOpenSeleccionModal(false);
+    localStorage.setItem("contactType", "cotizaciones");
+    router.push("/#contacto");
+    setTimeout(() => {
+      window.dispatchEvent(new Event("contactTypeChange"));
+    }, 100);
+  };
 
   return (
     <Box
@@ -56,7 +83,7 @@ const ShippingHero = () => {
                 fontWeight="bold"
                 textAlign={"center"}
                 sx={{
-                  fontSize: { xs: "1.5rem", md: "2.7rem" },
+                  fontSize: { xs: "1.5rem", md: "2.5rem" },
                   lineHeight: "1.2",
                 }}
               >
@@ -67,18 +94,17 @@ const ShippingHero = () => {
                     background: "linear-gradient(to right, #007bff, #007bff99)",
                     WebkitBackgroundClip: "text",
                     color: "transparent",
-                    fontSize: { xs: "1.5rem", md: "2.7rem" },
+                    fontSize: { xs: "1.5rem", md: "2.5rem" },
                   }}
                 >
                   instantánea
                 </Typography>
               </Typography>
               <Typography
-                variant="body1"
                 textAlign={{ xs: "justify", sm: "center" }}
                 sx={{
                   color: "#6b7280",
-                  fontSize: { xs: "1rem", md: "1.8rem" },
+                  fontSize: { xs: "1rem", md: "1.5rem" },
                   maxWidth: { xs: "80%", md: "100%" },
                   margin: { xs: "auto", md: "0" },
                   mt: { xs: 2, md: 0 },
@@ -116,7 +142,7 @@ const ShippingHero = () => {
                     </Box>
                     <Box>
                       <Typography variant="h6" textAlign={"center"}>
-                        Cotización
+                        Cotizaciones
                       </Typography>
                       <Typography
                         variant="body2"
@@ -178,7 +204,7 @@ const ShippingHero = () => {
             >
               <Button
                 aria-label="Cotizar envío"
-                onClick={() => setOpenDialog(true)}
+                onClick={handleCotizarClick}
                 variant="contained"
                 color="primary"
                 sx={{
@@ -265,9 +291,108 @@ const ShippingHero = () => {
       </Box>
 
       <CustomDialog
+        open={openSeleccionModal}
+        onClose={() => setOpenSeleccionModal(false)}
+        title="¿Cómo prefieres cotizar?"
+        width="sm"
+        onPdfPreview={true}
+        paddingContent={{ xs: 1, md: 4 }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: 3,
+            justifyContent: "center",
+            alignItems: "center",
+            py: 3,
+          }}
+        >
+          <Button
+            onClick={handleCotizarAqui}
+            variant="contained"
+            sx={{
+              borderRadius: "15px",
+              padding: { xs: "10px", md: "20px" },
+              width: { xs: "100%", sm: "45%" },
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              backgroundColor: "#007bff",
+              "&:hover": {
+                backgroundColor: "#0056b3",
+                transform: "scale(1.02)",
+              },
+              transition: "all 0.3s ease",
+            }}
+          >
+            <CalculateIcon sx={{ fontSize: { xs: "2rem", md: "40px" } }} />
+            <Typography
+              sx={{
+                fontSize: { xs: "1rem", md: "1.5rem" },
+                textTransform: "none",
+              }}
+            >
+              Cotizar aquí
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                textAlign: "center",
+                fontSize: { xs: "0.8rem", md: "1rem" },
+                textTransform: "none",
+              }}
+            >
+              Obtén una cotización instantánea
+            </Typography>
+          </Button>
+
+          <Button
+            onClick={handleCotizarAsesor}
+            variant="outlined"
+            sx={{
+              borderRadius: "15px",
+              padding: { xs: "10px", md: "20px" },
+              width: { xs: "100%", sm: "45%" },
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              borderColor: "#007bff",
+              color: "#007bff",
+              "&:hover": {
+                borderColor: "#0056b3",
+                backgroundColor: "#f8fafc",
+                transform: "scale(1.02)",
+              },
+              transition: "all 0.3s ease",
+            }}
+          >
+            <PersonIcon sx={{ fontSize: { xs: "2rem", md: "40px" } }} />
+            <Typography
+              sx={{
+                fontSize: { xs: "1rem", md: "1.5rem" },
+                textTransform: "none",
+              }}
+            >
+              Cotizar con asesor
+            </Typography>
+            <Typography
+              sx={{
+                textAlign: "center",
+                fontSize: { xs: "0.8rem", md: "1rem" },
+                textTransform: "none",
+              }}
+            >
+              Contacta a nuestro equipo
+            </Typography>
+          </Button>
+        </Box>
+      </CustomDialog>
+
+      <CustomDialog
         open={openDialog}
         onClose={() => setOpenDialog(false)}
-        title="Cotiza tu envio"
+        title="Cotización de envío"
         width={emailConfirmado || !mostrarResultados ? "lg" : "sm"}
         onPdfPreview={true}
         paddingContent={4}

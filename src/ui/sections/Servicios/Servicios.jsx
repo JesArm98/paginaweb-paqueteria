@@ -68,7 +68,7 @@ const Servicios = () => {
   return (
     <Box
       sx={{
-        py: 8,
+        py: { xs: 4, md: 8 },
         backgroundColor: "#ffffff",
       }}
     >
@@ -76,7 +76,7 @@ const Servicios = () => {
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Typography
             sx={{
-              fontSize: "2.5rem",
+              fontSize: { xs: "1.5rem", md: "2.5rem" },
               fontWeight: "bold",
               mb: 2,
               background: "linear-gradient(45deg, #007bff, #007bff99)",
@@ -91,7 +91,7 @@ const Servicios = () => {
               color: "#6b7280",
               maxWidth: "800px",
               mx: "auto",
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", md: "1.2rem" },
             }}
           >
             Soluciones integrales de logística adaptadas a tus necesidades
@@ -104,7 +104,7 @@ const Servicios = () => {
               <Card
                 sx={{
                   height: "100%",
-                  width: "70%",
+                  width: { xs: "90%", md: "70%" },
                   margin: "auto",
                   display: "flex",
                   flexDirection: "column",
@@ -136,14 +136,22 @@ const Servicios = () => {
                     {servicio.icon}
                   </Box>
                   <Typography
-                    sx={{ mb: 2, fontWeight: "bold", fontSize: "1.5rem" }}
+                    sx={{
+                      mb: 2,
+                      fontWeight: "bold",
+                      fontSize: { xs: "1rem", md: "1.5rem" },
+                    }}
                   >
                     {servicio.titulo}
                   </Typography>
                   <Typography
                     variant="body1"
                     color="text.secondary"
-                    sx={{ mb: 3 }}
+                    sx={{
+                      mb: { xs: 2, md: 3 },
+                      fontSize: { xs: "0.8rem", md: "1rem" },
+                      textAlign: { xs: "justify", md: "center" },
+                    }}
                   >
                     {servicio.descripcion}
                   </Typography>
