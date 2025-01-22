@@ -67,7 +67,7 @@ const Testimonios = () => {
         spaceBetween={30}
         loop={true}
         slidesPerView={{ xs: 1, sm: 2, md: 3 }}
-        pagination={{ clickable: true }}
+        pagination
         autoplay={{
           delay: 5000,
           disableOnInteraction: false,

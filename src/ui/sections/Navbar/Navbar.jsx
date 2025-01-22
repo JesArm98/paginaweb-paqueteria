@@ -260,7 +260,7 @@ const Navbar = () => {
           <Button
             aria-label="Instagram"
             variant="outlined"
-            href="https://www.instagram.com/tuvanosa.mx?igsh=bTVjYTBpdmNmbm9h"
+            href="https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg=="
             target="_blank"
             rel="noopener noreferrer"
             sx={{

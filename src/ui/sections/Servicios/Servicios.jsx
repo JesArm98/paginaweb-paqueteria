@@ -128,7 +128,7 @@ const Servicios = () => {
                   <Box
                     sx={{
                       mb: 2,
-                      p: 2,
+                      p: { xs: 1, md: 2 },
                       borderRadius: "50%",
                       backgroundColor: "#f8fafc",
                     }}
@@ -155,7 +155,13 @@ const Servicios = () => {
                   >
                     {servicio.descripcion}
                   </Typography>
-                  <Box sx={{ mt: "auto" }}>
+                  <Box
+                    sx={{
+                      mt: "auto",
+                      display: { xs: "none", md: "flex" },
+                      flexDirection: "column",
+                    }}
+                  >
                     {servicio.caracteristicas.map((caracteristica, idx) => (
                       <Typography
                         key={idx}

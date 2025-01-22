@@ -14,30 +14,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useRouter } from "next/navigation";
-
-const preguntasPrincipales = [
-  {
-    pregunta: "¿Cuál es la diferencia entre FTL y LTL?",
-    respuesta:
-      "FTL (Full Truck Load) es cuando rentas el camión completo para tu carga. LTL (Less Than Truck Load) es cuando compartes el espacio del camión con otros clientes, ideal para cargas menores y más económico.",
-  },
-  {
-    pregunta: "¿Qué documentación necesito para envíos?",
-    respuesta:
-      "Para envíos básicos: carta porte y factura comercial. Para FTL/LTL adicional: lista de empaque y seguro de carga. Para materiales especiales pueden requerirse permisos adicionales.",
-  },
-  {
-    pregunta: "¿Cómo puedo rastrear mi envío?",
-    respuesta:
-      "Puedes rastrear tu envío en tiempo real a través de nuestra plataforma web ingresando tu número de guía. También recibirás actualizaciones por correo electrónico sobre el estado de tu envío.",
-  },
-  {
-    pregunta: "¿Cuáles son los tiempos estimados de entrega?",
-    respuesta:
-      "FTL: 24-72 horas según destino. LTL: 2-5 días hábiles. Paquetería: 24-48 horas en envíos locales, 2-5 días en nacionales. Ofrecemos opciones express para entregas más rápidas.",
-  },
-];
-
+import { preguntasPrincipales } from "@/data/data";
 const FAQ = () => {
   const [expandedId, setExpandedId] = useState(null);
   const router = useRouter();

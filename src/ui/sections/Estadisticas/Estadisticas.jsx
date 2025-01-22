@@ -3,29 +3,7 @@
 import React from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import CountUp from "react-countup";
-
-const stats = [
-  {
-    valor: 500000,
-    sufijo: "+",
-    texto: "Toneladas Transportadas",
-  },
-  {
-    valor: 98,
-    sufijo: "%",
-    texto: "Entregas a Tiempo",
-  },
-  {
-    valor: 150,
-    sufijo: "+",
-    texto: "Unidades de Transporte",
-  },
-  {
-    valor: 15,
-    sufijo: "+",
-    texto: "Años de Experiencia",
-  },
-];
+import { stats } from "@/data/data";
 
 const Estadisticas = () => {
   return (

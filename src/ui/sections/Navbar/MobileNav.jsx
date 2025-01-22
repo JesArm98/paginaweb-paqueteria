@@ -117,7 +117,7 @@ const MobileNav = () => {
   const menuItems2 = [
     {
       icon: <Instagram sx={{ fontSize: 20 }} />,
-      href: "https://www.instagram.com/tuvanosa.mx?igsh=bTVjYTBpdmNmbm9h",
+      href: "https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
     },
     // {
     //   button: (
@@ -138,11 +138,11 @@ const MobileNav = () => {
     // },
     {
       icon: <Instagram sx={{ fontSize: 20 }} />,
-      href: "https://www.instagram.com/tuvanosa.mx?igsh=bTVjYTBpdmNmbm9h",
+      href: "https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
     },
     {
       icon: <Instagram sx={{ fontSize: 20 }} />,
-      href: "https://www.instagram.com/tuvanosa.mx?igsh=bTVjYTBpdmNmbm9h",
+      href: "https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
     },
     // {
     //   button: (

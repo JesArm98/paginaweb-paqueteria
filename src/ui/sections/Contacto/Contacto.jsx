@@ -12,15 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
-const contactOptions = [
-  { value: "sugerencia", label: "Sugerencias o quejas" },
-  {
-    value: "socio",
-    label: "¿Quieres ser nuestro socio?",
-  },
-  { value: "cotizaciones", label: "Cotizaciones" },
-];
+import { contactOptions } from "@/data/data";
 
 /*
 const sucursalOptions = [

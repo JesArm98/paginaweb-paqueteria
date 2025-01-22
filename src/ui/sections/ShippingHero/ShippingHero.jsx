@@ -124,6 +124,10 @@ const ShippingHero = () => {
                     boxShadow: 1,
                     width: { xs: "50%", md: "80%" },
                     margin: "auto",
+                    display: "flex",
+                    flexDirection: { xs: "row", md: "column" },
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
                   <CardContent display="flex" alignItems="center" gap={2}>
@@ -205,11 +209,10 @@ const ShippingHero = () => {
               <Button
                 aria-label="Cotizar envío"
                 onClick={handleCotizarClick}
-                variant="contained"
                 color="primary"
                 sx={{
                   textTransform: "none",
-                  fontSize: "1.125em",
+                  fontSize: { xs: "0.8rem", md: "1.125rem" },
                   transition: "background-color 0.3s ease",
                   borderColor: "#FFFFFF",
                   borderRadius: "30px",
