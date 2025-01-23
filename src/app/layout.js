@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/ui/sections/Navbar/Navbar";
 import Footer from "@/ui/sections/Footer/Footer";
 import { EmailProvider } from "../context/EmailContext";
+import LoginDialog from "@/ui/components/LoginDialog/LoginDialog";
+import { UserProvider } from "@/context/UserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,15 +39,19 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ open, setOpen,children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <EmailProvider>
-          <Navbar />
-          {children}
-          <Footer />
+        <UserProvider>
+
+          <EmailProvider>
+            <Navbar />
+            <LoginDialog open={open} setOpen={setOpen} />
+            {children}
+            <Footer />
         </EmailProvider>
+        </UserProvider>
       </body>
     </html>
   );

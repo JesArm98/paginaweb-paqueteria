@@ -54,12 +54,13 @@ function LTLPage() {
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: "2rem", md: "3rem" },
+                fontSize: { xs: "1.7rem", md: "3rem" },
                 fontWeight: "bold",
                 mb: 2,
                 background: "linear-gradient(45deg, #007bff, #007bff99)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
+                textAlign: "center",
               }}
             >
               LTL (Less Than Truckload)
@@ -68,8 +69,9 @@ function LTLPage() {
               variant="h5"
               sx={{
                 color: "#6b7280",
-                mb: 4,
+                mb: { xs: 1, md: 4 },
                 fontSize: { xs: "1.1rem", md: "1.3rem" },
+                textAlign: "center",
               }}
             >
               Solución eficiente para envíos que no requieren un camión completo
@@ -79,10 +81,16 @@ function LTLPage() {
           {/* Contenido principal */}
           <Grid item xs={12} md={6}>
             <Box sx={{ mb: 4 }}>
-              <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+              <Typography
+                variant="h6"
+                sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+              >
                 ¿Qué es LTL?
               </Typography>
-              <Typography variant="body1" sx={{ color: "#4b5563", mb: 3 }}>
+              <Typography
+                variant="body1"
+                sx={{ color: "#4b5563", mb: 3, textAlign: "justify" }}
+              >
                 El servicio LTL (Less Than Truckload) es ideal para empresas que
                 necesitan transportar cargas que no ocupan un camión completo.
                 Permite compartir el espacio del camión con otros envíos,
@@ -92,7 +100,10 @@ function LTLPage() {
             </Box>
 
             <Box>
-              <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+              <Typography
+                variant="h6"
+                sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+              >
                 Beneficios principales
               </Typography>
               <List>
@@ -107,22 +118,26 @@ function LTLPage() {
               </List>
             </Box>
 
-            <Link href="/#headerTVN">
-              <Button
-                aria-label="Solicitar cotización"
-                variant="contained"
-                size="large"
-                sx={{
-                  mt: 4,
-                  borderRadius: "30px",
-                  textTransform: "none",
-                  fontSize: "1.1rem",
-                  px: 4,
-                }}
-              >
-                Solicitar cotización
-              </Button>
-            </Link>
+            <Box sx={{ mt: 4 }}>
+              <Link href="/#headerTVN">
+                <Button
+                  aria-label="Solicitar cotización"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    borderRadius: "30px",
+                    textTransform: "none",
+                    fontSize: "1.1rem",
+                    width: "fit-content",
+                    margin: "auto",
+                    display: "flex",
+                    px: 4,
+                  }}
+                >
+                  Solicitar cotización
+                </Button>
+              </Link>
+            </Box>
           </Grid>
 
           {/* Imagen o ilustración */}
@@ -131,7 +146,7 @@ function LTLPage() {
             xs={12}
             md={6}
             sx={{
-              display: "flex",
+              display: { xs: "none", md: "flex" },
               justifyContent: "center",
               alignItems: "center",
             }}

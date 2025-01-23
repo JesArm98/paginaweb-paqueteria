@@ -6,13 +6,13 @@ import "slick-carousel/slick/slick-theme.css";
 import "./CarouselAlianzas.css";
 
 // Imports de logos con rutas relativas
-const logo1 = "/images/Carrousel/ups.jpeg";
-const logo2 = "/images/Carrousel/pmm-paqueteria-mensajeria.jpeg";
-const logo3 = "/images/Carrousel/fedex.jpeg";
-const logo4 = "/images/Carrousel/estafeta.jpeg";
-const logo5 = "/images/Carrousel/dhl.jpeg";
+const logo1 = "/images/Carrousel/ups.svg";
+const logo2 = "/images/Carrousel/pmm-paqueteria-mensajeria.svg";
+const logo3 = "/images/Carrousel/fedex.svg";
+const logo4 = "/images/Carrousel/estafeta.svg";
+const logo5 = "/images/Carrousel/dhl.svg";
 const logo6 = "/images/Carrousel/paquetexpress.jpeg";
-const logo7 = "/images/Carrousel/j&t-express.jpeg";
+const logo7 = "/images/Carrousel/j&t-express.webp";
 const logo8 = "/images/Carrousel/99-minutor.jpeg";
 import Image from "next/image";
 

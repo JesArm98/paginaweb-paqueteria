@@ -1,16 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.fade-in {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Estilos globales */
+html,
+body {
+  @apply w-full overflow-x-hidden bg-white font-sans; /* Usa clases de Tailwind */
+  margin: 0; /* Agrega esto manualmente */
+  padding: 0; /* Agrega esto manualmente */
+  min-width: 320px; /* Esta regla sigue específica */
 }

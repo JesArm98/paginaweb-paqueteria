@@ -60,6 +60,7 @@ function FTLPage() {
                 background: "linear-gradient(45deg, #007bff, #007bff99)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
+                textAlign: "center",
               }}
             >
               FTL (Full Truck Load)
@@ -70,6 +71,7 @@ function FTLPage() {
                 color: "#6b7280",
                 mb: 4,
                 fontSize: { xs: "1.1rem", md: "1.3rem" },
+                textAlign: "justify",
               }}
             >
               Transporte dedicado para cargas completas con máxima seguridad
@@ -79,7 +81,10 @@ function FTLPage() {
           {/* Contenido principal */}
           <Grid item xs={12} md={6}>
             <Box sx={{ mb: 4 }}>
-              <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+              <Typography
+                variant="h6"
+                sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+              >
                 ¿Qué es FTL?
               </Typography>
               <Typography variant="body1" sx={{ color: "#4b5563", mb: 3 }}>
@@ -91,7 +96,10 @@ function FTLPage() {
             </Box>
 
             <Box>
-              <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+              <Typography
+                variant="h6"
+                sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+              >
                 Beneficios principales
               </Typography>
               <List>
@@ -106,22 +114,26 @@ function FTLPage() {
               </List>
             </Box>
 
-            <Link href="/#contacto">
-              <Button
-                aria-label="Solicitar cotización"
-                variant="contained"
-                size="large"
-                sx={{
-                  mt: 4,
-                  borderRadius: "30px",
-                  textTransform: "none",
-                  fontSize: "1.1rem",
-                  px: 4,
-                }}
-              >
-                Solicitar cotización
-              </Button>
-            </Link>
+            <Box sx={{ mt: 4 }}>
+              <Link href="/#contacto">
+                <Button
+                  aria-label="Solicitar cotización"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    borderRadius: "30px",
+                    textTransform: "none",
+                    fontSize: "1.1rem",
+                    px: 4,
+                    width: "fit-content",
+                    display: "flex",
+                    margin: "auto",
+                  }}
+                >
+                  Solicitar cotización
+                </Button>
+              </Link>
+            </Box>
           </Grid>
 
           {/* Imagen o ilustración */}
@@ -130,7 +142,7 @@ function FTLPage() {
             xs={12}
             md={6}
             sx={{
-              display: "flex",
+              display: { xs: "none", md: "flex" },
               justifyContent: "center",
               alignItems: "center",
             }}

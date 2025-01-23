@@ -67,6 +67,7 @@ const Servicios = () => {
 
   return (
     <Box
+      id="Servicios"
       sx={{
         py: { xs: 4, md: 8 },
         backgroundColor: "#ffffff",

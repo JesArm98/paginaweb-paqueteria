@@ -80,7 +80,7 @@ const Cobertura = () => {
           <Paper
             elevation={3}
             sx={{
-              p: 4,
+              p: { xs: 2, md: 4 },
               borderRadius: "15px",
               height: "100%",
               transition: "transform 0.3s ease-in-out",
@@ -117,6 +117,7 @@ const Cobertura = () => {
             <Typography
               gutterBottom
               sx={{
+                mt: { xs: 2, md: 0 },
                 background: "linear-gradient(45deg, #007bff, #007bff99)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
