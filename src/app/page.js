@@ -19,7 +19,7 @@ export default function Home() {
       <Cobertura />
       <Testimonios />
       <FAQ />
-
+      <RastreoEnvios/>
       <Alianzas />
       <Estadisticas />
       <Contacto />
