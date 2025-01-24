@@ -29,7 +29,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/images/Mapa/Myllos.webp",
+        url: "https://www.myllos.com.mx/background.webp",
         width: 1000,
         height: 630,
         alt: "Myllos",
