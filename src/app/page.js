@@ -15,13 +15,13 @@ export default function Home() {
   return (
     <main>
       <ShippingHero />
-      <Estadisticas />
       <Servicios />
-      <RastreoEnvios />
       <Cobertura />
       <Testimonios />
       <FAQ />
+
       <Alianzas />
+      <Estadisticas />
       <Contacto />
     </main>
   );

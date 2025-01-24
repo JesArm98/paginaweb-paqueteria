@@ -12,7 +12,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://www.myllos.com.mx/background.webp",
+        url: "https://www.myllos.com.mx/background.webp?v=1.0",
         width: 1000,
         height: 630,
         alt: "Myllos",
