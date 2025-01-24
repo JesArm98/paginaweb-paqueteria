@@ -4,42 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-
-const testimonios = [
-  {
-    nombre: "Juan Pérez",
-    cargo: "Gerente de Logística",
-    empresa: "Industrias Manufactureras XYZ",
-    comentario:
-      "Su servicio FTL ha sido fundamental para nuestra cadena de suministro. La puntualidad y el cuidado de la carga son excepcionales.",
-    rating: 5,
-  },
-  {
-    nombre: "María González",
-    cargo: "Directora de Operaciones",
-    empresa: "Distribuidora Nacional",
-    comentario:
-      "El servicio LTL nos permite optimizar costos manteniendo la calidad del servicio. Su sistema de rastreo es excelente.",
-    rating: 5,
-  },
-  {
-    nombre: "Carlos Rodríguez",
-    cargo: "Gerente de E-commerce",
-    empresa: "Tiendas Online MX",
-    comentario:
-      "Su servicio de paquetería ha sido clave para el crecimiento de nuestro e-commerce. Las entregas siempre a tiempo.",
-    rating: 5,
-  },
-  {
-    nombre: "Juan Pérez",
-    cargo: "Gerente de Logística",
-    empresa: "Industrias Manufactureras XYZ",
-    comentario:
-      "Su servicio FTL ha sido fundamental para nuestra cadena de suministro. La puntualidad y el cuidado de la carga son excepcionales.",
-    rating: 5,
-  },
-  // Puedes agregar más testimonios aquí
-];
+import { testimonios } from "@/data/data";
 
 const Testimonios = () => {
   return (

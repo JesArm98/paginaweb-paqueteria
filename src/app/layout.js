@@ -40,10 +40,9 @@ export const metadata = {
 
 export default function RootLayout({ open, setOpen,children }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <UserProvider>
-
           <EmailProvider>
             <Navbar />
             <LoginDialog open={open} setOpen={setOpen} />

@@ -14,70 +14,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-
-const categorias = {
-  general: {
-    label: "General",
-    preguntas: [
-      {
-        pregunta: "¿Cuáles son sus horarios de servicio?",
-        respuesta:
-          "Operamos 24/7 para servicios de transporte. Nuestro centro de atención al cliente está disponible de lunes a viernes de 8:00 AM a 6:00 PM.",
-      },
-      {
-        pregunta: "¿Cómo puedo solicitar una cotización?",
-        respuesta:
-          "Puedes solicitar una cotización a través de nuestro formulario en línea, contactando a nuestro equipo de ventas o mediante el botón 'Cotizar' en nuestra página principal.",
-      },
-    ],
-  },
-  ftl: {
-    label: "FTL",
-    preguntas: [
-      {
-        pregunta: "¿Qué capacidad tienen sus unidades FTL?",
-        respuesta:
-          "Nuestras unidades FTL tienen capacidad para 24 tarimas estándar. Contamos con cajas secas de 48 y 53 pies, y opciones refrigeradas según necesidad.",
-      },
-      {
-        pregunta:
-          "¿Cuál es el tiempo mínimo de anticipación para un servicio FTL?",
-        respuesta:
-          "Recomendamos programar servicios FTL con 24-48 horas de anticipación para garantizar disponibilidad de unidades.",
-      },
-    ],
-  },
-  ltl: {
-    label: "LTL",
-    preguntas: [
-      {
-        pregunta: "¿Cuál es el mínimo de carga para LTL?",
-        respuesta:
-          "El servicio LTL está disponible desde 1 tarima hasta 10 tarimas. Ideal para optimizar costos cuando no se requiere un camión completo.",
-      },
-      {
-        pregunta: "¿Cómo se calcula el costo del servicio LTL?",
-        respuesta:
-          "El costo se calcula basado en el peso, dimensiones, distancia y espacio ocupado en el camión. Ofrecemos tarifas competitivas por volumen.",
-      },
-    ],
-  },
-  paqueteria: {
-    label: "Paquetería",
-    preguntas: [
-      {
-        pregunta: "¿Cuál es el peso máximo por paquete?",
-        respuesta:
-          "Para servicio de paquetería, aceptamos envíos de hasta 70 kg por pieza. Para envíos más pesados, recomendamos nuestros servicios LTL.",
-      },
-      {
-        pregunta: "¿Ofrecen servicio de recolección?",
-        respuesta:
-          "Sí, ofrecemos recolección a domicilio sin costo adicional en las principales ciudades, programando con 24 horas de anticipación.",
-      },
-    ],
-  },
-};
+import { categorias } from "@/data/data";
 
 export default function PreguntasFrecuentes() {
   const [categoria, setCategoria] = useState("general");

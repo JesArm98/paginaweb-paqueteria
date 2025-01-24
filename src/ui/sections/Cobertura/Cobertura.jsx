@@ -90,6 +90,7 @@ const Cobertura = () => {
               p: { xs: 2, md: 4 },
               borderRadius: "15px",
               height: "100%",
+
               transition: "transform 0.3s ease-in-out",
               "&:hover": {
                 transform: "scale(1.02)",

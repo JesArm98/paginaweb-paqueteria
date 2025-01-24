@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import ShippingHero from "@/ui/sections/ShippingHero/ShippingHero";
 import Alianzas from "@/ui/sections/Alianzas/Alianzas";
 import Contacto from "@/ui/sections/Contacto/Contacto";
@@ -19,7 +18,6 @@ export default function Home() {
       <Cobertura />
       <Testimonios />
       <FAQ />
-      <RastreoEnvios/>
       <Alianzas />
       <Estadisticas />
       <Contacto />

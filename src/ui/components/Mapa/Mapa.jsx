@@ -1,3 +1,4 @@
+"use client";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import "./Mapa.css";
@@ -16,7 +17,6 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import Image from "next/image";
-import { Icon } from "leaflet";
 import { markers } from "@/data/dataMapa";
 
 const MapContainer = dynamic(
@@ -35,23 +35,33 @@ const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
   ssr: false,
 });
 
-const sucursalesIcon = new Icon({
-  iconUrl: "/images/Mapa/sucursales_location.svg",
-  iconSize: [30, 30],
-});
+let sucursalesIcon, matrizIcon, puntoIcon;
 
-const matrizIcon = new Icon({
-  iconUrl: "/images/Mapa/matriz_location.svg",
-  iconSize: [30, 30],
-});
+if (typeof window !== "undefined") {
+  const L = require("leaflet");
 
-const puntoIcon = new Icon({
-  iconUrl: "/images/Mapa/puntosventa_location.svg",
-  iconSize: [30, 30],
-});
+  sucursalesIcon = new L.Icon({
+    iconUrl: "/images/Mapa/sucursales_location.svg",
+    iconSize: [30, 30],
+  });
+
+  matrizIcon = new L.Icon({
+    iconUrl: "/images/Mapa/matriz_location.svg",
+    iconSize: [30, 30],
+  });
+
+  puntoIcon = new L.Icon({
+    iconUrl: "/images/Mapa/puntosventa_location.svg",
+    iconSize: [30, 30],
+  });
+}
 
 function Mapa() {
   const [expanded, setExpanded] = useState(false);
+
+  if (typeof window === "undefined") {
+    return null;
+  }
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
