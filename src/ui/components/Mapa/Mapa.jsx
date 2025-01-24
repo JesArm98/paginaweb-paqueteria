@@ -66,6 +66,9 @@ function Mapa() {
           zIndex: { xs: -1, sm: 1003 },
           margin: "2%",
           display: "flex",
+          overflowY: "hidden",
+          overflowX: "hidden",
+          flexDirection: "column",
         }}
         className="somosDesc"
       >

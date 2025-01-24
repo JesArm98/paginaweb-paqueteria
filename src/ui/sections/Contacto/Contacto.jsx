@@ -175,6 +175,7 @@ function ContactForm() {
         alignItems: "center",
         gap: "16px",
         overflow: "hidden",
+        marginTop: { xs: "20px", md: "40px" },
       }}
     >
       <Typography

@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -9,6 +11,8 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Dialog,
+  DialogContent,
 } from "@mui/material";
 import Image from "next/image";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -16,6 +20,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import SecurityIcon from "@mui/icons-material/Security";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Mapa from "@/ui/components/Mapa/Mapa";
 
 const beneficios = [
   {
@@ -52,6 +57,8 @@ const ciudadesPrincipales = [
 ];
 
 const Cobertura = () => {
+  const [openMap, setOpenMap] = useState(false);
+
   return (
     <Box
       sx={{
@@ -106,7 +113,14 @@ const Cobertura = () => {
                 src="/images/mapa-mexico.jpg"
                 alt="Mapa de cobertura"
                 fill
-                style={{ objectFit: "contain" }}
+                style={{
+                  objectFit: "contain",
+                  border: "1px solid red",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setOpenMap(true);
+                }}
               />
             </Box>
           </Paper>
@@ -269,6 +283,18 @@ const Cobertura = () => {
           </Box>
         </Grid>
       </Grid>
+
+      {/* Mapa de cobertura */}
+      <Dialog
+        open={openMap}
+        onClose={() => setOpenMap(false)}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogContent sx={{ width: "100%", padding: 0 }}>
+          <Mapa />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };

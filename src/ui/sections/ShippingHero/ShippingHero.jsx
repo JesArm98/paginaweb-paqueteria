@@ -80,7 +80,7 @@ const ShippingHero = () => {
           <Grid
             container
             spacing={4}
-            py={{ xs: 0, md: 10 }}
+            py={{ xs: 0, md: 3 }}
             mt={{ xs: -2, md: 0 }}
           >
             {/* Left Column - Content */}
@@ -269,42 +269,41 @@ const ShippingHero = () => {
                 sx={{
                   display: { xs: "none", md: "block" },
                   position: "absolute",
-                  width: "600px",
-                  height: "600px",
+                  width: "100%",
+                  height: "100%",
                   background:
                     "linear-gradient(to bottom right, #007bff33, #ffffff)",
                   filter: "blur(60px)",
                   top: "50%",
-                  left: "60%",
+                  left: "50%",
                   transform: "translate(-50%, -50%)",
                 }}
               />
 
-              {/* Círculo con imagen */}
+              {/* Full-width image container */}
               <Box
                 display={{ xs: "none", md: "block" }}
                 position="relative"
                 sx={{
-                  width: "400px",
-                  height: "400px",
-                  borderRadius: "50%",
+                  width: "100%",
+                  height: "500px",
                   backgroundColor: "#f8fafc",
                   boxShadow: 3,
                   overflow: "hidden",
                   position: "relative",
                   zIndex: 1,
+                  borderRadius: "24px", // Rounded corners instead of circle
                 }}
               >
                 <Image
                   src="/images/entrega.jpeg"
                   alt="Myllos"
                   fill
-                  sizes="400px"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   style={{
                     display: "flex",
                     objectFit: "cover",
-                    objectPosition: "center 65%", // Ajusta la posición vertical de la imagen
-                    transform: "scale(1.2)", // Hace la imagen un poco más grande para evitar bordes blancos
+                    objectPosition: "center",
                   }}
                 />
               </Box>

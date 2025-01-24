@@ -29,7 +29,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://www.myllos.com.mx/background.webp?v=1.0',
+        url: 'https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Myllos.webp?alt=media&token=d9ff1a3e-6180-4910-b24a-6f0e7d7ee694',
         width: 1200,
         height: 630,
         alt: 'Myllos - Soluciones Logisticas',
