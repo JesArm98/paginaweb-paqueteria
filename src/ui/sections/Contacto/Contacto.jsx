@@ -144,9 +144,6 @@ function ContactForm() {
     alert(JSON.stringify(payload, null, 2));
 
     try {
-      {
-        console.log(data.Tipo);
-      }
       setIsLoading(true);
       await axios.post(
         "https://us-central1-tvn-api-store.cloudfunctions.net/app/contactUs",
