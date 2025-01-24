@@ -15,7 +15,7 @@ export const metadata = {
   openGraph: {
     title: "Myllos",
     description: "Aviso de privacidad de la empresa Myllos.",
-    url: "https://myllos.netlify.app/aviso-de-privacidad",
+    url: "https://myllos-web.vercel.app//aviso-de-privacidad",
     type: "website",
     images: [
       {

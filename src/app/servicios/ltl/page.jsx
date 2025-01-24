@@ -21,7 +21,7 @@ export const metadata = {
   openGraph: {
     title: "Myllos - LTL (Less Than Truckload)",
     description: "LTL (Less Than Truckload) de la empresa Myllos.",
-    url: "https://myllos.netlify.app/servicios/ltl",
+    url: "https://myllos-web.vercel.app//servicios/ltl",
     type: "website",
     images: [
       {
