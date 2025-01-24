@@ -21,7 +21,7 @@ export const metadata = {
   openGraph: {
     title: "Myllos - FTL (Full Truck Load)",
     description: "FTL (Full Truck Load) de la empresa Myllos.",
-    url: "https://myllos.vercel.app//servicios/ftl",
+    url: "https://myllos.netlify.app//servicios/ftl",
     type: "website",
     images: [
       {
