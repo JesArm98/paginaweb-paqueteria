@@ -237,7 +237,7 @@ const Footer = () => {
             }}
           >
             <Link
-              href="https://portal.tuvanosa.net/clientes/inicio"
+              href="https://www.myllos.com.mx/"
               target="_blank"
               rel="noopener noreferrer"
               sx={{ textDecoration: "none" }}
@@ -266,7 +266,7 @@ const Footer = () => {
               </Button>
             </Link>
             <Link
-              href="https://portal.tuvanosa.net/proveedores/inicio"
+              href="https://www.myllos.com.mx/"
               target="_blank"
               rel="noopener noreferrer"
               sx={{ textDecoration: "none" }}
@@ -385,7 +385,7 @@ const Footer = () => {
                 aria-label="Facebook"
                 variant="outlined"
                 component="a"
-                href="https://www.facebook.com/tuvanosaMX"
+                href="https://www.myllos.com.mx/"
                 target="_blank"
                 sx={{
                   textTransform: "none",
@@ -451,7 +451,7 @@ const Footer = () => {
                 aria-label="LinkedIn"
                 variant="outlined"
                 component="a"
-                href="https://www.linkedin.com/company/tuvanosamx/"
+                href="https://www.myllos.com.mx/"
                 target="_blank"
                 sx={{
                   textTransform: "none",

@@ -1,0 +1,152 @@
+.leaflet-container {
+  font-family: "Raleway" !important;
+  height: 90vh;
+  width: 100%;
+}
+
+.leaflet-popup-content {
+  font-size: 1.2em;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+  border-radius: 10px;
+}
+
+.leaflet-popup-content p {
+  margin: 0 !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute;
+  top: 10px !important;
+  right: 10px !important;
+}
+
+.leaflet-popup-content-wrapper {
+  padding: 0px !important;
+  border-radius: 10px;
+  z-index: 10000;
+}
+
+.css-10hburv-MuiTypography-root {
+  font-family: "Raleway" !important;
+  line-height: 1 !important;
+}
+.css-15v22id-MuiAccordionDetails-root {
+  padding: 0px 16px 0px 16px !important;
+}
+.css-h4y409-MuiList-root {
+  padding: 0px !important;
+}
+.css-1p823my-MuiListItem-root {
+  padding-top: 0px !important;
+}
+
+.css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded {
+  margin-bottom: 0px !important;
+  height: 40px;
+}
+
+.css-eqpfi5-MuiAccordionSummary-content {
+  padding: 0px !important;
+  margin: 0px !important;
+  display: flex;
+  align-items: center;
+}
+
+.somosDesc {
+  background-color: rgba(
+    255,
+    255,
+    255
+  ); /* Fondo semitransparente para mejor visibilidad */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute;
+  top: 10px !important;
+  right: 10px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px; /* Asegúrate de que el tamaño sea suficiente para el icono */
+  height: 30px;
+  background-color: white; /* Fondo blanco para el botón */
+  border-radius: 50%; /* Para hacer un círculo */
+}
+
+.leaflet-container a.leaflet-popup-close-button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black !important;
+  background-color: #ffffff !important;
+  border-radius: 50%;
+  font-size: 16px !important;
+  width: 100%; /* Asegúrate de que el span ocupe todo el contenedor */
+  height: 100%;
+  line-height: 30px; /* Alinea verticalmente el contenido dentro del contenedor */
+}
+
+.cluster-icon {
+  background-color: red;
+  height: 2em;
+  width: 2em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0 5px #fff;
+}
+
+/* Archivo: MapaTuvanosa.css */
+.popup {
+  max-height: 500px; /* Ajusta según sea necesario */
+  z-index: 10000 !important;
+}
+
+.accordion-summary-fixed {
+  background-color: #f7f7f7; /* Fondo opcional para distinguir las secciones */
+}
+
+/* Opcional: estilo para el contenido del acordeón */
+.accordion-details {
+  background-color: #ffffff;
+}
+
+h4 {
+  color: #07417b;
+}
+
+.leaflet-control-attribution {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .popup h4,
+  .popup p {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .leaflet-popup-content {
+    font-size: 1.2em;
+    margin: 0 !important;
+    width: 250px;
+    z-index: 10000;
+  }
+
+  .leaflet-container {
+    height: 90vh !important;
+  }
+  .popup img {
+    display: flex;
+    margin: auto;
+  }
+  .popup p {
+    text-align: left;
+  }
+}

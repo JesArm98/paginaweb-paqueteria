@@ -215,7 +215,7 @@ const Navbar = () => {
             <Button
               aria-label="Facebook"
               variant="outlined"
-              href="https://www.facebook.com/tuvanosaMX"
+              href="https://www.myllos.com.mx/"
               target="_blank"
               sx={{
                 color: "#FFFFFF",
