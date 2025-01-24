@@ -33,13 +33,15 @@ const ScrollDown = () => {
       sx={{
         position: "absolute",
         bottom: "14px",
-        left: "50%",
+        left: { xs: "45%", md: "50%" },
         transform: "translateX(-50%)",
         zIndex: 20,
         textAlign: "center",
+        transform: { xs: "translateY(50%)", md: "translateY(0)" },
       }}
     >
       <IconButton
+        aria-label="scroll-down"
         onClick={handleScroll}
         sx={{
           color: "black",

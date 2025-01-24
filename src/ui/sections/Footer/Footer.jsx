@@ -112,7 +112,7 @@ const Footer = () => {
                 Nosotros
               </Button>
             </Link>
-            <Link href="/#servicios">
+            <Link href="/#Servicios">
               <Button
                 aria-label="Servicios"
                 sx={{
@@ -265,14 +265,15 @@ const Footer = () => {
                 Clientes
               </Button>
             </Link>
+            {/*Botón de preguntas frecuentes*/}
             <Link
-              href="https://www.myllos.com.mx/"
+              href="/preguntas-frecuentes"
               target="_blank"
               rel="noopener noreferrer"
               sx={{ textDecoration: "none" }}
             >
               <Button
-                aria-label="Proveedores"
+                aria-label="Preguntas frecuentes"
                 sx={{
                   textTransform: "none",
 
@@ -291,9 +292,10 @@ const Footer = () => {
                   },
                 }}
               >
-                Proveedores
+                Preguntas frecuentes
               </Button>
             </Link>
+            {/*Botón de términos y condiciones*/}
             <Link
               href="/terminos-y-condiciones"
               target="_blank"
@@ -322,6 +324,7 @@ const Footer = () => {
                 Terminos y condiciones
               </Button>
             </Link>
+            {/*Botón de aviso de privacidad*/}
             <Link
               href="/aviso-de-privacidad"
               rel="noopener noreferrer"

@@ -116,7 +116,6 @@ const Cobertura = () => {
                 fill
                 style={{
                   objectFit: "contain",
-                  border: "1px solid red",
                   cursor: "pointer",
                 }}
                 onClick={() => {
@@ -251,6 +250,7 @@ const Cobertura = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
+                        justifyContent: "center",
                         gap: 1,
                         p: 1,
                         borderRadius: "8px",

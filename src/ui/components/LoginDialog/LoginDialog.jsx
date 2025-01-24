@@ -425,6 +425,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                           endAdornment: (
                             <InputAdornment position="end">
                               <IconButton
+                                aria-label="Visibilidad de contraseña"
                                 onClick={() => handleTogglePasswordVisibility()}
                                 edge="end"
                               >
@@ -478,6 +479,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                       </Box>
 
                       <Button
+                        aria-label="Iniciar sesión"
                         fullWidth
                         disabled={isLoading || !loginFormik.isValid}
                         variant="contained"
@@ -513,6 +515,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
 
                     {isFlipped !== "flip-card" ? null : (
                       <Button
+                        aria-label="Continuar con Google"
                         fullWidth
                         variant="outlined"
                         onClick={handleGoogleLogin}
@@ -562,6 +565,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                       }}
                     >
                       <Button
+                        aria-label="Olvidaste tu contraseña"
                         onClick={() => setOlvidar(true)}
                         sx={{
                           color: "#009FE3",
@@ -572,6 +576,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                         ¿Olvidaste tu contraseña?
                       </Button>
                       <Button
+                        aria-label="¿No tienes cuenta? Crea una aquí"
                         onClick={() => setIsFlipped("flip-card2")}
                         sx={{
                           color: "#009FE3",
@@ -648,6 +653,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                     fullWidth
                   />
                   <Button
+                    aria-label="Enviar correo"
                     disabled={isLoading}
                     onClick={handleFormSubmit}
                     fullWidth
@@ -668,6 +674,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                     Enviar correo
                   </Button>
                   <Button
+                    aria-label="Regresar"
                     onClick={() => setOlvidar(false)}
                     sx={{
                       color: "#009FE3",
@@ -893,6 +900,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                   </Box>
 
                   <Button
+                    aria-label="Registrarse"
                     fullWidth
                     disabled={isLoading || !registerFormik.isValid}
                     variant="contained"
@@ -924,6 +932,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                   }}
                 >
                   <Button
+                    aria-label="¿Tienes una cuenta? Inicia sesión"
                     onClick={() => setIsFlipped("flip-card")}
                     sx={{
                       color: "#009FE3",

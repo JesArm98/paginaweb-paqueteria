@@ -12,7 +12,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Myllos.webp?alt=media&token=d9ff1a3e-6180-4910-b24a-6f0e7d7ee694",
+        url: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Myllos.webp?alt=media&token=286f024b-6144-4152-a657-29966c67be2f",
         width: 1000,
         height: 630,
         alt: "Myllos",

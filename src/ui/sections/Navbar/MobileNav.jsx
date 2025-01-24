@@ -23,7 +23,6 @@ const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [animation, setAnimation] = useState("");
   const [targetSection, setTargetSection] = useState(null);
-  const [showSocialLinks, setShowSocialLinks] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -31,13 +30,6 @@ const MobileNav = () => {
   const toggleMenu = useCallback(() => {
     setAnimation(isOpen ? "slideOut 0.5s forwards" : "slideIn 0.5s forwards");
     setIsOpen(!isOpen);
-
-    if (!isOpen) {
-      setShowSocialLinks(false);
-      setTimeout(() => {
-        setShowSocialLinks(true);
-      }, 1000);
-    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -185,7 +177,7 @@ const MobileNav = () => {
             right: 0,
             width: "100vw",
             height: "100%",
-            zIndex: 2,
+            zIndex: 30,
             backgroundColor: "rgba(0,0,0,0.95)",
             animation: animation,
             display: "flex",
@@ -225,25 +217,23 @@ const MobileNav = () => {
           </List>
 
           {/* Sección de Redes Sociales con retraso */}
-          {showSocialLinks && (
-            <Box sx={{ textAlign: "center" }}>
-              <Typography sx={{ color: "white", mb: 2, fontSize: "21px" }}>
-                Redes
-              </Typography>
-              <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-                {menuItems2.map((item, index) => (
-                  <IconButton
-                    aria-label="Red social"
-                    key={index}
-                    href={item.href}
-                    sx={{ color: "white" }}
-                  >
-                    {item.button || item.icon}
-                  </IconButton>
-                ))}
-              </Box>
+          <Box sx={{ textAlign: "center" }}>
+            <Typography sx={{ color: "white", mb: 2, fontSize: "21px" }}>
+              Redes
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+              {menuItems2.map((item, index) => (
+                <IconButton
+                  aria-label="Red social"
+                  key={index}
+                  href={item.href}
+                  sx={{ color: "white" }}
+                >
+                  {item.button || item.icon}
+                </IconButton>
+              ))}
             </Box>
-          )}
+          </Box>
         </Box>
       )}
     </>

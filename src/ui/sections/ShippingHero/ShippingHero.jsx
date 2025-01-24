@@ -81,7 +81,7 @@ const ShippingHero = () => {
             container
             spacing={4}
             py={{ xs: 0, md: 3 }}
-            mt={{ xs: -2, md: 0 }}
+            mt={{ xs: 2, md: 0 }}
           >
             {/* Left Column - Content */}
             <Grid
@@ -233,12 +233,12 @@ const ShippingHero = () => {
                     textTransform: "none",
                     fontSize: { xs: "0.8rem", md: "1.125rem" },
                     transition: "background-color 0.3s ease",
-                    borderColor: "#FFFFFF",
+                    border: "0.5px solid #007bff",
                     borderRadius: "30px",
                     zIndex: 1,
                     "&:hover": {
-                      backgroundColor: "#CF1D5680",
-                      borderColor: "#FFFFFF",
+                      backgroundColor: "#007bff",
+                      color: "#FFFFFF",
                       "& .text": {
                         transform: "scale(0.90)",
                         transition: "transform 0.2s ease, filter 0.2s ease",
