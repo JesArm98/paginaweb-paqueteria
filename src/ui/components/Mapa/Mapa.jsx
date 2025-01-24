@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import "./MapaTuvanosa.css";
+import "./Mapa.css";
 import "leaflet/dist/leaflet.css";
 import PhoneIcon from "@mui/icons-material/Phone";
 import {
@@ -36,21 +36,21 @@ const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
 });
 
 const sucursalesIcon = new Icon({
-  iconUrl: "/images/MapaTuvanosa/sucursales_location.svg",
+  iconUrl: "/images/Mapa/sucursales_location.svg",
   iconSize: [30, 30],
 });
 
 const matrizIcon = new Icon({
-  iconUrl: "/images/MapaTuvanosa/matriz_location.svg",
+  iconUrl: "/images/Mapa/matriz_location.svg",
   iconSize: [30, 30],
 });
 
 const puntoIcon = new Icon({
-  iconUrl: "/images/MapaTuvanosa/puntosventa_location.svg",
+  iconUrl: "/images/Mapa/puntosventa_location.svg",
   iconSize: [30, 30],
 });
 
-function MapaTuvanosa() {
+function Mapa() {
   const [expanded, setExpanded] = useState(false);
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
@@ -71,7 +71,7 @@ function MapaTuvanosa() {
       >
         <div>
           <Image
-            src="/images/MapaTuvanosa/sucursales_location.svg"
+            src="/images/Mapa/sucursales_location.svg"
             alt="SucursalesIcon"
             width={30}
             height={30}
@@ -89,7 +89,7 @@ function MapaTuvanosa() {
         </div>
         <div>
           <Image
-            src="/images/MapaTuvanosa/puntosventa_location.svg"
+            src="/images/Mapa/puntosventa_location.svg"
             alt="PuntosDeVentaIcon"
             width={30}
             height={30}
@@ -106,7 +106,7 @@ function MapaTuvanosa() {
         </div>
         <div>
           <Image
-            src="/images/MapaTuvanosa/matriz_location.svg"
+            src="/images/Mapa/matriz_location.svg"
             alt="CorporativoIcon"
             width={30}
             height={30}
@@ -288,4 +288,4 @@ function MapaTuvanosa() {
   );
 }
 
-export default MapaTuvanosa;
+export default Mapa;

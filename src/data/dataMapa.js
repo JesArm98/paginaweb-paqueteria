@@ -1,4 +1,4 @@
-//JSON MAPA DE TUVANOSA
+//JSON MAPA DE MYLLOS
  export const markers = [
     {
       id: 0,
@@ -6,7 +6,7 @@
       type: "sucursal",
       direccion:
         "Calzada Lázaro Cárdenas #2795 Col. Diez Div. 2. Deleg. González OrtegaC.P. 21218. Mexicali, Baja California.",
-      imagen: "/images/MapaTuvanosa/TVN Mexicali.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/Tuber%C3%ADas+Y+V%C3%A1lvulas+Del+Noroeste,+S.A.+De+C.V./@29.2597629,-116.8449867,6.5z/data=!4m8!1m2!2m1!1stuvanosa!3m4!1s0x0:0x560719f3622769d!8m2!3d32.6139299!4d-115.3894043",
       telefonosOne: [
         {
@@ -39,7 +39,7 @@
       direccion:
         "Carretera Libre Tijuana Tecate #27427. Col. Maclovio RojasTijuana, Baja California Norte.",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Tijuana.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/Tuvanosa+Tijuana/@32.4610162,-116.814851,15.75z/data=!4m8!1m2!2m1!1stuvanosa!3m4!1s0x80d93fd961116735:0xabf72893fb636aa5!8m2!3d32.4638519!4d-116.8099899",
   
       telefonosOne: [
@@ -72,7 +72,7 @@
       ciudad: "ENSENADA",
       direccion: "Av. Reforma 298, El Cipres. Ensenada, Baja California",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Ensenada.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUVANOSA+ENSENADA/@29.2597629,-116.8449867,6.5z/data=!4m8!1m2!2m1!1stuvanosa!3m4!1s0x0:0x7214517c6f0cb09!8m2!3d31.809895!4d-116.5965271",
   
       telefonosOne: [
@@ -98,7 +98,7 @@
       direccion:
         "Av. de las Torres y Calle A #1675, Col. Torres del PRICiudad Juárez, Chihuahua.",
       type: "punto",
-      imagen: "/images/MapaTuvanosa/TVN Juarez.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUBERIAS+Y+VALVULAS+DEL+NOROESTE/@29.8919478,-109.4484696,7z/data=!4m8!1m2!2m1!1stuvanosa!3m4!1s0x0:0xdf49d78f28b5a64!8m2!3d31.6428598!4d-106.388855",
   
       telefonosOne: [
@@ -128,7 +128,7 @@
       direccion:
         "Calle de la plata #92. Col. Parque Industrial C. P. 83299.Hermosillo, Sonora.",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Hermosillo.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUVANOSA+HERMOSILLO/@29.0228214,-110.912528,17z/data=!3m1!4b1!4m5!3m4!1s0x86ce85ddba19e6a3:0xf7b05b4e1243849c!8m2!3d29.0228214!4d-110.9103393",
   
       telefonosOne: [
@@ -162,7 +162,7 @@
       direccion:
         "Av. Industrias # 6703-1. Col. Nombre de Dios.Chihuahua, Chihuahua.",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Chihuahua.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/Tuber%C3%ADas+y+V%C3%A1lvulas+del+Noroeste/@25.7018877,-111.2850667,6z/data=!4m8!1m2!2m1!1stuvanosa+!3m4!1s0x0:0xeb9e049d0ae3bd8a!8m2!3d28.6809497!4d-106.0908508",
   
       telefonosOne: [
@@ -184,7 +184,7 @@
       direccion:
         "Calle Norman E. Borlaug #9048 Sur. Ejido General Ricardo Topete.Cajeme, Sonora.",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Obregon.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUVANOSA+OBREGON/@27.4310896,-109.9355078,17z/data=!3m1!4b1!4m5!3m4!1s0x86c815e230dc2ef9:0x68dc582e4acc25f3!8m2!3d27.4310896!4d-109.9333191",
   
       telefonosOne: [
@@ -214,7 +214,7 @@
       direccion:
         "Calle Mariano Matamoros #905, Col. Centro. C.P. 66650Pesquería, Nuevo León.",
       type: "punto",
-      imagen: "/images/MapaTuvanosa/TVN Pesquería.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUVANOSA/@22.6286874,-102.161312,7z/data=!4m8!1m2!2m1!1stuvanosa!3m4!1s0x0:0xd4bd2d253310b867!8m2!3d25.7838169!4d-100.0449371",
   
       telefonosOne: [
@@ -240,7 +240,7 @@
       direccion:
         "Av. Calgary #100 Parque Industrial Nexxus XXI, General Escobedo Nuevo León C.P 66055",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Monterrey.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com/maps/place/Tuvanosa+Monterrey/@25.7667847,-100.3084354,14.86z/data=!4m20!1m14!4m13!1m4!2m2!1d-107.4797234!2d24.7722993!4e1!1m6!1m2!1s0x86629555d76ee9eb:0x61ece196379fe184!2sTuvanosa+Monterrey,+Av.+Calgary+%23100+Parque+Industrial+Nexxus+XXI,+Cd+Gral+Escobedo,+N.L.!2m2!1d-100.3084541!2d25.7690202!3e1!3m4!1s0x86629555d76ee9eb:0x61ece196379fe184!8m2!3d25.7690202!4d-100.3084541?hl=es-419",
   
       telefonosOne: [
@@ -270,7 +270,7 @@
       direccion:
         "Antonio Dueñez Orozco #199, Esq. con Joaquín Serrano. Col. ciudad industrial Torreón.Torreón, Coahuila.",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Torreon.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUVANOSA+TORREON/@25.5879946,-103.3964376,17z/data=!3m1!4b1!4m5!3m4!1s0x868fdb6a81f66407:0x34ad4a0db20eb49!8m2!3d25.5879898!4d-103.3942489",
   
       telefonosOne: [
@@ -296,7 +296,7 @@
       ciudad: "LOS MOCHIS",
       direccion:
         "Blvd. Juan de Dios Batiz #210 OTE. Col. El Parque C.P. 81259.Los Mochis, Sinaloa.",
-      imagen: "/images/MapaTuvanosa/TVN Mochis.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://maps.app.goo.gl/FKBcie1UYAwKkgmMA",
       telefonosOne: [
         {
@@ -317,7 +317,7 @@
       type: "matriz",
       direccion:
         "Calzada Aeropuerto #9016 Pte. Col. Nuevo Bachigualato C.P. 80135. Culiacan,Sinaloa.",
-      imagen: "/images/MapaTuvanosa/TVN Matriz.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUVANOSA+CULIACAN/@24.7748882,-107.4794076,17z/data=!4m12!1m6!3m5!1s0x86bcd0270cb0ea83:0x2352baa1c84fb291!2sTUVANOSA+CULIACAN!8m2!3d24.7748882!4d-107.4779914!3m4!1s0x86bcd0270cb0ea83:0x2352baa1c84fb291!8m2!3d24.7748882!4d-107.4779914",
   
       telefonosOne: [
@@ -343,7 +343,7 @@
       type: "sucursal",
       direccion:
         "Carretera Internacional al Sur 7406 3 Col. Diaz Ordaz,  C.P. 82090Mazatlán,  Sinaloa.",
-      imagen: "/images/MapaTuvanosa/TVN Mazatlan.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://maps.app.goo.gl/FuRuVvi8JB4HrAXV8",
       telefonosOne: [
         {
@@ -364,7 +364,7 @@
       type: "punto",
       direccion:
         "Calle Cuatro #105, Parque Industrial Millenium C.P:78395. San Luis Potosí, San Luis Potosí.",
-      imagen: "/images/MapaTuvanosa/TVN San Luis.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/TUVANOSA/@20.1635687,-103.7043343,6.25z/data=!4m8!1m2!2m1!1stuvanosa!3m4!1s0x0:0xb867f52e6ed36be1!8m2!3d22.1059988!4d-100.9643555",
       telefonosOne: [
         {
@@ -393,7 +393,7 @@
       type: "sucursal",
       direccion:
         "Dr. R, Michel Num. 2102 Col. Atlas C.P. 44870 Guadalajara, Jalisco.",
-      imagen: "/images/MapaTuvanosa/ETISA Guadalajara.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/ETISA+de+Guadalajara+SA+de+CV/@20.5021544,-105.727065,7z/data=!4m8!1m2!2m1!1stuvanosa+guadalajara!3m4!1s0x0:0xc473b0c93a30e53d!8m2!3d20.6398527!4d-103.3339691",
       telefonosOne: [
         {
@@ -422,7 +422,7 @@
       direccion:
         "Guadalupe San Vidaño #5, Ejido Los Angeles, Corregidora(Pueblito)Querétaro, Querétaro.",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Queretaro.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/Tuvanosa+Quer%C3%A9taro/@20.5535061,-100.485259,17z/data=!3m1!4b1!4m5!3m4!1s0x85d35ac76e7162e9:0x51ee20e252302387!8m2!3d20.5535011!4d-100.4830703",
   
       telefonosOne: [
@@ -443,7 +443,7 @@
       ciudad: "VERACRUZ",
       direccion:
         "C. 5 Nte. 402 ESQ, Av. 6, Ricardo Ballinas, 94470 Fortín de las Flores, Veracruz.",
-      imagen: "/images/MapaTuvanosa/TVN Fortin.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       type: "sucursal",
       maps: "https://goo.gl/maps/ZVXfUjHPogSvJh4SA",
       telefonosOne: [
@@ -469,7 +469,7 @@
       direccion:
         "Av. de las Partidas s/n Mz 14 Lt 27 y 28  Col. Parque Industrial Lerma C.P. 52000Toluca, Estado de México.",
       type: "sucursal",
-      imagen: "/images/MapaTuvanosa/TVN Toluca.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://www.google.com.mx/maps/place/Tuvanosa/@19.9727984,-101.0329022,7.5z/data=!4m8!1m2!2m1!1stuvanosa!3m4!1s0x0:0x87c32050534c213b!8m2!3d19.3001268!4d-99.5333862",
   
       telefonosOne: [
@@ -499,7 +499,7 @@
       type: "sucursal",
       direccion:
         "Paseo de los industriales #306 Pte. Colonia el refugio Silao Victoria, CP.36284 Parque Industrial Fipasi",
-      imagen: "/images/MapaTuvanosa/TVN Silao.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "google.com/maps/place/Tuvanosa+Silao/@20.9050041,-101.3908109,15z/data=!4m12!1m6!3m5!1s0x0:0xc8a65d568716084e!2sTuvanosa+Silao!8m2!3d20.9050041!4d-101.3908109!3m4!1s0x0:0xc8a65d568716084e!8m2!3d20.9050041!4d-101.3908109",
       telefonosOne: [
         {
@@ -521,7 +521,7 @@
       type: "punto",
       direccion:
         "Blvd. Benito Juárez 3, Costa Azul, Gil Samaniego, CP. 85470 Guaymas, Sonora.",
-      imagen: "/images/MapaTuvanosa/TVN Guaymas.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://maps.app.goo.gl/zrvhbupugEnFqHmg9",
       telefonosOne: [
         {
@@ -542,7 +542,7 @@
       type: "punto",
       direccion:
         "José María Velasco #103 Frida Kalho Alf. Siqueiros Paraíso Fracc., CP. 96523, Coatzacoalcos, Veracruz",
-      imagen: "/images/MapaTuvanosa/TVN Fortin.webp",
+      imagen: "/images/Mapa/Myllos.webp",
       maps: "https://maps.app.goo.gl/D4UJc68Qva4HdqHr9",
       telefonosOne: [
         {
