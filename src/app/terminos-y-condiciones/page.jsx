@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: "Terminos y condiciones",
     description: "Terminos y condiciones de la empresa Myllos.",
-    url: "https://myllos-web.vercel.app//terminos-y-condiciones",
+    url: "https://myllos.vercel.app//terminos-y-condiciones",
     type: "website",
     images: [
       {

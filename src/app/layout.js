@@ -19,11 +19,11 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Myllos",
   description: "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
-  metadataBase: new URL('https://myllos-web.vercel.app/'),
+  metadataBase: new URL('https://myllos.vercel.app/'),
   openGraph: {
     title: "Myllos - Soluciones Logisticas",
     description: "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
-    url: 'https://myllos-web.vercel.app/',
+    url: 'https://myllos.vercel.app/',
     siteName: 'Myllos',
     locale: 'es_MX',
     type: 'website',
