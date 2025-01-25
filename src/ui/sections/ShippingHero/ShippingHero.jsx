@@ -65,7 +65,7 @@ const ShippingHero = () => {
         flexDirection="column"
         position="relative"
         overflow="hidden"
-        height={"100vh"}
+        minHeight="100vh"
         justifyContent="center"
         sx={{
           background:
