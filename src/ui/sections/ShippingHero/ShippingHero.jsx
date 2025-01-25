@@ -65,7 +65,7 @@ const ShippingHero = () => {
         flexDirection="column"
         position="relative"
         overflow="hidden"
-        height="100vh"
+        height={"100vh"}
         justifyContent="center"
         sx={{
           background:
@@ -82,6 +82,7 @@ const ShippingHero = () => {
             spacing={4}
             py={{ xs: 0, md: 3 }}
             mt={{ xs: 2, md: 0 }}
+            pr={{ xs: 0, md: 0 }}
           >
             {/* Left Column - Content */}
             <Grid
@@ -90,7 +91,7 @@ const ShippingHero = () => {
               md={6}
               display="flex"
               flexDirection="column"
-              sx={{ justifyContent: "end" }}
+              sx={{ justifyContent: "center" }}
               gap={4}
             >
               <Box>

@@ -19,7 +19,6 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Myllos - Soluciones Logisticas",
   description: "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
-  metadataBase: new URL('https://myllos.netlify.app/'),
   openGraph: {
     title: "Myllos - Soluciones Logisticas",
     description: "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
@@ -33,7 +32,7 @@ export const metadata = {
         width: 1000,
         height: 630,
         alt: 'Myllos - Soluciones Logisticas',
-        type: "image/webp"
+        type: "image/svg+xml"
       },
     ],
   },
