@@ -12,11 +12,11 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://firebasestorage.googleapis.com/v0/b/tuvanosa-portal.appspot.com/o/Imagenes%20Landings%2FfondoInicio.webp?alt=media&token=bbd109eb-f7ed-49b9-8fdd-db94dd465e48",
+        url: "https://storage.googleapis.com/fir-adminsdk-documents.appspot.com/Myllos.webp",
         width: 1000,
         height: 630,
         alt: "Myllos",
-        type: "image/svg+xml",
+        type: "image/webp",
       },
     ],
   },
