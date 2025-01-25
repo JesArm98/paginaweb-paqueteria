@@ -409,7 +409,7 @@ const Footer = () => {
                 }}
               >
                 <Image
-                  src="/images/Footer/facebook.svg"
+                  src="/images/Icons/facebook.svg"
                   width={30}
                   height={30}
                   alt="Facebook"
@@ -477,7 +477,7 @@ const Footer = () => {
                 <Image
                   width={30}
                   height={30}
-                  src="/images/Footer/linkedin.svg"
+                  src="/images/Icons/linkedin.svg"
                   alt="LinkedIn"
                   style={{ width: "25px", height: "25px" }}
                 />

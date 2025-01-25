@@ -233,7 +233,7 @@ const Navbar = () => {
               }}
             >
               <Image
-                src="/images/Footer/facebook.svg"
+                src="/images/Icons/facebook.svg"
                 alt="Facebook"
                 width={16}
                 height={16}
