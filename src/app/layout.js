@@ -23,8 +23,6 @@ export const metadata = {
     title: "Myllos - Soluciones Logisticas",
     description: "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
     url: 'https://myllos.netlify.app/',
-    siteName: 'Myllos',
-    locale: 'es_MX',
     type: 'website',
     images: [
       {
