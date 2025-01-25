@@ -119,7 +119,7 @@ function LTLPage() {
             </Box>
 
             <Box sx={{ mt: 4 }}>
-              <Link href="/#headerTVN">
+              <Link href="/#contacto">
                 <Button
                   aria-label="Solicitar cotización"
                   variant="contained"
