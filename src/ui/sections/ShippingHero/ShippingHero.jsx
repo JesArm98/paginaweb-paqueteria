@@ -167,7 +167,7 @@ const ShippingHero = () => {
                           Cotizaciones
                         </Typography>
                         <Typography
-                          variant="body2"
+                          variant="h7"
                           textAlign={"center"}
                           sx={{ color: "#6b7280" }}
                         >
