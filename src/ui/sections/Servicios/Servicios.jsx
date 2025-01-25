@@ -109,11 +109,12 @@ const Servicios = () => {
                   margin: "auto",
                   display: "flex",
                   flexDirection: "column",
+                  boxShadow: "3px 2px 15px 4px rgba(0, 0, 0, 0.15)",
                   borderRadius: "20px",
-                  transition: "transform 0.3s ease-in-out",
+                  transition: "all 0.3s ease",
                   "&:hover": {
-                    transform: "translateY(-10px)",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                    boxShadow: "6px 4px 20px 8px rgba(0, 0, 0, 0.25)",
+                    transform: "translateY(-5px)",
                   },
                 }}
               >

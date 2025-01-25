@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Box,
@@ -14,25 +15,43 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Myllos - LTL (Less Than Truckload)",
-  description: "LTL (Less Than Truckload) de la empresa Myllos.",
+const handleCotizacionesClick = () => {
+  // Establecer el tipo en localStorage
+  localStorage.setItem("contactType", "cotizaciones");
 
-  openGraph: {
-    title: "Myllos - LTL (Less Than Truckload)",
-    description: "LTL (Less Than Truckload) de la empresa Myllos.",
-    url: "https://myllos.netlify.app//servicios/ltl",
-    type: "website",
-    images: [
-      {
-        url: "https://storage.googleapis.com/fir-adminsdk-documents.appspot.com/Myllos.webp",
-        width: 1000,
-        height: 630,
-        alt: "Myllos",
-        type: "image/svg+xml",
-      },
-    ],
-  },
+  // Redirigir a la página principal y luego realizar el scroll
+  const currentPath = window.location.pathname;
+
+  if (currentPath !== "/") {
+    // Redirigir a la página principal
+    const navigateToContact = () => {
+      const contactoSection = document.getElementById("contacto");
+      if (contactoSection) {
+        contactoSection.scrollIntoView({ behavior: "smooth" });
+
+        // Disparar el evento personalizado
+        setTimeout(() => {
+          const event = new Event("contactTypeChange");
+          window.dispatchEvent(event);
+        }, 700);
+      }
+    };
+
+    window.localStorage.setItem("navigateToContact", "true");
+    window.location.href = "/";
+    return;
+  }
+
+  // Si ya estás en la página principal
+  const contactoSection = document.getElementById("contacto");
+  if (contactoSection) {
+    contactoSection.scrollIntoView({ behavior: "smooth" });
+
+    setTimeout(() => {
+      const event = new Event("contactTypeChange");
+      window.dispatchEvent(event);
+    }, 700);
+  }
 };
 
 function LTLPage() {
@@ -119,24 +138,23 @@ function LTLPage() {
             </Box>
 
             <Box sx={{ mt: 4 }}>
-              <Link href="/#contacto">
-                <Button
-                  aria-label="Solicitar cotización"
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    borderRadius: "30px",
-                    textTransform: "none",
-                    fontSize: "1.1rem",
-                    width: "fit-content",
-                    margin: "auto",
-                    display: "flex",
-                    px: 4,
-                  }}
-                >
-                  Solicitar cotización
-                </Button>
-              </Link>
+              <Button
+                aria-label="Solicitar cotización"
+                onClick={handleCotizacionesClick}
+                variant="contained"
+                size="large"
+                sx={{
+                  borderRadius: "30px",
+                  textTransform: "none",
+                  fontSize: "1.1rem",
+                  width: "fit-content",
+                  margin: "auto",
+                  display: "flex",
+                  px: 4,
+                }}
+              >
+                Solicitar cotización
+              </Button>
             </Box>
           </Grid>
 

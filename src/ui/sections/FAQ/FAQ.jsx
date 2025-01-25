@@ -60,11 +60,12 @@ const FAQ = () => {
                   height: "100%",
                   borderRadius: "20px",
                   transition: "all 0.3s ease-in-out",
+                  boxShadow: "3px 2px 15px 4px rgba(0, 0, 0, 0.15)",
                   cursor: "pointer",
                   "&:hover": {
                     transform:
                       expandedId === index ? "none" : "translateY(-5px)",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                    boxShadow: "6px 4px 20px 8px rgba(0, 0, 0, 0.25)",
                   },
                 }}
                 onClick={() => handleExpandClick(index)}

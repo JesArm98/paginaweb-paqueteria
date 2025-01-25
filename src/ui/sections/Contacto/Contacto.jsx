@@ -101,6 +101,9 @@ function ContactForm() {
         if (contactType === "socio") {
           setValue("Tipo", "socio", { shouldValidate: true });
           localStorage.removeItem("contactType");
+        } else if (contactType === "cotizaciones") {
+          setValue("Tipo", "cotizaciones", { shouldValidate: true });
+          localStorage.removeItem("contactType");
         }
       } catch (error) {
         console.error("Error al manejar el tipo de contacto:", error);

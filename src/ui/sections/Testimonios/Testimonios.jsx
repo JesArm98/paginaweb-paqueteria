@@ -67,10 +67,11 @@ const Testimonios = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-                transition: "transform 0.3s ease-in-out",
+                boxShadow: "3px 2px 15px 4px rgba(0, 0, 0, 0.15)",
+                transition: "all 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-10px)",
+                  boxShadow: "6px 4px 20px 8px rgba(0, 0, 0, 0.25)",
                 },
               }}
             >
