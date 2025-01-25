@@ -80,12 +80,12 @@ const Navbar = () => {
           </Link>
           <Link href="/" passHref>
             <Button
-              onClick={() => handleNavigation("Coordinaciones")}
+              onClick={() => handleNavigation("Servicios")}
               sx={{
                 display: { xs: "none", md: "flex" },
                 color: "#FFFFFF",
                 padding: " 8px 16px 8px 16px",
-
+                
                 transition: "background-color 0.3s ease",
                 borderColor: "transparent",
                 borderRadius: "30px",
