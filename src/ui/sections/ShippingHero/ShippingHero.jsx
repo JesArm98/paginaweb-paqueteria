@@ -47,6 +47,10 @@ const ShippingHero = () => {
     }, 100);
   };
 
+  {
+    console.log(metadata);
+  }
+
   return (
     <Box
       sx={{
