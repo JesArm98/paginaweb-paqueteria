@@ -18,24 +18,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Myllos - Soluciones Logisticas",
-  description: "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
+  title: "Myllos - Soluciones Logísticas",
+  description:
+    "Empresa dedicada y especializada en aportar la mejor solución para sus problemáticas de envíos de mercancía por distintos tipos de transporte.",
   openGraph: {
-    title: "Myllos - Soluciones Logisticas",
-    description: "Empresa dedicada y especializada en aportar la mejor solucion para sus problematicas de envios de mercancia por distintos tipos de transporte.",
-    url: 'https://myllos.netlify.app/',
-    type: 'website',
+    title: "Myllos - Soluciones Logísticas",
+    description:
+      "Empresa dedicada y especializada en aportar la mejor solución para sus problemáticas de envíos de mercancía por distintos tipos de transporte.",
+    url: "https://myllos.netlify.app/",
+    type: "website",
     images: [
       {
-        url: 'https://storage.googleapis.com/fir-adminsdk-documents.appspot.com/Myllos.webp',
+        url: "https://storage.googleapis.com/fir-adminsdk-documents.appspot.com/Myllos.webp",
         width: 1000,
         height: 630,
-        alt: 'Myllos - Soluciones Logisticas',
-        
+        alt: "Myllos - Soluciones Logísticas",
       },
     ],
   },
 };
+
 
 export default function RootLayout({ open, setOpen,children }) {
   return (

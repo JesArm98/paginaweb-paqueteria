@@ -4,7 +4,7 @@ export const metadata = {
   openGraph: {
     title: "Preguntas frecuentes",
     description: "Preguntas frecuentes de la empresa Myllos.",
-    url: "https://myllos.netlify.app//preguntas-frecuentes",
+    url: "https://myllos.netlify.app/preguntas-frecuentes",
     type: "website",
     images: [
       {
