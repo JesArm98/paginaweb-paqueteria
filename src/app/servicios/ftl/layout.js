@@ -13,7 +13,7 @@ export const metadata = {
         width: 1000,
         height: 630,
         alt: "Myllos",
-        type: "image/svg+xml",
+      
       },
     ],
   },

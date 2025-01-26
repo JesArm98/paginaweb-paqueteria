@@ -31,7 +31,7 @@ export const metadata = {
         width: 1000,
         height: 630,
         alt: 'Myllos - Soluciones Logisticas',
-        type: "image/svg+xml",
+        
       },
     ],
   },
