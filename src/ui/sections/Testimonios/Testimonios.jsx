@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { use } from "react";
 import { Box, Typography, Card, Avatar, Rating } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
