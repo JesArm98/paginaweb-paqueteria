@@ -2,7 +2,16 @@
 
 import { createContext, useState } from "react";
 
-const UserContext = createContext();
+const UserContext = createContext({
+  userData: null,
+  setUserData: () => {},
+  isLoggedIn: false,
+  setIsLoggedIn: () => {},
+  orderDataFinal: null,
+  setOrderDataFinal: () => {},
+  formaPago: "SPEI",
+  setFormaPago: () => {},
+});
 
 const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState();
