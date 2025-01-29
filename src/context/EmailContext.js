@@ -2,14 +2,7 @@
 
 import React, { createContext, useState, useContext } from "react";
 
-const EmailContext = createContext({
-  emailConfirmado: false,
-  setEmailConfirmado: () => {},
-  emailUsuario: "",
-  setEmailUsuario: () => {},
-  mostrarResultados: false,
-  setMostrarResultados: () => {},
-});
+const EmailContext = createContext();
 
 export function EmailProvider({ children }) {
   const [emailConfirmado, setEmailConfirmado] = useState(false);
