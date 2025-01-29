@@ -1,41 +1,33 @@
-"use client";
+import PaginaPrincipal from "@/ui/sections/PaginaPrincipal/page";
 
-import { useEffect } from "react";
-import ShippingHero from "@/ui/sections/ShippingHero/ShippingHero";
-import Alianzas from "@/ui/sections/Alianzas/Alianzas";
-import Contacto from "@/ui/sections/Contacto/Contacto";
-import Servicios from "@/ui/sections/Servicios/Servicios";
-import RastreoEnvios from "@/ui/sections/RastreoEnvios/RastreoEnvios";
-import Testimonios from "@/ui/sections/Testimonios/Testimonios";
-import Cobertura from "@/ui/sections/Cobertura/Cobertura";
-import FAQ from "@/ui/sections/FAQ/FAQ";
-import Estadisticas from "@/ui/sections/Estadisticas/Estadisticas";
+export const metadata = {
+  title: "Myllos - Soluciones Logísticas",
+  description:
+    "Empresa dedicada y especializada en aportar la mejor solución para sus problemáticas de envíos de mercancía por distintos tipos de transporte.",
+  openGraph: {
+    title: "Myllos - Soluciones Logísticas",
+    description:
+      "Empresa dedicada y especializada en aportar la mejor solución para sus problemáticas de envíos de mercancía por distintos tipos de transporte.",
+    url: "https://myllos.netlify.app/",
+    type: "website",
+    images: [
+      {
+        url: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Myllos.jpg?alt=media&token=80a669b8-699c-49ce-8747-8b9367fcef4b",
+        width: 1000,
+        height: 630,
+        alt: "Myllos - Soluciones Logísticas",
+        type: "image/svg+xml",
+      },
+    ],
+  },
+};
 
 export default function Home() {
-  useEffect(() => {
-    const navigateToContact = localStorage.getItem("navigateToContact");
-    if (navigateToContact === "true") {
-      // Limpia la bandera para evitar repeticiones
-      localStorage.removeItem("navigateToContact");
 
-      // Realiza el desplazamiento a la sección de contacto
-      const contactoSection = document.getElementById("contacto");
-      if (contactoSection) {
-        contactoSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, []);
-
+  
   return (
-    <main>
-      <ShippingHero />
-      <Servicios />
-      <Cobertura />
-      <Testimonios />
-      <FAQ />
-      <Alianzas />
-      <Estadisticas />
-      <Contacto />
-    </main>
+    <>
+<PaginaPrincipal/>
+    </>
   );
 }
