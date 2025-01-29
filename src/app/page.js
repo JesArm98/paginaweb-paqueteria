@@ -1,4 +1,13 @@
-import PaginaPrincipal from "@/ui/sections/PaginaPrincipal/page";
+import ShippingHero from "@/ui/sections/ShippingHero/ShippingHero";
+import Alianzas from "@/ui/sections/Alianzas/Alianzas";
+import Contacto from "@/ui/sections/Contacto/Contacto";
+import Servicios from "@/ui/sections/Servicios/Servicios";
+import RastreoEnvios from "@/ui/sections/RastreoEnvios/RastreoEnvios";
+import Testimonios from "@/ui/sections/Testimonios/Testimonios";
+import Cobertura from "@/ui/sections/Cobertura/Cobertura";
+import FAQ from "@/ui/sections/FAQ/FAQ";
+import Estadisticas from "@/ui/sections/Estadisticas/Estadisticas";
+import NavigateToContact from "@/components/NavigateToContact"; // Importamos el wrapper
 
 export const metadata = {
   title: "Myllos - Soluciones Logísticas",
@@ -22,12 +31,18 @@ export const metadata = {
   },
 };
 
-export default function Home() {
-
-  
+export default function PaginaPrincipal() {
   return (
-    <>
-<PaginaPrincipal/>
-    </>
+    <main>
+      <NavigateToContact /> {/* Componente cliente */}
+      <ShippingHero />
+      <Servicios />
+      <Cobertura />
+      <Testimonios />
+      <FAQ />
+      <Alianzas />
+      <Estadisticas />
+      <Contacto />
+    </main>
   );
 }
