@@ -29,10 +29,11 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/images/Mapa/Myllos.webp",
+        url: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Myllos.jpg?alt=media&token=80a669b8-699c-49ce-8747-8b9367fcef4b",
         width: 1000,
         height: 630,
         alt: "Myllos - Soluciones Logísticas",
+        imageType: "image/jpg",
       },
     ],
   },
