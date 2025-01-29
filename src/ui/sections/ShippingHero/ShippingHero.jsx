@@ -22,6 +22,7 @@ import Image from "next/image";
 import { useEmail } from "@/context/EmailContext";
 import { useRouter } from "next/navigation";
 import ScrollDown from "@/ui/components/ScrollDown";
+import {motion} from "framer-motion"
 
 const ShippingHero = () => {
   const router = useRouter();
@@ -95,29 +96,37 @@ const ShippingHero = () => {
               gap={4}
             >
               <Box>
-                <Typography
-                  variant="h1"
-                  fontWeight="bold"
-                  textAlign={"center"}
-                  sx={{
-                    fontSize: { xs: "1.5rem", md: "2.5rem" },
-                    lineHeight: "1.2",
-                  }}
-                >
-                  Cotiza tus envíos de manera{" "}
-                  <Typography
-                    component="span"
-                    sx={{
-                      background:
-                        "linear-gradient(to right, #007bff, #007bff99)",
-                      WebkitBackgroundClip: "text",
-                      color: "transparent",
-                      fontSize: { xs: "1.5rem", md: "2.5rem" },
-                    }}
-                  >
-                    instantánea
-                  </Typography>
-                </Typography>
+
+
+              <motion.h1
+  initial={{ opacity: 0, y: 50 }} // Comienza opaco y abajo
+  animate={{ opacity: 1, y: 0 }} // Aparece y sube suavemente
+  transition={{ duration: 2, ease: "easeOut" }} // Duración de 3 segundos
+  fontWeight="bold"
+  textAlign="center"
+  style={{
+    fontSize: { xs: "1.5rem", md: "2.5rem" }, // Tamaños responsivos
+    lineHeight: "1.2",
+  }}
+>
+  Cotiza tus envíos de manera{" "}
+  <motion.span
+    initial={{ opacity: 0, y: 50 }} // Mismo efecto de levantarse
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 4, ease: "easeOut", delay:2 }}
+    style={{
+      background: "linear-gradient(to right, #007bff, #007bff99)",
+      WebkitBackgroundClip: "text",
+      color: "transparent",
+      fontSize: "inherit", // 🔹 HEREDA el tamaño del `Typography`
+      display: "inline-block",
+    }}
+  >
+    instantánea
+  </motion.span>
+</motion.h1>
+
+
                 <Typography
                   textAlign={{ xs: "justify", sm: "center" }}
                   sx={{

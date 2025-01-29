@@ -42,7 +42,7 @@ const Footer = () => {
             padding: 2,
           }}
         >
-          <Link href="/">
+          <Link href="/" style={{ textDecoration: "none" }}>
             <Button
               aria-label="Logo Myllos - Volver a Inicio"
               sx={{
@@ -88,7 +88,7 @@ const Footer = () => {
               height: "100%",
             }}
           >
-            <Link href="/">
+            <Link href="/" style={{ textDecoration: "none" }}>
               <Button
                 aria-label="Volver a Inicio"
                 sx={{
@@ -112,7 +112,7 @@ const Footer = () => {
                 Nosotros
               </Button>
             </Link>
-            <Link href="/#Servicios">
+            <Link href="/#Servicios" style={{ textDecoration: "none" }}>
               <Button
                 aria-label="Servicios"
                 sx={{
@@ -163,7 +163,7 @@ const Footer = () => {
             </Link>
           */}
 
-            <Link href="/preguntas-frecuentes" passHref>
+            <Link href="/preguntas-frecuentes" style={{ textDecoration: "none" }} passHref>
               <Button
                 aria-label="Preguntas frecuentes"
                 sx={{

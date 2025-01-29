@@ -67,7 +67,7 @@ const Navbar = () => {
           }}
           className="logNosCoord"
         >
-          <Link href="/">
+          <Link href="/" style={{ textDecoration: "none" }}>
             <Image
               style={{ borderRadius: "20px" }}
               className="LogoNavbar"
@@ -78,7 +78,7 @@ const Navbar = () => {
               priority
             />
           </Link>
-          <Link href="/" passHref>
+          <Link href="/" passHref style={{ textDecoration: "none" }}>
             <Button
               onClick={() => handleNavigation("Servicios")}
               sx={{
@@ -111,7 +111,7 @@ const Navbar = () => {
               </Typography>
             </Button>
           </Link>
-          <Link href="/#contacto" passHref>
+          <Link href="/#contacto" style={{ textDecoration: "none" }} passHref>
             <Button
               aria-label="¿Quieres ser socio?"
               onClick={handleSocioClick}
@@ -139,6 +139,8 @@ const Navbar = () => {
                   fontSize: "1.1875em",
                   fontWeight: "500",
                   cursor: "pointer",
+                  textDecoration:"none"
+                  
                 }}
               >
                 ¿QUIERES SER SOCIO?
@@ -476,7 +478,7 @@ const Navbar = () => {
                 </>
               )}
             </Box>
-            <Link href="/#contacto" passHref>
+            <Link href="/#contacto" style={{ textDecoration: "none" }} passHref>
               <Button
                 aria-label="Botón para contacto"
                 sx={{
