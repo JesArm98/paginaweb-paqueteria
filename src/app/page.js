@@ -31,7 +31,7 @@ export const metadata = {
   },
 };
 
-export default function PaginaPrincipal() {
+export default function Home() {
   return (
     <main>
       <NavigateToContact /> {/* Componente cliente */}
