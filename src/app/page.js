@@ -7,7 +7,7 @@ import Testimonios from "@/ui/sections/Testimonios/Testimonios";
 import Cobertura from "@/ui/sections/Cobertura/Cobertura";
 import FAQ from "@/ui/sections/FAQ/FAQ";
 import Estadisticas from "@/ui/sections/Estadisticas/Estadisticas";
-import NavigateToContact from "@/components/NavigateToContact"; // Importamos el wrapper
+import NavigateToContact from "@/ui/components/NavigateToContact/NavigateToContact";
 
 export const metadata = {
   title: "Myllos - Soluciones Logísticas",
