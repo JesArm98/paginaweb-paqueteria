@@ -1,5 +1,3 @@
-import AnimatedWrapper from "@/ui/components/AnimatedWrapper"; // Importa el nuevo componente
-
 export const metadata = {
   title: "Myllos - FTL (Full Truck Load)",
   description: "FTL (Full Truck Load) de la empresa Myllos.",
@@ -15,11 +13,12 @@ export const metadata = {
         width: 1000,
         height: 630,
         alt: "Myllos",
+      
       },
     ],
   },
 };
 
 export default function Layout({ children }) {
-  return <AnimatedWrapper>{children}</AnimatedWrapper>; // Envolvemos los children
-}
+    return children;
+  } 

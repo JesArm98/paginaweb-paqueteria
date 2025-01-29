@@ -1,5 +1,3 @@
-import AnimatedWrapper from "@/ui/components/AnimatedWrapper";
-
 export const metadata = {
   title: "Myllos - LTL (Less Than Truckload)",
   description: "LTL (Less Than Truckload) de la empresa Myllos.",
@@ -21,6 +19,6 @@ export const metadata = {
   },
 };
   
-export default function Layout({ children }) {
-  return <AnimatedWrapper>{children}</AnimatedWrapper>; // Envolvemos los children
-}
+  export default function Layout({ children }) {
+      return children;
+    } 

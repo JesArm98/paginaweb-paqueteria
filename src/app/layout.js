@@ -6,7 +6,6 @@ import { EmailProvider } from "../context/EmailContext";
 import LoginDialog from "@/ui/components/LoginDialog/LoginDialog";
 import { UserProvider } from "@/context/UserContext";
 import FloatButton from "@/ui/components/FloatButton/FloatButton";
-import AnimatedWrapper from "@/ui/components/AnimatedWrapper"; // Nuevo componente
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,40 +17,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export async function generateMetadata() {
-  return {
+export const metadata = {
+  title: "Myllos - Soluciones Logísticas",
+  description:
+    "Empresa dedicada y especializada en aportar la mejor solución para sus problemáticas de envíos de mercancía por distintos tipos de transporte.",
+  openGraph: {
     title: "Myllos - Soluciones Logísticas",
-    description: "Empresa especializada en soluciones logísticas.",
-    openGraph: {
-      title: "Myllos - Soluciones Logísticas",
-      description: "Empresa especializada en soluciones logísticas.",
-      url: "https://myllos.netlify.app/",
-      type: "website",
-      images: [
-        {
-          url: "https://storage.googleapis.com/fir-adminsdk-documents.appspot.com/Myllos.webp",
-          width: 1000,
-          height: 630,
-          alt: "Myllos - Soluciones Logísticas",
-        },
-      ],
-    },
-  };
-}
+    description:
+      "Empresa dedicada y especializada en aportar la mejor solución para sus problemáticas de envíos de mercancía por distintos tipos de transporte.",
+    url: "https://myllos.netlify.app/",
+    type: "website",
+    images: [
+      {
+        url: "/images/Mapa/Myllos.webp",
+        width: 1000,
+        height: 630,
+        alt: "Myllos - Soluciones Logísticas",
+      },
+    ],
+  },
+};
 
-export default function RootLayout({ open, setOpen, children }) {
+
+export default function RootLayout({ open, setOpen,children }) {
   return (
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <UserProvider>
           <EmailProvider>
-            <Navbar />
+            <Navbar />  
             <LoginDialog open={open} setOpen={setOpen} />
             <FloatButton />
-            {/* Ahora envuelves children en el nuevo componente */}
-            <AnimatedWrapper>{children}</AnimatedWrapper>
+            {children}
             <Footer />
-          </EmailProvider>
+        </EmailProvider>
         </UserProvider>
       </body>
     </html>
