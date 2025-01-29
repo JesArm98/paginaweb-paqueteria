@@ -33,7 +33,7 @@ export const metadata = {
         width: 1000,
         height: 630,
         alt: "Myllos - Soluciones Logísticas",
-        imageType: "image/jpg",
+        type: "image/svg+xml",
       },
     ],
   },
