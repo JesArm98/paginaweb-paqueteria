@@ -15,20 +15,20 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Myllos - LTL (Less Than Truckload)",
+  title: "Myllos2 - LTL (Less Than Truckload)",
   description: "LTL (Less Than Truckload) de la empresa Myllos.",
 
   openGraph: {
-    title: "Myllos - LTL (Less Than Truckload)",
+    title: "Myllos2 - LTL (Less Than Truckload)",
     description: "LTL (Less Than Truckload) de la empresa Myllos.",
-    url: "https://myllos.netlify.app/servicios/ltl",
+    url: "https://myllos2.netlify.app/servicios/ltl",
     type: "website",
     images: [
       {
-        url: "https://firebasestorage.googleapis.com/v0/b/tuvanosa-portal.appspot.com/o/Imagenes%20Landings%2FfondoInicio.webp?alt=media&token=bbd109eb-f7ed-49b9-8fdd-db94dd465e48",
+        url: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Myllos.webp?alt=media&token=286f024b-6144-4152-a657-29966c67be2f",
         width: 1000,
         height: 630,
-        alt: "Myllos",
+        alt: "Myllos2",
         type: "image/svg+xml",
       },
     ],
