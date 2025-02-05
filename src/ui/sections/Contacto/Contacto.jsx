@@ -7,12 +7,15 @@ import {
   Box,
   CircularProgress,
   Typography,
+  Autocomplete,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { contactOptions } from "@/data/data";
+import { tipoServicio } from "@/data/data";
+import useContactType from "@/hooks/useContactType";
 
 /*
 const sucursalOptions = [
@@ -47,6 +50,13 @@ const schema = yup
         "El tipo de contacto no es válido."
       )
       .required("El tipo de contacto es obligatorio."),
+    Servicio: yup
+      .string()
+      .oneOf(
+        tipoServicio.map((option) => option.value),
+        "El tipo de servicio no es válido."
+      )
+      .required("El tipo de servicio es obligatorio."),
     Nombre: yup
       .string()
       .matches(
@@ -77,56 +87,52 @@ const schema = yup
       .required("El mensaje es obligatorio.")
       .min(20, "El mensaje debe tener al menos 20 caracteres.")
       .max(500, "El mensaje no debe exceder los 500 caracteres."),
+    Origen: yup
+      .string()
+      .matches(
+        nameRegExp,
+        "Solo puede contener letras, espacios, guiones y apóstrofes."
+      ),
   })
   .required();
 
 function ContactForm() {
   const [loading, setIsLoading] = useState(false);
+  const [coloniasOrigen, setColoniasOrigen] = useState([]);
+  const [coloniasDestino, setColoniasDestino] = useState([]);
+
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
     reset,
     setValue,
+    trigger,
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
+  const formValues = useWatch({ control });
+  console.log(formValues);
+  console.log(isValid);
+
   // Detectar el parámetro type en la URL al montar el componente
-  useEffect(() => {
-    const handleContactTypeChange = () => {
-      try {
-        const contactType = localStorage.getItem("contactType");
-        if (contactType === "socio") {
-          setValue("Tipo", "socio", { shouldValidate: true });
-          localStorage.removeItem("contactType");
-        } else if (contactType === "cotizaciones") {
-          setValue("Tipo", "cotizaciones", { shouldValidate: true });
-          localStorage.removeItem("contactType");
-        }
-      } catch (error) {
-        console.error("Error al manejar el tipo de contacto:", error);
-      }
-    };
-
-    // Ejecutar una vez al montar
-    handleContactTypeChange();
-
-    // Agregar el event listener
-    window.addEventListener("contactTypeChange", handleContactTypeChange);
-
-    return () => {
-      window.removeEventListener("contactTypeChange", handleContactTypeChange);
-      // Limpiar localStorage al desmontar por si acaso
-      localStorage.removeItem("contactType");
-    };
-  }, [setValue]);
+  useContactType(setValue, trigger);
 
   const selectedTipo = useWatch({
     control,
     name: "Tipo",
   });
+
+  const selectedServicio = useWatch({
+    control,
+    name: "Servicio",
+  });
+
+  const Cotizaciones =
+    selectedTipo === "cotizaciones" || formValues.Tipo === "cotizaciones";
+  console.log(Cotizaciones);
 
   // const filteredSucursalOptions =
   // selectedTipo === "cotizaciones"
@@ -136,7 +142,9 @@ function ContactForm() {
   const onSubmit = async (data) => {
     const payload = {
       tipo: data.Tipo,
-      // sucursal: data.Sucursal,
+      servicio: data.Servicio,
+      origen: data.Origen, // Nuevo campo agregado
+      destino: data.destino, // Nuevo campo agregado
       nombre: data.Nombre + (data.RazonSocial ? " " + data.RazonSocial : ""),
       email: data.Correo,
       telefono: data.Telefono,
@@ -148,16 +156,39 @@ function ContactForm() {
 
     try {
       setIsLoading(true);
-      await axios.post(
-        "https://us-central1-tvn-api-store.cloudfunctions.net/app/contactUs",
-        payload
-      );
+      //  await axios.post(
+      //    "https://us-central1-tvn-api-store.cloudfunctions.net/app/contactUs",
+      //    payload
+      //  );
       reset();
       setIsLoading(false);
     } catch (error) {
       console.error("Error enviando el mensaje:", error);
       reset();
       setIsLoading(false);
+    }
+  };
+
+  const handleAutocompleteChange = async (field, value, onChange) => {
+    if (value && value.length === 5) {
+      try {
+        const response = await axios.get(
+          `https://api.pktuno.mx/Api/Cobertura/${value}`
+        );
+
+        if (field === "origen") {
+          setColoniasOrigen(response.data || []);
+          onChange(value);
+        } else if (field === "destino") {
+          setColoniasDestino(response.data || []);
+          onChange(value);
+        }
+      } catch (error) {
+        console.error("Error al obtener datos:", error);
+        onChange("");
+      }
+    } else {
+      onChange(value || "");
     }
   };
 
@@ -283,6 +314,198 @@ function ContactForm() {
             );
           }}
         />
+        {Cotizaciones && (
+          <Controller
+            name="Servicio"
+            control={control}
+            defaultValue=""
+            render={({ field }) => {
+              const isEmpty = field.value === "";
+              const hasError = !!errors.Tipo;
+
+              return (
+                <TextField
+                  {...field}
+                  select
+                  label="Tipo servicio*"
+                  helperText={
+                    hasError
+                      ? errors.Tipo.message
+                      : !isEmpty
+                      ? "✔️"
+                      : "Selecciona tu tipo de servicio"
+                  }
+                  error={hasError}
+                  sx={{
+                    width: {
+                      xs: "100%",
+                      sm: "500px",
+                      md: "367px",
+                      lg: "492px",
+                      xl: "592px",
+                    },
+                    borderRadius: "8px",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: isEmpty
+                          ? "#07417B"
+                          : hasError
+                          ? "red"
+                          : "green",
+                        borderRadius: "15px",
+                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: isEmpty
+                          ? "blue"
+                          : hasError
+                          ? "red"
+                          : "blue",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: isEmpty
+                          ? "gray"
+                          : hasError
+                          ? "red"
+                          : "green",
+                      },
+                    },
+                  }}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    if (e.target.value === "c") {
+                      setValue("Sucursal", "Matriz");
+                    }
+                  }}
+                >
+                  {tipoServicio.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              );
+            }}
+          />
+        )}
+        <>
+          {Cotizaciones && selectedServicio && (
+            <div
+              style={{
+                width: "42%",
+                display: "flex",
+                justifyContent: "space-evenly",
+                gap: 16,
+              }}
+            >
+              {/* Campo de origen */}
+              <Controller
+                name="Origen"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value } }) => (
+                  <Autocomplete
+                    freeSolo
+                    options={coloniasOrigen}
+                    value={value}
+                    fullWidth
+                    onInputChange={(e, newValue) => {
+                      if (/^\d+$/.test(newValue) || newValue === "") {
+                        handleAutocompleteChange("origen", newValue, onChange);
+                      }
+                    }}
+                    onChange={(e, newValue) => onChange(newValue)}
+                    getOptionLabel={(option) =>
+                      typeof option === "string"
+                        ? option
+                        : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Origen"
+                        variant="outlined"
+                        fullWidth
+                        helperText="Ingrese CP de origen"
+                        sx={{
+                          width: "100%",
+                          borderRadius: "8px",
+                          "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                              borderColor: "#07417B",
+                              borderRadius: "15px",
+                              boxShadow:
+                                "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
+                            },
+                            "&:hover fieldset": {
+                              borderColor: "blue",
+                            },
+                            "&.Mui-focused fieldset": {
+                              borderColor: "green",
+                            },
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                )}
+              />
+
+              {/* Campo de destino */}
+              <Controller
+                name="destino"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value } }) => (
+                  <Autocomplete
+                    freeSolo
+                    options={coloniasDestino}
+                    value={value}
+                    onInputChange={(e, newValue) => {
+                      if (/^\d+$/.test(newValue) || newValue === "") {
+                        handleAutocompleteChange("destino", newValue, onChange);
+                      }
+                    }}
+                    fullWidth
+                    onChange={(e, newValue) => onChange(newValue)}
+                    getOptionLabel={(option) =>
+                      typeof option === "string"
+                        ? option
+                        : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Destino"
+                        variant="outlined"
+                        fullWidth
+                        helperText="Ingrese CP de destino"
+                        sx={{
+                          width: "100%",
+                          borderRadius: "8px",
+                          "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                              borderColor: "#07417B",
+                              borderRadius: "15px",
+                              boxShadow:
+                                "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
+                            },
+                            "&:hover fieldset": {
+                              borderColor: "blue",
+                            },
+                            "&.Mui-focused fieldset": {
+                              borderColor: "green",
+                            },
+                          },
+                        }}
+                      />
+                    )}
+                  />
+                )}
+              />
+            </div>
+          )}
+        </>
         <Controller
           name="Nombre"
           control={control}
@@ -309,7 +532,7 @@ function ContactForm() {
                     sm: "500px",
                     md: "367px",
                     lg: "492px",
-                    xl: "592px",
+                    xl: selectedServicio || !Cotizaciones ? "592px" : "85%",
                   },
                   borderRadius: "8px",
                   "& .MuiOutlinedInput-root": {

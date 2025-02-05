@@ -17,8 +17,6 @@ export default function Home() {
       <Cobertura />
       <Testimonios />
       <FAQ />
-      <Alianzas />
-      <Estadisticas />
       <Contacto />
     </main>
   );

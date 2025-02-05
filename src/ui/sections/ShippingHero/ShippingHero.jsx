@@ -28,23 +28,16 @@ const ShippingHero = () => {
   const { emailConfirmado, emailUsuario, mostrarResultados } = useEmail();
   const [openDialog, setOpenDialog] = useState(false);
   const [openSeleccionModal, setOpenSeleccionModal] = useState(false);
+  const [selectedShippingType, setSelectedShippingType] = useState("");
 
   const handleCotizarClick = () => {
     setOpenSeleccionModal(true);
   };
 
-  const handleCotizarAqui = () => {
+  const handleCotizarAqui = (tipo) => {
+    setSelectedShippingType(tipo);
     setOpenSeleccionModal(false);
     setOpenDialog(true);
-  };
-
-  const handleCotizarAsesor = () => {
-    setOpenSeleccionModal(false);
-    localStorage.setItem("contactType", "cotizaciones");
-    router.push("/#contacto");
-    setTimeout(() => {
-      window.dispatchEvent(new Event("contactTypeChange"));
-    }, 100);
   };
 
   return (
@@ -95,9 +88,7 @@ const ShippingHero = () => {
               gap={4}
             >
               <Box>
-
-
-              <Typography
+                <Typography
                   variant="h1"
                   fontWeight="bold"
                   textAlign={"center"}
@@ -107,20 +98,19 @@ const ShippingHero = () => {
                   }}
                 >
                   Cotiza tus envíos de manera{" "}
-                  <Typography
-                    component="span"
-                    sx={{
-                      background:
-                        "linear-gradient(to right, #007bff, #007bff99)",
-                      WebkitBackgroundClip: "text",
-                      color: "transparent",
-                      fontSize: { xs: "1.5rem", md: "2.5rem" },
-                    }}
-                  >
-                    instantánea
-                  </Typography>
                 </Typography>
-
+                <Typography
+                  component="h1"
+                  sx={{
+                    background: "linear-gradient(to right, #007bff, #007bff99)",
+                    WebkitBackgroundClip: "text",
+                    textAlign: "center",
+                    color: "transparent",
+                    fontSize: { xs: "1.5rem", md: "2.5rem" },
+                  }}
+                >
+                  eficiente con nosotros.
+                </Typography>
 
                 <Typography
                   textAlign={{ xs: "justify", sm: "center" }}
@@ -132,8 +122,9 @@ const ShippingHero = () => {
                     mt: { xs: 2, md: 0 },
                   }}
                 >
-                  Calcula el costo de tus envíos en segundos. Servicio rápido,
-                  seguro y confiable para todas tus necesidades de paquetería.
+                  Solucionar tus necesidades logísticas es muy fácil con Myllos,
+                  solo compártenos tu requerimiento y nosotros nos encargamos de
+                  encontrar una solución ideal para ti.
                 </Typography>
               </Box>
 
@@ -171,13 +162,6 @@ const ShippingHero = () => {
                         <Typography variant="h6" textAlign={"center"}>
                           Cotizaciones
                         </Typography>
-                        <Typography
-                          variant="h7"
-                          textAlign={"center"}
-                          sx={{ color: "#6b7280" }}
-                        >
-                          En segundos
-                        </Typography>
                       </Box>
                     </CardContent>
                   </Card>
@@ -209,13 +193,6 @@ const ShippingHero = () => {
                       <Box>
                         <Typography variant="h6" textAlign={"center"}>
                           Envío Seguro
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          textAlign={"center"}
-                          sx={{ color: "#6b7280" }}
-                        >
-                          100% garantizado
                         </Typography>
                       </Box>
                     </CardContent>
@@ -335,7 +312,7 @@ const ShippingHero = () => {
             }}
           >
             <Button
-              onClick={handleCotizarAqui}
+              onClick={() => handleCotizarAqui("ftl")}
               variant="contained"
               sx={{
                 borderRadius: "15px",
@@ -352,29 +329,18 @@ const ShippingHero = () => {
                 transition: "all 0.3s ease",
               }}
             >
-              <CalculateIcon sx={{ fontSize: { xs: "2rem", md: "40px" } }} />
               <Typography
                 sx={{
                   fontSize: { xs: "1rem", md: "1.5rem" },
                   textTransform: "none",
                 }}
               >
-                Cotizar aquí
-              </Typography>
-              <Typography
-                variant="caption"
-                sx={{
-                  textAlign: "center",
-                  fontSize: { xs: "0.8rem", md: "1rem" },
-                  textTransform: "none",
-                }}
-              >
-                Obtén una cotización instantánea
+                FTL
               </Typography>
             </Button>
 
             <Button
-              onClick={handleCotizarAsesor}
+              onClick={() => handleCotizarAqui("ltl")}
               variant="outlined"
               sx={{
                 borderRadius: "15px",
@@ -393,23 +359,13 @@ const ShippingHero = () => {
                 transition: "all 0.3s ease",
               }}
             >
-              <PersonIcon sx={{ fontSize: { xs: "2rem", md: "40px" } }} />
               <Typography
                 sx={{
                   fontSize: { xs: "1rem", md: "1.5rem" },
                   textTransform: "none",
                 }}
               >
-                Cotizar con asesor
-              </Typography>
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: { xs: "0.8rem", md: "1rem" },
-                  textTransform: "none",
-                }}
-              >
-                Contacta a nuestro equipo
+                LTL
               </Typography>
             </Button>
           </Box>
@@ -423,7 +379,7 @@ const ShippingHero = () => {
           onPdfPreview={true}
           paddingContent={4}
         >
-          <CotizacionEnvios />
+          <CotizacionEnvios initialShippingType={selectedShippingType} />
         </CustomDialog>
 
         {/* Background decoration */}

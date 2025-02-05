@@ -37,7 +37,7 @@ const servicios = [
       "Camión completo dedicado",
       "Control total de la ruta",
       "Envíos urgentes o programados",
-      "Capacidad hasta 24 tarimas",
+      "Logistica personalizada",
     ],
   },
   //  {

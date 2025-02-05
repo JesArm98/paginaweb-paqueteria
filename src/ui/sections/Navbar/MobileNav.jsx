@@ -28,17 +28,22 @@ const MobileNav = () => {
   const pathname = usePathname();
 
   const toggleMenu = useCallback(() => {
-    setAnimation(isOpen ? "slideOut 0.5s forwards" : "slideIn 0.5s forwards");
-    setIsOpen(!isOpen);
-  }, [isOpen]);
+    setAnimation((prev) =>
+      prev === "slideIn 0.5s forwards"
+        ? "slideOut 0.5s forwards"
+        : "slideIn 0.5s forwards"
+    );
+    setIsOpen((prev) => !prev);
+  }, []);
 
   useEffect(() => {
+    let animationTimer;
     if (!isOpen) {
-      const animationTimer = setTimeout(() => {
+      animationTimer = setTimeout(() => {
         setAnimation("");
       }, ANIMATION_DURATION);
-      return () => clearTimeout(animationTimer);
     }
+    return () => clearTimeout(animationTimer);
   }, [isOpen]);
 
   useEffect(() => {
@@ -108,52 +113,51 @@ const MobileNav = () => {
 
   const menuItems2 = [
     {
-      icon: <Instagram sx={{ fontSize: 20 }} />,
-      href: "https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
-    },
-    // {
-    //   button: (
-    //     <Button
-    //       variant="outlined"
-    //       href="https://www.facebook.com/tuvanosaMX"
-    //       target="_blank"
-    //     >
-    //       <Image
-    //         src="/images/Footer/facebook.svg"
-    //         alt="Facebook"
-    //         width={20}
-    //         height={20}
-    //       />
-    //     </Button>
-    //   ),
-    //   href: "https://www.facebook.com/tuvanosaMX",
-    // },
-    {
-      icon: <Instagram sx={{ fontSize: 20 }} />,
-      href: "https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
+      button: (
+        <Button
+          variant="outlined"
+          href="https://www.facebook.com/tuvanosaMX"
+          target="_blank"
+        >
+          <Image
+            src="/images/Icons/facebook.svg"
+            alt="Facebook"
+            width={20}
+            height={20}
+          />
+        </Button>
+      ),
+      href: "https://www.facebook.com/tuvanosaMX",
+      name: "Facebook",
     },
     {
       icon: <Instagram sx={{ fontSize: 20 }} />,
       href: "https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
+      name: "Instagram",
     },
-    // {
-    //   button: (
-    //     <Button
-    //       variant="outlined"
-    //       href="https://www.linkedin.com/company/tuvanosa"
-    //       target="_blank"
-    //     >
-    //       <Image
-    //         src="/images/Footer/linkedin.svg"
-    //         alt="LinkedIn"
-    //         width={20}
-    //         height={20}
-    //       />
-    //     </Button>
-    //   ),
-    //   href: "https://www.linkedin.com/company/tuvanosa",
-    // },
-    { icon: <EmailOutlinedIcon sx={{ fontSize: 20 }} />, href: "#contacto" },
+    {
+      button: (
+        <Button
+          variant="outlined"
+          href="https://www.linkedin.com/company/tuvanosa"
+          target="_blank"
+        >
+          <Image
+            src="/images/Icons/linkedin.svg"
+            alt="LinkedIn"
+            width={20}
+            height={20}
+          />
+        </Button>
+      ),
+      href: "https://www.linkedin.com/company/tuvanosa",
+      name: "LinkedIn",
+    },
+    {
+      icon: <EmailOutlinedIcon sx={{ fontSize: 20 }} />,
+      href: "#contacto",
+      name: "Email",
+    },
   ];
 
   return (
@@ -169,7 +173,7 @@ const MobileNav = () => {
       </IconButton>
 
       {/* Contenedor del menú móvil */}
-      {(isOpen || animation) && (
+      {isOpen && (
         <Box
           sx={{
             position: "fixed",
@@ -224,7 +228,7 @@ const MobileNav = () => {
             <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
               {menuItems2.map((item, index) => (
                 <IconButton
-                  aria-label="Red social"
+                  aria-label={`Red social ${item.name}`}
                   key={index}
                   href={item.href}
                   sx={{ color: "white" }}

@@ -139,8 +139,7 @@ const Navbar = () => {
                   fontSize: "1.1875em",
                   fontWeight: "500",
                   cursor: "pointer",
-                  textDecoration:"none"
-                  
+                  textDecoration: "none",
                 }}
               >
                 ¿QUIERES SER SOCIO?
@@ -195,8 +194,6 @@ const Navbar = () => {
           </Link>
           */}
         </Box>
-
-        {console.log(openLogin)}
         <Box
           className="NavWeb"
           sx={{
@@ -214,6 +211,7 @@ const Navbar = () => {
               gap: 4,
             }}
           >
+            {/*Botón Facebook*/}
             <Button
               aria-label="Facebook"
               variant="outlined"
@@ -242,6 +240,7 @@ const Navbar = () => {
                 style={{ width: "24px", height: "24px" }}
               />
             </Button>
+            {/*Botón Instagram*/}
             <Button
               aria-label="Instagram"
               variant="outlined"
@@ -272,7 +271,8 @@ const Navbar = () => {
                 }}
               />
             </Button>
-            <Box>
+            {/*Botón de Login*/}
+            {/* <Box>
               {isLoggedIn === false ? (
                 <Button
                   sx={{ color: "#FFFFFF" }}
@@ -308,7 +308,7 @@ const Navbar = () => {
                     open={Boolean(anchorEl)}
                     onClose={handleMenuClose}
                   >
-                    {/* MIS PEDIDOS */}
+                   
                     <MenuItem
                       sx={{
                         height: "44px",
@@ -340,7 +340,7 @@ const Navbar = () => {
                         sx={{ fontSize: "16px", color: "#009FE3" }}
                       />
                     </MenuItem>
-                    {/* MI PERFIL */}
+                    
                     <MenuItem
                       sx={{
                         borderTop: "1px solid grey",
@@ -372,7 +372,7 @@ const Navbar = () => {
                         sx={{ fontSize: "16px", color: "#009FE3" }}
                       />
                     </MenuItem>
-                    {/* MIS DIRECCIONES */}
+                 
                     <MenuItem
                       sx={{
                         borderTop: "1px solid grey",
@@ -402,7 +402,7 @@ const Navbar = () => {
                         sx={{ fontSize: "16px", color: "#009FE3" }}
                       />
                     </MenuItem>
-                    {/* FACTURACION */}
+                   
                     <MenuItem
                       sx={{
                         borderTop: "1px solid grey",
@@ -433,7 +433,7 @@ const Navbar = () => {
                         sx={{ fontSize: "16px", color: "#009FE3" }}
                       />
                     </MenuItem>
-                    {/* CARRITO */}
+              
                     <MenuItem
                       disabled={cart.length <= 0}
                       sx={{
@@ -464,7 +464,7 @@ const Navbar = () => {
                         sx={{ fontSize: "16px", color: "#009FE3" }}
                       />
                     </MenuItem>
-                    {/* CERRAR SESION */}
+                    
                     <MenuItem
                       sx={{ borderTop: "1px solid grey", height: "44px" }}
                       onClick={() => handleLogOut("/tienda")}
@@ -477,7 +477,41 @@ const Navbar = () => {
                   </Menu>
                 </>
               )}
-            </Box>
+            </Box> */}
+            {/*Botón de LinkedIn*/}
+            <Button
+              aria-label="LinkedIn"
+              variant="outlined"
+              component="a"
+              href="https://www.myllos.com.mx/"
+              target="_blank"
+              sx={{
+                textTransform: "none",
+
+                color: "#FFFFFF",
+                transition: "background-color 0.3s ease",
+                borderColor: "transparent",
+                borderRadius: "30px",
+                height: "40px",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.31)",
+                  borderColor: "#FFFFFF",
+                  borderWidth: "1px",
+                  borderStyle: "solid",
+                  transform: "scale(0.90)",
+                  transition: "transform 0.2s ease, filter 0.2s ease",
+                },
+              }}
+            >
+              <Image
+                width={30}
+                height={30}
+                src="/images/Icons/linkedin.svg"
+                alt="LinkedIn"
+                style={{ width: "25px", height: "25px" }}
+              />
+            </Button>
+            {/*Botón de Contacto*/}
             <Link href="/#contacto" style={{ textDecoration: "none" }} passHref>
               <Button
                 aria-label="Botón para contacto"

@@ -24,7 +24,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CotizacionResultados from "./CotizacionResultados";
 import { useEmail } from "@/context/EmailContext";
 
-const CotizacionEnvios = () => {
+const CotizacionEnvios = ({ initialShippingType }) => {
   const {
     emailConfirmado,
     setEmailConfirmado,
@@ -51,9 +51,8 @@ const CotizacionEnvios = () => {
 
   // Opciones de tipo de envío
   const shippingTypes = [
-    { value: "caja", label: "Caja" },
-    { value: "sobre", label: "Sobre (máx. 1kg)" },
-    { value: "tarima", label: "Tarima" },
+    { value: "ltl", label: "LTL" },
+    { value: "ftl", label: "FTL" },
   ];
 
   // Definición de pasos y tamaños estándar
@@ -64,9 +63,9 @@ const CotizacionEnvios = () => {
           `${
             shippingType === "sobre"
               ? "Sobre"
-              : shippingType === "tarima"
-              ? "Tarima"
-              : "Caja"
+              : shippingType === "ftl"
+              ? "FTL"
+              : "LTL"
           } ${index + 1}`
       )
     : ["Detalles del Envío"];
@@ -98,10 +97,16 @@ const CotizacionEnvios = () => {
     defaultValues: {
       origen: "",
       destino: "",
-      tipoEnvio: null,
+      tipoEnvio: initialShippingType || "",
       packages: Array.from({ length: 1 }, () => ({ size: "", peso: "" })),
     },
   });
+
+  useEffect(() => {
+    if (initialShippingType) {
+      setShippingType(initialShippingType);
+    }
+  }, [initialShippingType]);
 
   // Funciones de navegación para el Stepper
   const handleNext = () => setStep((prevStep) => prevStep + 1);
@@ -165,8 +170,6 @@ const CotizacionEnvios = () => {
 
   // Observar cambios en el formulario en tiempo real
   const formData = watch();
-
-  console.log(formData);
 
   // Renderizar el componente de resultados si mostrarResultados es true
   if (mostrarResultados && quoteData) {
@@ -289,6 +292,7 @@ const CotizacionEnvios = () => {
                 <TextField
                   select
                   label="Tipo de Envío"
+                  value={shippingType}
                   {...field}
                   onChange={(e) => {
                     field.onChange(e);
@@ -323,7 +327,7 @@ const CotizacionEnvios = () => {
                   label={`Número de ${
                     shippingType === "sobre"
                       ? "sobres"
-                      : shippingType === "tarima"
+                      : shippingType === "ftl"
                       ? "tarimas"
                       : "cajas"
                   }`}
@@ -344,7 +348,7 @@ const CotizacionEnvios = () => {
                   helperText={`Ingrese número de ${
                     shippingType === "sobre"
                       ? "sobres"
-                      : shippingType === "tarima"
+                      : shippingType === "ftl"
                       ? "tarimas"
                       : "cajas"
                   }`}
@@ -386,7 +390,7 @@ const CotizacionEnvios = () => {
               </Grid>
 
               {/* Mostrar selector de tamaño solo para cajas y tarimas */}
-              {(shippingType === "caja" || shippingType === "tarima") && (
+              {(shippingType === "ltl" || shippingType === "ftl") && (
                 <Grid item xs={12} md={isMultiPackage ? 12 : 6}>
                   <Controller
                     name={`packages[${step}].size`}

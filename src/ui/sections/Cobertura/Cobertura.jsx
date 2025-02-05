@@ -25,13 +25,14 @@ import Mapa from "@/ui/components/Mapa/Mapa";
 const beneficios = [
   {
     icon: <LocalShippingIcon sx={{ color: "#07417B" }} />,
-    titulo: "Cobertura Nacional",
-    descripcion: "Servicio en toda la República Mexicana",
+    titulo: "Cobertura nacional e internacional",
+    descripcion:
+      "Te apoyamos con cualquier proyecto tanto nacional como global",
   },
   {
     icon: <AccessTimeIcon sx={{ color: "#07417B" }} />,
-    titulo: "Entregas Express",
-    descripcion: "Tiempos de entrega garantizados",
+    titulo: "Entregas y recolecciones con cita",
+    descripcion: "Coordinamos el servicio para cumplir con tu compromiso",
   },
   {
     icon: <TrackChangesIcon sx={{ color: "#07417B" }} />,
@@ -41,19 +42,14 @@ const beneficios = [
   {
     icon: <SecurityIcon sx={{ color: "#07417B" }} />,
     titulo: "Envíos Seguros",
-    descripcion: "Garantía en todos tus paquetes",
+    descripcion:
+      "Aseguramos tu mercancía para darte tranquilidad de inicio a fin",
   },
-];
-
-const ciudadesPrincipales = [
-  "Ciudad de México",
-  "Guadalajara",
-  "Monterrey",
-  "Puebla",
-  "Tijuana",
-  "Mérida",
-  "Querétaro",
-  "Cancún",
+  {
+    icon: <SecurityIcon sx={{ color: "#07417B" }} />,
+    titulo: "Acuse de recibo",
+    descripcion: "Gestionamos la evidencia de tus entregas",
+  },
 ];
 
 const Cobertura = () => {
@@ -84,46 +80,56 @@ const Cobertura = () => {
 
       <Grid container spacing={4} justifyContent="center">
         <Grid item xs={12} md={6}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: { xs: 2, md: 4 },
-              borderRadius: "15px",
-              height: "100%",
-
-              transition: "transform 0.3s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.02)",
-              },
-              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Box
-              position="relative"
-              height={{ xs: "150px", md: "400px" }}
+          <Box sx={{ height: "90%" }}>
+            <Paper
+              elevation={3}
               sx={{
-                "& img": {
-                  transition: "transform 0.3s ease-in-out",
+                p: { xs: 2, md: 4 },
+                borderRadius: "15px",
+                height: "100%",
+
+                transition: "transform 0.3s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.02)",
                 },
-                "&:hover img": {
-                  transform: "scale(1.05)",
-                },
+                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <Image
-                src="/images/mapa-mexico.jpg"
-                alt="Mapa de cobertura"
-                fill
-                style={{
-                  objectFit: "contain",
-                  cursor: "pointer",
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignContent={{ xs: "center", md: "center" }}
+                marginTop="auto"
+                position="relative"
+                height={{ xs: "150px", md: "400px" }}
+                sx={{
+                  "& img": {
+                    transition: "transform 0.3s ease-in-out",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    marginTop: "15%",
+                  },
+                  "&:hover img": {
+                    transform: "scale(1.05)",
+                  },
                 }}
-                onClick={() => {
-                  setOpenMap(true);
-                }}
-              />
-            </Box>
-          </Paper>
+              >
+                <Image
+                  src="/images/cobertura-mundial.webp"
+                  alt="Mapa de cobertura"
+                  fill
+                  style={{
+                    objectFit: "contain",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setOpenMap(true);
+                  }}
+                />
+              </Box>
+            </Paper>
+          </Box>
         </Grid>
 
         <Grid item xs={12} md={6}>
@@ -141,7 +147,7 @@ const Cobertura = () => {
                 textAlign: "center",
               }}
             >
-              Presencia Nacional
+              Cobertura Global
             </Typography>
 
             <Typography
@@ -155,10 +161,9 @@ const Cobertura = () => {
                 textAlign: { xs: "justify" },
               }}
             >
-              Contamos con una sólida red logística que nos permite ofrecer
-              servicios de entrega eficientes y confiables en todo México.
-              Nuestra infraestructura garantiza que tus envíos lleguen a su
-              destino de manera segura y puntual.
+              Contamos con una red de aliados que nos permiten ofrecerte una
+              cobertura global, tus necesidades seguro encontrarán una solución
+              en Myllos.
             </Typography>
 
             <List sx={{ mb: 4 }}>
@@ -227,60 +232,6 @@ const Cobertura = () => {
                 </React.Fragment>
               ))}
             </List>
-
-            <Box sx={{ mt: 4 }}>
-              <Typography
-                variant="h6"
-                sx={{
-                  background: "linear-gradient(45deg, #007bff, #007bff99)",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                  mb: { xs: 2, md: 3 },
-                  fontWeight: 600,
-                  fontSize: { xs: "1.2rem", md: "1.5rem" },
-                  textAlign: "center",
-                }}
-              >
-                Ciudades Principales
-              </Typography>
-              <Grid container spacing={2}>
-                {ciudadesPrincipales.map((ciudad) => (
-                  <Grid item xs={6} sm={4} key={ciudad}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 1,
-                        p: 1,
-                        borderRadius: "8px",
-                        transition: "all 0.3s ease-in-out",
-                        "&:hover": {
-                          backgroundColor: "#f0f9ff",
-                          transform: "translateX(5px)",
-                        },
-                      }}
-                    >
-                      <CheckCircleIcon
-                        sx={{
-                          color: "#007bff",
-                          fontSize: "1.2rem",
-                        }}
-                      />
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#4b5563",
-                          fontWeight: 500,
-                        }}
-                      >
-                        {ciudad}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
           </Box>
         </Grid>
       </Grid>

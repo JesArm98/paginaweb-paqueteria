@@ -185,3 +185,11 @@ export const stats = [
   //   ],
   // },
 };
+
+export const tipoServicio = [
+  { value: "FTL", label: "Servicio FTL" },
+  {
+    value: "LTL",
+    label: "Servicio LTL",
+  },
+];
