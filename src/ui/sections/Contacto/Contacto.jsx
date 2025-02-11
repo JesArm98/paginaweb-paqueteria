@@ -392,7 +392,7 @@ function ContactForm() {
           {Cotizaciones && selectedServicio && (
             <div
               style={{
-                width: "42%",
+                width: "600px",
                 display: "flex",
                 justifyContent: "space-evenly",
                 gap: 16,
@@ -428,7 +428,7 @@ function ContactForm() {
                         fullWidth
                         helperText="Ingrese CP de origen"
                         sx={{
-                          width: "100%",
+                          width: "280px",
                           borderRadius: "8px",
                           "& .MuiOutlinedInput-root": {
                             "& fieldset": {
@@ -481,7 +481,7 @@ function ContactForm() {
                         fullWidth
                         helperText="Ingrese CP de destino"
                         sx={{
-                          width: "100%",
+                          width: "290px",
                           borderRadius: "8px",
                           "& .MuiOutlinedInput-root": {
                             "& fieldset": {
@@ -532,7 +532,7 @@ function ContactForm() {
                     sm: "500px",
                     md: "367px",
                     lg: "492px",
-                    xl: selectedServicio || !Cotizaciones ? "592px" : "85%",
+                    xl: selectedServicio || !Cotizaciones ? "600px" : "800px",
                   },
                   borderRadius: "8px",
                   "& .MuiOutlinedInput-root": {

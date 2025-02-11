@@ -163,7 +163,11 @@ const Footer = () => {
             </Link>
           */}
 
-            <Link href="/preguntas-frecuentes" style={{ textDecoration: "none" }} passHref>
+            <Link
+              href="/preguntas-frecuentes"
+              style={{ textDecoration: "none" }}
+              passHref
+            >
               <Button
                 aria-label="Preguntas frecuentes"
                 sx={{
@@ -388,7 +392,7 @@ const Footer = () => {
                 aria-label="Facebook"
                 variant="outlined"
                 component="a"
-                href="https://www.myllos.com.mx/"
+                href="https://www.facebook.com/profile.php?id=61569802240206"
                 target="_blank"
                 sx={{
                   textTransform: "none",
@@ -454,7 +458,7 @@ const Footer = () => {
                 aria-label="LinkedIn"
                 variant="outlined"
                 component="a"
-                href="https://www.myllos.com.mx/"
+                href="https://www.facebook.com/profile.php?id=61569802240206"
                 target="_blank"
                 sx={{
                   textTransform: "none",

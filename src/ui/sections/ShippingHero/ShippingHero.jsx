@@ -374,7 +374,7 @@ const ShippingHero = () => {
         <CustomDialog
           open={openDialog}
           onClose={() => setOpenDialog(false)}
-          title="Cotización de envío"
+          title={`Cotización de envío ${selectedShippingType.toUpperCase()}`}
           width={emailConfirmado || !mostrarResultados ? "lg" : "sm"}
           onPdfPreview={true}
           paddingContent={4}

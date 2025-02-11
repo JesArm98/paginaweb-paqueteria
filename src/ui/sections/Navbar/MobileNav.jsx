@@ -116,7 +116,7 @@ const MobileNav = () => {
       button: (
         <Button
           variant="outlined"
-          href="https://www.facebook.com/tuvanosaMX"
+          href="https://www.facebook.com/profile.php?id=61569802240206"
           target="_blank"
         >
           <Image
@@ -127,7 +127,7 @@ const MobileNav = () => {
           />
         </Button>
       ),
-      href: "https://www.facebook.com/tuvanosaMX",
+      href: "https://www.facebook.com/profile.php?id=61569802240206",
       name: "Facebook",
     },
     {
