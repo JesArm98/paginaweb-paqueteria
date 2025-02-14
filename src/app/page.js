@@ -15,7 +15,6 @@ export default function Home() {
       <ShippingHero />
       <Servicios />
       <Cobertura />
-      <Testimonios />
       <FAQ />
       <Contacto />
     </main>

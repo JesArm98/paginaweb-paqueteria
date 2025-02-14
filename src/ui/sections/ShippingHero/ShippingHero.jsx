@@ -379,7 +379,8 @@ const ShippingHero = () => {
           onPdfPreview={true}
           paddingContent={4}
         >
-          <CotizacionEnvios initialShippingType={selectedShippingType} />
+          <CotizacionEnvios initialShippingType={selectedShippingType}
+          open={openDialog} onClose={()=> setOpenDialog(false)} />
         </CustomDialog>
 
         {/* Background decoration */}

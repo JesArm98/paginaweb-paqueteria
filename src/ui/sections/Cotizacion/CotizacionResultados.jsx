@@ -56,91 +56,33 @@ const CotizacionResultados = ({
     return a.precio - b.precio;
   });
 
-  const renderPackageDetails = (packageData, index) => {
-    const isFirstPackage = index === 0;
-    const dimensions =
-      packageData.size === "manual"
-        ? {
-            ancho: packageData.customWidth,
-            alto: packageData.customHeight,
-            largo: packageData.customLength,
-          }
-        : packageData.size.split("x").reduce((acc, val, idx) => {
-            const keys = ["ancho", "alto", "largo"];
-            acc[keys[idx]] = val;
-            return acc;
-          }, {});
-
+  const renderPackageDetails = (pkg, index) => {
+    if (!pkg) return null;
+  
     return (
-      <Card
-        sx={{
-          mb: 2,
-          borderRadius: "20px",
-          border: "1px solid red",
-          height: "fit-content",
-        }}
-        key={index}
-      >
-        {console.log(cotizacionData)}
+      <Card key={index} sx={{ mb: 2, borderRadius: "20px", border: "1px solid red" }}>
         <CardContent>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} sm={2}></Grid>
-            <Grid item xs={12} sm={8}>
-              <Grid container spacing={2}>
-                <Grid item xs={6} sm={2}>
-                  <Typography variant="body2">
-                    <strong>Desde:</strong>{" "}
-                    {typeof cotizacionData.origen === "object"
-                      ? `${cotizacionData.origen.cp}`
-                      : cotizacionData.origen}
-                  </Typography>
-                </Grid>{" "}
-                <Grid item xs={6} sm={2}>
-                  <Typography variant="body2">
-                    <strong>Hasta:</strong>{" "}
-                    {typeof cotizacionData.destino === "object"
-                      ? `${cotizacionData.destino.cp}`
-                      : cotizacionData.destino}
-                  </Typography>
-                </Grid>{" "}
-                <Grid item xs={6} sm={2}>
-                  <Typography variant="body2">
-                    <strong>Alto:</strong> {dimensions.alto} cm
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={2}>
-                  <Typography variant="body2">
-                    <strong>Ancho:</strong> {dimensions.ancho} cm
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={2}>
-                  <Typography variant="body2">
-                    <strong>Largo:</strong> {dimensions.largo} cm
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={2}>
-                  <Typography variant="body2">
-                    <strong>Peso:</strong> {packageData.peso} kg
-                  </Typography>
-                </Grid>
-              </Grid>
+            <Grid item xs={6} sm={2}>
+              <Typography variant="body2">
+                <strong>Ancho:</strong> {pkg.width || "N/A"} cm
+              </Typography>
             </Grid>
-            {isFirstPackage && (
-              <Grid item xs={12} sm={2}>
-                <Button
-                  variant="outlined"
-                  onClick={onModificarCotizacion}
-                  fullWidth
-                  sx={{
-                    mt: { xs: 2, sm: 0 },
-                    borderRadius: "20px",
-                    textTransform: "none",
-                  }}
-                >
-                  Modificar cotización
-                </Button>
-              </Grid>
-            )}
+            <Grid item xs={6} sm={2}>
+              <Typography variant="body2">
+                <strong>Alto:</strong> {pkg.height || "N/A"} cm
+              </Typography>
+            </Grid>
+            <Grid item xs={6} sm={2}>
+              <Typography variant="body2">
+                <strong>Largo:</strong> {pkg.length || "N/A"} cm
+              </Typography>
+            </Grid>
+            <Grid item xs={6} sm={2}>
+              <Typography variant="body2">
+                <strong>Peso:</strong> {pkg.weight || "N/A"} kg
+              </Typography>
+            </Grid>
           </Grid>
         </CardContent>
       </Card>
@@ -188,9 +130,30 @@ const CotizacionResultados = ({
         <>
           {/* Resumen de la cotización */}
           <Box sx={{ mb: 4 }}>
+            <Box sx={{display:"flex"}}>
             <Typography variant="h5" gutterBottom sx={{ mb: 3, color: "blue" }}>
               Detalles del envío
             </Typography>
+            <Button
+  variant="outlined"
+  color="primary"
+  onClick={onModificarCotizacion}
+  sx={{
+    textTransform: "none",
+    borderRadius: "20px",
+    width: "fit-content",
+    mx: "auto",
+    display:"flex",
+    "&:hover": {
+      backgroundColor: "#007bff",
+      color: "white",
+    },
+  }}
+>
+  Modificar Cotización
+</Button>
+
+            </Box>
             {cotizacionData.packages.map((pkg, index) =>
               renderPackageDetails(pkg, index)
             )}

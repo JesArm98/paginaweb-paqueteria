@@ -478,7 +478,7 @@ const Navbar = () => {
                 </>
               )}
             </Box> */}
-            {/*Botón de LinkedIn*/}
+            {/*Botón de LinkedIn
             <Button
               aria-label="LinkedIn"
               variant="outlined"
@@ -511,6 +511,7 @@ const Navbar = () => {
                 style={{ width: "25px", height: "25px" }}
               />
             </Button>
+            */}
             {/*Botón de Contacto*/}
             <Link href="/#contacto" style={{ textDecoration: "none" }} passHref>
               <Button
