@@ -532,7 +532,7 @@ function ContactForm() {
                     sm: "500px",
                     md: "367px",
                     lg: "492px",
-                    xl: selectedServicio || !Cotizaciones ? "600px" : "800px",
+                    xl: selectedServicio && !Cotizaciones ? "800px" : "600px",
                   },
                   borderRadius: "8px",
                   "& .MuiOutlinedInput-root": {

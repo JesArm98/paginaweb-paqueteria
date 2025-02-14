@@ -272,7 +272,7 @@ const Navbar = () => {
               />
             </Button>
             {/*Botón de Login*/}
-            {/* <Box>
+ <Box>
               {isLoggedIn === false ? (
                 <Button
                   sx={{ color: "#FFFFFF" }}
@@ -477,7 +477,7 @@ const Navbar = () => {
                   </Menu>
                 </>
               )}
-            </Box> */}
+            </Box> 
             {/*Botón de LinkedIn
             <Button
               aria-label="LinkedIn"

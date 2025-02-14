@@ -242,17 +242,16 @@ useEffect(() => {
 
           {/* Contador de Tarimas y Botón Agregar */}
           <Grid item xs={12} md={6}>
-            <TextField
-              label="Número de Tarimas"
-              value={fields.length}
-              InputProps={{
-                readOnly: true,
-              }}
-              helperText="Pallet, Jaula, etc."
-              disabled
-              fullWidth
-              sx={inputStyles}
-            />
+            <Typography sx={{
+              fontSize:"16px",
+            }}>
+              Número de Tarimas: {fields.length}
+            </Typography>
+              <Typography sx={{
+                fontSize:"11px"
+              }}>
+                Ingrese número de tarimas por Pallet, Jaulta, etc.
+              </Typography>
           </Grid>
 
           <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "roww", alignItems: "center", justifyContent:"space-evenly" }}>

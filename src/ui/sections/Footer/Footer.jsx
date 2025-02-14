@@ -163,17 +163,19 @@ const Footer = () => {
             </Link>
           */}
 
+            {/*Botón de preguntas frecuentes*/}
             <Link
               href="/preguntas-frecuentes"
-              style={{ textDecoration: "none" }}
-              passHref
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ textDecoration: "none" }}
             >
               <Button
                 aria-label="Preguntas frecuentes"
                 sx={{
-                  display: { xs: "none", md: "flex" },
+                  textTransform: "none",
+
                   color: "#FFFFFF",
-                  padding: "8px 16px",
                   transition: "background-color 0.3s ease",
                   borderColor: "transparent",
                   borderRadius: "30px",
@@ -181,22 +183,14 @@ const Footer = () => {
                   "&:hover": {
                     backgroundColor: "rgba(255, 255, 255, 0.31)",
                     borderColor: "#FFFFFF",
+                    borderWidth: "1px",
+                    borderStyle: "solid",
                     transform: "scale(0.90)",
+                    transition: "transform 0.2s ease, filter 0.2s ease",
                   },
                 }}
               >
-                <Typography
-                  variant="h2"
-                  className="nav-text"
-                  sx={{
-                    fontSize: "1.1875em",
-                    fontWeight: "500",
-                    cursor: "pointer",
-                    textTransform: "none",
-                  }}
-                >
-                  Preguntas frecuentes
-                </Typography>
+                Preguntas frecuentes
               </Button>
             </Link>
           </Box>
@@ -240,94 +234,64 @@ const Footer = () => {
               height: "100%",
             }}
           >
-            <Link
-              href="https://www.myllos.com.mx/"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{ textDecoration: "none" }}
-            >
-              <Button
-                aria-label="Área de clientes"
-                sx={{
-                  textTransform: "none",
-
-                  color: "#FFFFFF",
-                  transition: "background-color 0.3s ease",
-                  borderColor: "transparent",
-                  borderRadius: "30px",
-                  height: "40px",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.31)",
-                    borderColor: "#FFFFFF",
-                    borderWidth: "1px",
-                    borderStyle: "solid",
-                    transform: "scale(0.90)",
-                    transition: "transform 0.2s ease, filter 0.2s ease",
-                  },
-                }}
-              >
-                Clientes
-              </Button>
-            </Link>
-            {/*Botón de preguntas frecuentes*/}
-            <Link
-              href="/preguntas-frecuentes"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{ textDecoration: "none" }}
-            >
-              <Button
-                aria-label="Preguntas frecuentes"
-                sx={{
-                  textTransform: "none",
-
-                  color: "#FFFFFF",
-                  transition: "background-color 0.3s ease",
-                  borderColor: "transparent",
-                  borderRadius: "30px",
-                  height: "40px",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.31)",
-                    borderColor: "#FFFFFF",
-                    borderWidth: "1px",
-                    borderStyle: "solid",
-                    transform: "scale(0.90)",
-                    transition: "transform 0.2s ease, filter 0.2s ease",
-                  },
-                }}
-              >
-                Preguntas frecuentes
-              </Button>
-            </Link>
+<a
+  href="https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Contrato-adhesion-Myllos.pdf?alt=media&token=3f04bcb4-7d58-4428-9a94-07400a498bb0"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ textDecoration: "none" }}
+>
+  <Button
+    aria-label="Contrato de Adhesión"
+    sx={{
+      textTransform: "none",
+      color: "#FFFFFF",
+      transition: "background-color 0.3s ease",
+      borderColor: "transparent",
+      borderRadius: "30px",
+      height: "40px",
+      "&:hover": {
+        backgroundColor: "rgba(255, 255, 255, 0.31)",
+        borderColor: "#FFFFFF",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        transform: "scale(0.90)",
+        transition: "transform 0.2s ease, filter 0.2s ease",
+      },
+    }}
+  >
+    Contrato adhesión
+  </Button>
+</a>
             {/*Botón de términos y condiciones*/}
-            <Link
-              href="/terminos-y-condiciones"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{ textDecoration: "none" }}
-            >
-              <Button
-                aria-label="Terminos y condiciones"
-                sx={{
-                  textTransform: "none",
-                  color: "#FFFFFF",
-                  transition: "background-color 0.3s ease",
-                  borderColor: "transparent",
-                  borderRadius: "30px",
-                  height: "40px",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.31)",
-                    borderColor: "#FFFFFF",
-                    borderWidth: "1px",
-                    borderStyle: "solid",
-                    transform: "scale(0.90)",
-                    transition: "transform 0.2s ease, filter 0.2s ease",
-                  },
-                }}
-              >
-                Terminos y condiciones
-              </Button>
-            </Link>
+            <a
+  href="https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Terminos-y-condiciones-Myllos.pdf?alt=media&token=1733f60b-37be-4ccb-85a4-35ac88145ac5"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ textDecoration: "none" }}
+>
+  <Button
+    aria-label="Términos y Condiciones"
+    sx={{
+      textTransform: "none",
+      color: "#FFFFFF",
+      transition: "background-color 0.3s ease",
+      borderColor: "transparent",
+      borderRadius: "30px",
+      height: "40px",
+      "&:hover": {
+        backgroundColor: "rgba(255, 255, 255, 0.31)",
+        borderColor: "#FFFFFF",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        transform: "scale(0.90)",
+        transition: "transform 0.2s ease, filter 0.2s ease",
+      },
+    }}
+  >
+    Términos y Condiciones
+  </Button>
+</a>
+
             {/*Botón de aviso de privacidad*/}
             <Link
               href="/aviso-de-privacidad"
@@ -367,7 +331,7 @@ const Footer = () => {
             flexDirection: "column",
             backgroundColor: "#1b1c3c",
             height: "100%",
-            padding: { xs: "24px", md: "38px" },
+            padding: { xs: "24px", md: "12px" },
           }}
         >
           <Box
@@ -381,7 +345,7 @@ const Footer = () => {
             <Box
               sx={{
                 width: "100%",
-                marginTop: { xs: "0px", md: "40px" },
+                marginTop: { xs: "0px", md: "30px" },
                 height: { xs: "auto", md: "44px" },
                 display: { xs: "flex", md: "flex" },
                 justifyContent: "center",
@@ -492,9 +456,17 @@ const Footer = () => {
                 justifyContent: "center",
                 width: "100%",
                 paddingTop: 3,
-                display: { xs: "none", md: "flex" },
+                display: "flex",
+
               }}
-            ></Box>
+            >
+              <Typography sx={{
+                color:"white"
+              }}>
+                
+                WhatsApp: (667) 389 7772 
+                </Typography>
+                </Box>
           </Box>
         </Box>
       </Grid>
