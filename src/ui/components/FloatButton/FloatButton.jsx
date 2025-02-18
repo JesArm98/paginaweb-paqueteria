@@ -16,7 +16,7 @@ const bounce = keyframes`
 `;
 
 const FloatButton = () => {
-  const phoneNumber = "6673897772";
+  const phoneNumber = "526673897772";
   const message =
     "Hola, quisiera más información sobre sus servicios de envios en FTL y LTL. Gracias.";
 
