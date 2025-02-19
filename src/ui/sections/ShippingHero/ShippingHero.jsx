@@ -214,18 +214,44 @@ const ShippingHero = () => {
                   sx={{
                     textTransform: "none",
                     fontSize: { xs: "0.8rem", md: "1.125rem" },
-                    transition: "background-color 0.3s ease",
+                    padding: "10px 20px",
                     border: "0.5px solid #007bff",
                     borderRadius: "30px",
-                    zIndex: 1,
+                    backgroundColor: "white",
+                    color: "#007bff",
+                    fontWeight: "bold",
+                    position: "relative",
+                    overflow: "hidden",
+                    transition: "all 0.3s ease-in-out",
                     "&:hover": {
                       backgroundColor: "#007bff",
                       color: "#FFFFFF",
-                      "& .text": {
-                        transform: "scale(0.90)",
-                        transition: "transform 0.2s ease, filter 0.2s ease",
-                      },
+                      transform: "translateY(-3px)", // Movimiento leve hacia arriba
+                      boxShadow: "0 8px 20px rgba(0, 123, 255, 0.5)", // Sombra más intensa
                     },
+                    "&:active": {
+                      transform: "scale(0.95)", // Efecto de presión al hacer clic
+                    },
+                    "&::after": {
+                      content: '""',
+                      position: "absolute",
+                      width: "100%",
+                      height: "100%",
+                      background: "rgba(255,255,255,0.3)",
+                      top: 0,
+                      left: 0,
+                      opacity: 0,
+                      transition: "opacity 0.3s ease",
+                    },
+                    "&:hover::after": {
+                      opacity: 1,
+                    },
+                    "@keyframes pulse": {
+                      "0%": { boxShadow: "0 0 0 0 rgba(0, 123, 255, 0.8)" },
+                      "50%": { boxShadow: "0 0 10px 10px rgba(0, 123, 255, 0.3)" },
+                      "100%": { boxShadow: "0 0 0 0 rgba(0, 123, 255, 0)" },
+                    },
+                    animation: "pulse 3.5s infinite", // Efecto pulsante
                   }}
                 >
                   Cotizar ahora

@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <Grid
       container
-      sx={{ padding: 0, margin: 0, height: "100%", backgroundColor: "#1B1C3C" }}
+      sx={{ padding: 0, margin: 0, height: "100%", backgroundColor: "#3DC2CF" }}
     >
       <Grid
         item
@@ -39,7 +39,7 @@ const Footer = () => {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            padding: 2,
+            padding: 0,
           }}
         >
           <Link href="/" style={{ textDecoration: "none" }}>
@@ -49,17 +49,18 @@ const Footer = () => {
                 display: { xs: "none", md: "flex" },
                 padding: 0,
                 minWidth: "auto",
+                justifyContent:"center",
+                alignContent:"center",
+                margin:"auto"
               }}
             >
               <Image
-                src="/images/myllos-logo.jpeg"
+                src="/images/myllos-logo.png"
                 alt="Logo Myllos - Volver a Inicio"
                 width={150}
-                height={114}
+                height={150}
                 style={{
                   objectFit: "contain",
-                  width: "100%",
-                  height: "auto",
                 }}
               />
             </Button>
@@ -73,7 +74,7 @@ const Footer = () => {
             flexDirection: "column",
             justifyContent: "space-evenly",
             alignItems: "center",
-            backgroundColor: "#1b1c3c",
+            backgroundColor: "#3DC2CF",
             height: "100%",
             padding: { xs: 0, md: 3 },
           }}
@@ -203,7 +204,7 @@ const Footer = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#1b1c3c",
+            backgroundColor: "#3DC2CF",
             height: "100%",
             padding: { xs: 0, md: 3 },
             position: "relative",
@@ -293,14 +294,15 @@ const Footer = () => {
 </a>
 
             {/*Botón de aviso de privacidad*/}
-            <Link
-              href="/aviso-de-privacidad"
-              rel="noopener noreferrer"
-              sx={{ textDecoration: "none" }}
-            >
-              <Button
-                aria-label="Aviso de privacidad"
-                sx={{
+           <a
+  href="https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/aviso-de-privacidad-myllos.pdf?alt=media&token=0d3db21e-49ae-4186-abec-2a4674dccd97"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ textDecoration: "none" }}
+>
+  <Button
+    aria-label="Aviso de privacidad"
+    sx={{
                   textTransform: "none",
 
                   color: "#FFFFFF",
@@ -317,10 +319,10 @@ const Footer = () => {
                     transition: "transform 0.2s ease, filter 0.2s ease",
                   },
                 }}
-              >
-                Aviso de privacidad
-              </Button>
-            </Link>
+  >
+    Aviso de privacidad
+  </Button>
+</a>
           </Box>
         </Box>
       </Grid>
@@ -329,7 +331,7 @@ const Footer = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            backgroundColor: "#1b1c3c",
+            backgroundColor: "#3DC2CF",
             height: "100%",
             padding: { xs: "24px", md: "12px" },
           }}

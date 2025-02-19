@@ -48,12 +48,13 @@ const Navbar = () => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: "black",
+          backgroundColor: "#000",
           zIndex: 10,
           transition: "background-color 0.5s ease-in-out",
           position: "fixed",
           width: "100%",
           height: "60px",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
         }}
       >
         <Box
@@ -69,13 +70,17 @@ const Navbar = () => {
         >
           <Link href="/" style={{ textDecoration: "none" }}>
             <Image
-              style={{ borderRadius: "20px" }}
               className="LogoNavbar"
               width={50}
               height={50}
-              src="/images/myllos-logo-notext.jpeg"
+              src="/images/myllos-logo-notext.png"
               alt="Myllos Logo"
               priority
+              style={{
+                borderRadius: "20px",
+                transition: "transform 0.3s ease",
+                cursor: "pointer",
+              }}
             />
           </Link>
           <Link href="/" passHref style={{ textDecoration: "none" }}>
@@ -92,9 +97,8 @@ const Navbar = () => {
                 height: "40px",
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.31)",
-                  borderColor: "#FFFFFF",
-                  transform: "scale(0.90)",
-                  transition: "transform 0.2s ease, filter 0.2s ease",
+                  transform: "scale(1.1)",
+                  boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)",
                 },
               }}
             >
@@ -125,9 +129,8 @@ const Navbar = () => {
                 height: "40px",
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.31)",
-                  borderColor: "#FFFFFF",
-                  transform: "scale(0.90)",
-                  transition: "transform 0.2s ease, filter 0.2s ease",
+                  transform: "scale(1.1)",
+                  boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)",
                 },
               }}
             >
@@ -224,11 +227,8 @@ const Navbar = () => {
                 borderRadius: "30px",
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.31)",
-                  borderColor: "#FFFFFF",
-                  "& .text": {
-                    transform: "scale(0.90)",
-                    transition: "transform 0.2s ease, filter 0.2s ease",
-                  },
+                  transform: "scale(1.2)",
+                  boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)",
                 },
               }}
             >
@@ -254,11 +254,8 @@ const Navbar = () => {
                 borderRadius: "30px",
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.31)",
-                  borderColor: "#FFFFFF",
-                  "& .text": {
-                    transform: "scale(0.90)",
-                    transition: "transform 0.2s ease, filter 0.2s ease",
-                  },
+                  transform: "scale(1.2)",
+                  boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)",
                 },
               }}
             >
@@ -523,11 +520,8 @@ const Navbar = () => {
                   borderRadius: "30px",
                   "&:hover": {
                     backgroundColor: "rgba(255, 255, 255, 0.31)",
-                    borderColor: "#FFFFFF",
-                    "& .text": {
-                      transform: "scale(0.90)",
-                      transition: "transform 0.2s ease, filter 0.2s ease",
-                    },
+                    transform: "scale(1.2)",
+                    boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)",
                   },
                 }}
               >

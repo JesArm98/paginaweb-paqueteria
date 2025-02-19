@@ -77,7 +77,7 @@ const Servicios = () => {
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Typography
             sx={{
-              fontSize: { xs: "1.5rem", md: "2.5rem" },
+              fontSize: { xs: "1.5rem", md: "2.25rem" },
               fontWeight: "bold",
               mb: 2,
               background: "linear-gradient(45deg, #007bff, #007bff99)",
@@ -92,7 +92,7 @@ const Servicios = () => {
               color: "#6b7280",
               maxWidth: "800px",
               mx: "auto",
-              fontSize: { xs: "1rem", md: "1.2rem" },
+              fontSize: { xs: "1rem", md: "1.25rem" },
             }}
           >
             Soluciones integrales de logística adaptadas a tus necesidades
@@ -141,7 +141,7 @@ const Servicios = () => {
                     sx={{
                       mb: 2,
                       fontWeight: "bold",
-                      fontSize: { xs: "1rem", md: "1.5rem" },
+                      fontSize: { xs: "1rem", md: "1.25rem" },
                     }}
                   >
                     {servicio.titulo}

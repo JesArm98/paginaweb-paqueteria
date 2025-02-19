@@ -236,7 +236,7 @@ function ContactForm() {
         atender tus quejas o proporcionarte cotizaciones. ¡Estamos listos para
         ayudarte!
       </Typography>
-      <p>Los campos marcados con * son obligatorios.</p>
+      <p style={{fontSize:"14px"}}>Los campos marcados con * son obligatorios.</p>
       <div
         style={{
           width: "85%",

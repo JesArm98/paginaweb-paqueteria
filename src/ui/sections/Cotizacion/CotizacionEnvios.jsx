@@ -12,7 +12,8 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-  Tooltip
+  Tooltip,
+  FormControlLabel,Checkbox
 } from "@mui/material";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import axios from "axios";
@@ -43,6 +44,7 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
 
   const [coloniasOrigen, setColoniasOrigen] = useState([]);
   const [coloniasDestino, setColoniasDestino] = useState([]);
+  const [vincularTarimas, setVincularTarimas] = useState(false);
   const [expanded, setExpanded] = useState(true); // Expandido por defecto
 
   const { control, handleSubmit, watch, setValue } = useForm({
@@ -167,6 +169,33 @@ const isFormValid = () => {
 useEffect(() => {
   setExpanded(true);
 }, [fields.length]);
+
+const handleTarimaChange = (event) => {
+  let newCount = Number(event.target.value) || 1;
+  newCount = Math.max(1, newCount);
+  const currentCount = fields.length;
+  if (newCount > currentCount) {
+    for (let i = currentCount; i < newCount; i++) {
+      append({ width: "", height: "", length: "", weight: "" });
+    }
+  } else if (newCount < currentCount) {
+    for (let i = currentCount; i > newCount; i--) {
+      remove(i - 1);
+    }
+  }
+};
+
+const handleVincularTarimas = (event) => {
+  setVincularTarimas(event.target.checked);
+};
+
+const sincronizarValores = (index, field, value) => {
+  if (vincularTarimas) {
+    fields.forEach((_, i) => setValue(`packages.${i}.${field}`, value, { shouldValidate: true }));
+  } else {
+    setValue(`packages.${index}.${field}`, value, { shouldValidate: true });
+  }
+};
   
 
   return (
@@ -242,6 +271,17 @@ useEffect(() => {
 
           {/* Contador de Tarimas y Botón Agregar */}
           <Grid item xs={12} md={6}>
+            {initialShippingType === "ftl" ?             <TextField
+              label="Número de Tarimas"
+              value={fields.length}
+              helperText="Pallet, Jaula, etc."
+              onChange={handleTarimaChange}
+              fullWidth
+              sx={inputStyles}
+              type="number"
+            /> : 
+            
+            <Box>
             <Typography sx={{
               fontSize:"16px",
             }}>
@@ -252,9 +292,17 @@ useEffect(() => {
               }}>
                 Ingrese número de tarimas por Pallet, Jaulta, etc.
               </Typography>
+            </Box>
+            }
+
+
           </Grid>
 
           <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "roww", alignItems: "center", justifyContent:"space-evenly" }}>
+            {initialShippingType === "ltl" && (
+
+            <Box>
+
   {/* Botón Agregar Tarima */}
   <Button
     variant="outlined"
@@ -265,10 +313,22 @@ useEffect(() => {
   >
     Agregar
   </Button>
+            </Box>
+            )}
+            
+          {initialShippingType === "ftl" && (
+            <Grid item xs={12} md={6}>
+              <FormControlLabel
+                control={<Checkbox checked={vincularTarimas} onChange={handleVincularTarimas} />}
+                label="Vincular todas las tarimas"
+              />
+            </Grid>
+
+          )}
 <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid red", borderRadius:"20px", gap:1}}>
   {/* Texto debajo del botón */}
   <Typography variant="body2" sx={{ fontSize: "12px", textAlign: "center", ml:1.5 }}>
-    Cómo conocer las dimensiones
+    Conocer dimensiones de tarima
   </Typography>
 
   {/* Tooltip con imagen al hacer hover */}
@@ -333,7 +393,7 @@ useEffect(() => {
               name={`packages.${index}.width`}
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Ancho (cm)" type="number" fullWidth sx={{ ...inputStyles }} />
+                <TextField {...field} label="Ancho (cm)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'width', e.target.value)} />
               )}
             />
           </Grid>
@@ -344,7 +404,7 @@ useEffect(() => {
               name={`packages.${index}.height`}
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Alto (cm)" type="number" fullWidth sx={{ ...inputStyles }} />
+                <TextField {...field} label="Alto (cm)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'height', e.target.value)} />
               )}
             />
           </Grid>
@@ -355,7 +415,7 @@ useEffect(() => {
               name={`packages.${index}.length`}
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Largo (cm)" type="number" fullWidth sx={{ ...inputStyles }} />
+                <TextField {...field} label="Largo (cm)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'length', e.target.value)} />
               )}
             />
           </Grid>
@@ -366,7 +426,7 @@ useEffect(() => {
               name={`packages.${index}.weight`}
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Peso (kg)" type="number" fullWidth sx={{ ...inputStyles }} />
+                <TextField {...field} label="Peso (kg)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'weight', e.target.value)} />
               )}
             />
           </Grid>

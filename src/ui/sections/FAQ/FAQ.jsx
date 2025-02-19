@@ -29,7 +29,7 @@ const FAQ = () => {
         <Box sx={{ textAlign: "center", mb: { xs: 4, md: 6 } }}>
           <Typography
             sx={{
-              fontSize: { xs: "1.5rem", md: "2.5rem" },
+              fontSize: { xs: "1.5rem", md: "2.25rem" },
               fontWeight: "bold",
               mb: 2,
               background: "linear-gradient(45deg, #007bff, #007bff99)",
@@ -45,7 +45,7 @@ const FAQ = () => {
               maxWidth: "800px",
               mx: "auto",
               mb: 4,
-              fontSize: { xs: "1rem", md: "1.2rem" },
+              fontSize: { xs: "1rem", md: "1.25rem" },
             }}
           >
             Resolvemos tus dudas más comunes

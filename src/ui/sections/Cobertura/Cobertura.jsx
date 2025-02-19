@@ -1,6 +1,7 @@
-"use client";
 
-import React, { useState } from "react";
+
+//import { useState } from "react";
+import React from "react";
 import {
   Box,
   Typography,
@@ -11,16 +12,16 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-  Dialog,
-  DialogContent,
+//  Dialog,
+//  DialogContent,
 } from "@mui/material";
 import Image from "next/image";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import SecurityIcon from "@mui/icons-material/Security";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import Mapa from "@/ui/components/Mapa/Mapa";
+//import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+//import Mapa from "@/ui/components/Mapa/Mapa";
 
 const beneficios = [
   {
@@ -53,14 +54,14 @@ const beneficios = [
 ];
 
 const Cobertura = () => {
-  const [openMap, setOpenMap] = useState(false);
+ // const [openMap, setOpenMap] = useState(false);
 
   return (
     <Box
       sx={{
         py: { xs: 4, md: 8 },
         px: { xs: 2, md: 4 },
-        backgroundColor: "#f8fafc",
+        backgroundColor: "#fff",
       }}
     >
       <Typography
@@ -72,11 +73,12 @@ const Cobertura = () => {
           WebkitBackgroundClip: "text",
           color: "transparent",
           fontWeight: 700,
-          fontSize: { xs: "1.5rem", md: "2.5rem" },
+          fontSize: { xs: "1.5rem", md: "2.25rem" },
         }}
       >
         Nuestra Cobertura
       </Typography>
+<Box sx={{width:"90%", margin:"auto"}}>
 
       <Grid container spacing={4} justifyContent="center">
         <Grid item xs={12} md={6}>
@@ -95,39 +97,32 @@ const Cobertura = () => {
                 boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignContent={{ xs: "center", md: "center" }}
-                marginTop="auto"
-                position="relative"
-                height={{ xs: "150px", md: "400px" }}
-                sx={{
-                  "& img": {
-                    transition: "transform 0.3s ease-in-out",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    marginTop: "15%",
-                  },
-                  "&:hover img": {
-                    transform: "scale(1.05)",
-                  },
-                }}
-              >
-                <Image
-                  src="/images/cobertura-mundial.webp"
-                  alt="Mapa de cobertura"
-                  fill
-                  style={{
-                    objectFit: "contain",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setOpenMap(true);
-                  }}
-                />
-              </Box>
+<Box
+  display="flex"
+  justifyContent="center"
+  alignItems="center"
+  position="relative"
+  height={{ xs: "150px", md: "400px" }}
+  sx={{
+    "& img": {
+      transition: "transform 0.3s ease-in-out",
+    },
+    "&:hover img": {
+      transform: "scale(1.05)",
+    },
+  }}
+>
+  <Image
+    src="/images/cobertura-mundial.webp"
+    alt="Mapa de cobertura"
+    fill
+    style={{
+      objectFit: "cover",
+      cursor: "pointer",
+    }}
+  />
+</Box>
+
             </Paper>
           </Box>
         </Grid>
@@ -143,7 +138,7 @@ const Cobertura = () => {
                 color: "transparent",
                 fontWeight: 600,
                 mb: { xs: 2, md: 3 },
-                fontSize: { xs: "1.5rem", md: "2.5rem" },
+                fontSize: { xs: "1.5rem", md: "2rem" },
                 textAlign: "center",
               }}
             >
@@ -154,7 +149,7 @@ const Cobertura = () => {
               sx={{
                 mb: { xs: 3, md: 4 },
                 color: "#6b7280",
-                fontSize: { xs: "1rem", md: "1.1rem" },
+                fontSize: { xs: "1rem", md: "1rem" },
                 lineHeight: 1.7,
                 width: { xs: "90%" },
                 margin: "auto",
@@ -170,29 +165,33 @@ const Cobertura = () => {
               {beneficios.map((beneficio, index) => (
                 <React.Fragment key={beneficio.titulo}>
                   <ListItem
-                    sx={{
-                      display: "flex",
-                      border: "1px solid #e5e7eb",
-                      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-                      py: 2,
-                      transition: "all 0.3s ease-in-out",
-                      borderRadius: "10px",
-                      "&:hover": {
-                        transform: "translateX(10px)",
-                        backgroundColor: "#f0f9ff",
-                      },
-                    }}
+          sx={{
+            display: "flex",
+            border: "1px solid #e5e7eb",
+            boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+            py: 1.5,
+            mt: 2,
+            transition: "all 0.3s ease-in-out",
+            borderRadius: "12px",
+            backgroundColor: "#ffffff",
+            "&:hover": {
+              transform: "translateY(-5px)", // Efecto de elevación
+              backgroundColor: "#f0f9ff", // Cambio de color
+              boxShadow: "0px 8px 25px rgba(0, 0, 0, 0.15)", // Mayor elevación
+            },
+          }}
                   >
                     <ListItemIcon>
                       <Box
-                        sx={{
-                          backgroundColor: "#007bff0f",
-                          borderRadius: "50%",
-                          p: 1,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
+            sx={{
+              backgroundColor: "#007bff0f",
+              borderRadius: "50%",
+              p: 1.2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)", // Pequeña sombra al ícono
+            }}
                       >
                         {React.cloneElement(beneficio.icon, {
                           sx: { color: "#007bff" },
@@ -205,8 +204,8 @@ const Cobertura = () => {
                           variant="h6"
                           sx={{
                             color: "#1a1a1a",
-                            fontWeight: 500,
-                            fontSize: "1.1rem",
+                            fontWeight: 700,
+                            fontSize: "1rem",
                           }}
                         >
                           {beneficio.titulo}
@@ -235,8 +234,9 @@ const Cobertura = () => {
           </Box>
         </Grid>
       </Grid>
+</Box>
 
-      {/* Mapa de cobertura */}
+      {/* Mapa de cobertura 
       <Dialog
         open={openMap}
         onClose={() => setOpenMap(false)}
@@ -247,6 +247,7 @@ const Cobertura = () => {
           <Mapa />
         </DialogContent>
       </Dialog>
+      */}
     </Box>
   );
 };
