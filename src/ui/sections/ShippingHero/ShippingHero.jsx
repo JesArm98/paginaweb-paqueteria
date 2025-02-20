@@ -19,13 +19,11 @@ import {
 import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
 import { useState } from "react";
 import Image from "next/image";
-import { useEmail } from "@/context/EmailContext";
 import { useRouter } from "next/navigation";
 import ScrollDown from "@/ui/components/ScrollDown";
 
 const ShippingHero = () => {
   const router = useRouter();
-  const { emailConfirmado, emailUsuario, mostrarResultados } = useEmail();
   const [openDialog, setOpenDialog] = useState(false);
   const [openSeleccionModal, setOpenSeleccionModal] = useState(false);
   const [selectedShippingType, setSelectedShippingType] = useState("");
@@ -401,7 +399,7 @@ const ShippingHero = () => {
           open={openDialog}
           onClose={() => setOpenDialog(false)}
           title={`Cotización de envío ${selectedShippingType.toUpperCase()}`}
-          width={emailConfirmado || !mostrarResultados ? "lg" : "sm"}
+          width={"auto"}
           onPdfPreview={true}
           paddingContent={4}
         >

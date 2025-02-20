@@ -18,36 +18,23 @@ import {
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import axios from "axios";
 import Image from "next/image";
-import CotizacionResultados from "./CotizacionResultados";
-import { useEmail } from "@/context/EmailContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import CotizacionResultados from "./CotizacionResultados";
 
 const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
-  const {
-    emailConfirmado,
-    setEmailConfirmado,
-    emailUsuario,
-    setEmailUsuario,
-    mostrarResultados,
-    setMostrarResultados,
-  } = useEmail();
-
-  useEffect(() => {
-    console.log("Email confirmado:", emailConfirmado);
-    console.log("Email usuario:", emailUsuario);
-  }, [emailConfirmado, emailUsuario]);
+  const [cotizacionData, setCotizacionData] = useState(null); // Estado para almacenar datos de la cotización
+  const [mostrarResultados, setMostrarResultados] = useState(false);
   
-
   const [coloniasOrigen, setColoniasOrigen] = useState([]);
   const [coloniasDestino, setColoniasDestino] = useState([]);
   const [vincularTarimas, setVincularTarimas] = useState(false);
   const [expanded, setExpanded] = useState(true); // Expandido por defecto
 
-  const { control, handleSubmit, watch, setValue } = useForm({
+  const { control, handleSubmit, watch, setValue, reset } = useForm({
     defaultValues: {
       origen: "",
       destino: "",
@@ -67,6 +54,28 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
     }
   }, [initialShippingType, setValue]);
 
+    // Resetea todos los valores cuando el usuario cierra el modal
+    useEffect(() => {
+      if (!open) {
+        handleReset();
+      }
+    }, [open]);
+  
+    // Función para restablecer el formulario y el estado
+    const handleReset = () => {
+      setCotizacionData(null);
+      setMostrarResultados(false);
+    };
+
+    const handleCerrar = () => {
+      onClose(); // 🔹 Cierra el modal primero
+    
+      // 🔹 Espera un breve momento y luego resetea el estado
+      setTimeout(() => {
+        handleReset();
+      }, 300); // ⏳ Pequeña espera para evitar flashback visual
+    };
+
   const onSubmit = (data) => {
     const cotizacionDataNormalizada = {
       ...data,
@@ -81,8 +90,8 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
       })),
     };
   
-    console.log("Datos normalizados:", cotizacionDataNormalizada);
-    setMostrarResultados(true);
+    setCotizacionData(cotizacionDataNormalizada); // Guarda los datos normalizados
+    setMostrarResultados(true); // Muestra resultados
   };
 
   const handleAutocompleteChange = async (field, value, onChange) => {
@@ -107,28 +116,6 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
       onChange(value || "");
     }
   };
-
-    // Resetea el estado cuando el modal se cierra
-    useEffect(() => {
-      if (!open) {
-        setEmailConfirmado(false);
-        setEmailUsuario("");
-        setMostrarResultados(false);
-      }
-    }, [open]);
-
-  if (mostrarResultados) {
-    return (
-      <CotizacionResultados
-        cotizacionData={watch()}
-        onModificarCotizacion={() => setMostrarResultados(false)}
-        emailConfirmado={emailConfirmado}
-        setEmailConfirmado={setEmailConfirmado}
-        emailUsuario={emailUsuario}
-        setEmailUsuario={setEmailUsuario}
-      />
-    );
-  }
 
   const inputStyles = {
     borderRadius: "20px", // Bordes redondeados
@@ -160,7 +147,7 @@ const isFormValid = () => {
   if (!formValues.origen || !formValues.destino) return false;
 
   // Verifica que al menos un paquete tenga todas sus propiedades llenas
-  return formValues.packages.some(pkg => 
+  return formValues.packages.every(pkg => 
     pkg.width && pkg.height && pkg.length && pkg.weight
   );
 };
@@ -209,6 +196,8 @@ const sincronizarValores = (index, field, value) => {
         margin: "auto",
       }}
     >
+      {!mostrarResultados ? (
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3} justifyContent="center">
           {/* Origen */}
@@ -455,6 +444,13 @@ Servicios adicionales: Acuse de Recibo, Seguro, EAD o RAD con cita y Ocurre (Ent
           </Button>
         </Grid>
       </form>
+      ) : (
+        <CotizacionResultados 
+          cotizacionData={cotizacionData} 
+          onModificarCotizacion={handleReset} // Resetea cuando se vuelve al formulario
+          onCerrar={handleCerrar} // Resetea y cierra el diálogo
+        />
+      )}
     </Box>
   );
 };

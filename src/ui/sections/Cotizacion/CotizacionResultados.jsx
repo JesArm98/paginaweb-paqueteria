@@ -5,241 +5,73 @@ import {
   Box,
   TextField,
   Button,
-  Card,
-  CardContent,
   Typography,
-  Grid,
-  ToggleButtonGroup,
-  ToggleButton,
-  Chip,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import { proveedores } from "../../../data/data";
 
-const CotizacionResultados = ({
-  cotizacionData,
-  onModificarCotizacion,
-  onSelectProveedor,
-  emailConfirmado,
-  setEmailConfirmado,
-  emailUsuario,
-  setEmailUsuario,
-}) => {
-  const [ordenarPor, setOrdenarPor] = useState("rapidez");
+const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar }) => {
+  const [emailUsuario, setEmailUsuario] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false); // Estado del Snackbar
 
-  if (!cotizacionData) {
-    return (
-      <Box sx={{ p: 3, textAlign: "center" }}>
-        <Typography>No hay datos de cotización disponibles</Typography>
-        <Button onClick={onModificarCotizacion} sx={{ mt: 2 }}>
-          Volver al formulario
-        </Button>
-      </Box>
-    );
-  }
+  console.log(emailUsuario);
+  console.log(cotizacionData);
 
   const handleConfirmarEmail = () => {
     if (emailUsuario && emailUsuario.includes("@")) {
-      setEmailConfirmado(true);
-    }
-  };
+      console.log(
+        "Se enviará la cotización con estos datos:\n" +
+          JSON.stringify(cotizacionData, null, 2) +
+          "\n" +
+          JSON.stringify({ email: emailUsuario }, null, 2)
+      );
 
-  const handleOrdenarChange = (event, newValue) => {
-    if (newValue !== null) {
-      setOrdenarPor(newValue);
-    }
-  };
+      // 🔹 Muestra el Snackbar de éxito primero
+      setOpenSnackbar(true);
 
-  const proveedoresOrdenados = [...proveedores].sort((a, b) => {
-    if (ordenarPor === "rapidez") {
-      return a.tiempoEntrega - b.tiempoEntrega;
+      // 🔹 Espera 2 segundos antes de cerrar el modal, asegurando que el Snackbar se muestre
+      setTimeout(() => {
+        onCerrar(); // Cierra el modal después de que el usuario vea el mensaje
+        setEmailUsuario(""); // Resetea el email
+      }, 2000); 
     }
-    return a.precio - b.precio;
-  });
-
-  const renderPackageDetails = (pkg, index) => {
-    if (!pkg) return null;
-  
-    return (
-      <Card key={index} sx={{ mb: 2, borderRadius: "20px", border: "1px solid red" }}>
-        <CardContent>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6} sm={2}>
-              <Typography variant="body2">
-                <strong>Ancho:</strong> {pkg.width || "N/A"} cm
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sm={2}>
-              <Typography variant="body2">
-                <strong>Alto:</strong> {pkg.height || "N/A"} cm
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sm={2}>
-              <Typography variant="body2">
-                <strong>Largo:</strong> {pkg.length || "N/A"} cm
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sm={2}>
-              <Typography variant="body2">
-                <strong>Peso:</strong> {pkg.weight || "N/A"} kg
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-    );
   };
 
   return (
     <Box>
-      {!emailConfirmado ? (
-        <Box sx={{ mx: "auto" }}>
-          <Typography variant="h6" textAlign="center" gutterBottom>
-            Ingresa tu correo electrónico para ver la cotización
-          </Typography>
-          <TextField
-            fullWidth
-            label="Correo electrónico"
-            type="email"
-            value={emailUsuario}
-            onChange={(e) => setEmailUsuario(e.target.value)}
-            sx={{ mb: 2 }}
-            error={emailUsuario !== "" && !emailUsuario.includes("@")}
-            helperText={
-              emailUsuario !== "" && !emailUsuario.includes("@")
-                ? "Ingresa un correo válido"
-                : ""
-            }
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={handleConfirmarEmail}
-            sx={{
-              borderRadius: "20px",
-              textTransform: "none",
-              width: "fit-content",
-              margin: "auto",
-              display: "flex",
-            }}
-            disabled={!emailUsuario || !emailUsuario.includes("@")}
-          >
-            Confirmar
-          </Button>
-        </Box>
-      ) : (
-        <>
-          {/* Resumen de la cotización */}
-          <Box sx={{ mb: 4 }}>
-            <Box sx={{display:"flex"}}>
-            <Typography variant="h5" gutterBottom sx={{ mb: 3, color: "blue" }}>
-              Detalles del envío
-            </Typography>
-            <Button
-  variant="outlined"
-  color="primary"
-  onClick={onModificarCotizacion}
-  sx={{
-    textTransform: "none",
-    borderRadius: "20px",
-    width: "fit-content",
-    mx: "auto",
-    display:"flex",
-    "&:hover": {
-      backgroundColor: "#007bff",
-      color: "white",
-    },
-  }}
->
-  Modificar Cotización
-</Button>
+      <Typography variant="h6" sx={{ pb: 3 }}>
+        Confirma tu cotización ingresando tu correo electrónico
+      </Typography>
+      <TextField
+        fullWidth
+        label="Correo electrónico"
+        type="email"
+        value={emailUsuario}
+        onChange={(e) => setEmailUsuario(e.target.value)}
+        error={emailUsuario !== "" && !emailUsuario.includes("@")}
+        helperText={emailUsuario !== "" && !emailUsuario.includes("@") ? "Ingresa un correo válido" : ""}
+      />
+      <Box sx={{ display: "flex", mt: 2, justifyContent: "end", gap: 2 }}>
+        <Button onClick={onModificarCotizacion} variant="outlined" sx={{ width: "fit-content", textTransform: "none", borderRadius: "20px" }}>
+          Volver al formulario
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={handleConfirmarEmail}
+          disabled={!emailUsuario || !emailUsuario.includes("@")}
+          sx={{ textTransform: "none", width: "fit-content", borderRadius: "20px" }}
+        >
+          Confirmar
+        </Button>
+      </Box>
 
-            </Box>
-            {cotizacionData.packages.map((pkg, index) =>
-              renderPackageDetails(pkg, index)
-            )}
-          </Box>
-
-          {/* Selector de ordenamiento */}
-          <Box
-            sx={{
-              mb: 3,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h5" gutterBottom sx={{ color: "blue" }}>
-              Seleccionar alianza
-            </Typography>
-            <ToggleButtonGroup
-              value={ordenarPor}
-              exclusive
-              onChange={handleOrdenarChange}
-              aria-label="ordenar por"
-              sx={{ display: "flex", gap: 2 }}
-            >
-              <ToggleButton
-                sx={{ borderRadius: "20px", textTransform: "none" }}
-                value="rapidez"
-              >
-                Por rapidez
-              </ToggleButton>
-              <ToggleButton
-                sx={{ borderRadius: "20px", textTransform: "none" }}
-                value="precio"
-              >
-                Por precio
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-
-          {/* Lista de proveedores */}
-          <Grid container spacing={2}>
-            {proveedoresOrdenados.map((proveedor) => (
-              <Grid item xs={12} key={proveedor.id}>
-                <Card
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { boxShadow: 6 },
-                  }}
-                  onClick={() => onSelectProveedor(proveedor)}
-                >
-                  <CardContent>
-                    <Grid container alignItems="center" spacing={2}>
-                      <Grid item xs={12} sm={2}>
-                        <img
-                          src={proveedor.logo}
-                          alt={proveedor.nombre}
-                          style={{ maxWidth: "100%", height: "auto" }}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={7}>
-                        <Typography variant="subtitle1">
-                          Entrega para el {proveedor.fechaEntrega}
-                        </Typography>
-                        <Typography variant="body2">
-                          Duración de entrega: {proveedor.tiempoEntrega} días
-                        </Typography>
-                        <Typography variant="body2">
-                          {proveedor.tipoServicio}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <Typography variant="h6" color="primary">
-                          ${proveedor.precio.toFixed(2)} MXN
-                        </Typography>
-                        <Typography variant="caption">
-                          Precio Especial* (Solo Por Web)
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </>
-      )}
+      {/* Snackbar de éxito */}
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => setOpenSnackbar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "left" }}>
+        <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: "100%" }}>
+          Será contactado por nuestro equipo de atención en breve.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

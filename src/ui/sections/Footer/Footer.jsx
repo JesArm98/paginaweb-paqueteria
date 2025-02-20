@@ -39,7 +39,7 @@ const Footer = () => {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            padding: 0,
+            padding: 4,
           }}
         >
           <Link href="/" style={{ textDecoration: "none" }}>
@@ -57,8 +57,8 @@ const Footer = () => {
               <Image
                 src="/images/myllos-logo.png"
                 alt="Logo Myllos - Volver a Inicio"
-                width={150}
-                height={150}
+                width={200}
+                height={100}
                 style={{
                   objectFit: "contain",
                 }}
