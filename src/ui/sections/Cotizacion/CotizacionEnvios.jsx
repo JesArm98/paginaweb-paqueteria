@@ -28,10 +28,8 @@ import CotizacionResultados from "./CotizacionResultados";
 const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
   const [cotizacionData, setCotizacionData] = useState(null); // Estado para almacenar datos de la cotización
   const [mostrarResultados, setMostrarResultados] = useState(false);
-  
   const [coloniasOrigen, setColoniasOrigen] = useState([]);
   const [coloniasDestino, setColoniasDestino] = useState([]);
-  const [vincularTarimas, setVincularTarimas] = useState(false);
   const [expanded, setExpanded] = useState(true); // Expandido por defecto
 
   const { control, handleSubmit, watch, setValue, reset } = useForm({
@@ -39,9 +37,10 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
       origen: "",
       destino: "",
       tipoEnvio: initialShippingType || "",
-      packages: [{ width: "", height: "", length: "", weight: "" }],
+      packages: [{ width: "", height: "", length: "", weight: "", cantidad: 1 }],
     },
   });
+  
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -83,6 +82,7 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
       destino: typeof data.destino === "string" ? { cp: data.destino } : data.destino,
       packages: data.packages.map((pkg) => ({
         ...pkg,
+        cantidad:Number(pkg.cantidad) ||0,
         width: Number(pkg.width) || 0,
         height: Number(pkg.height) || 0,
         length: Number(pkg.length) || 0,
@@ -159,11 +159,13 @@ useEffect(() => {
 
 const handleTarimaChange = (event) => {
   let newCount = Number(event.target.value) || 1;
-  newCount = Math.max(1, newCount);
+  newCount = Math.max(1, newCount); // Evita números negativos o cero
+
   const currentCount = fields.length;
+
   if (newCount > currentCount) {
     for (let i = currentCount; i < newCount; i++) {
-      append({ width: "", height: "", length: "", weight: "" });
+      append({ width: "", height: "", length: "", weight: "", cantidad: 1 });
     }
   } else if (newCount < currentCount) {
     for (let i = currentCount; i > newCount; i--) {
@@ -172,18 +174,9 @@ const handleTarimaChange = (event) => {
   }
 };
 
-const handleVincularTarimas = (event) => {
-  setVincularTarimas(event.target.checked);
+const handleAgregarTarima = () => {
+  append({ width: "", height: "", length: "", weight: "", cantidad: 1 });
 };
-
-const sincronizarValores = (index, field, value) => {
-  if (vincularTarimas) {
-    fields.forEach((_, i) => setValue(`packages.${i}.${field}`, value, { shouldValidate: true }));
-  } else {
-    setValue(`packages.${index}.${field}`, value, { shouldValidate: true });
-  }
-};
-  
 
   return (
     <Box
@@ -261,14 +254,14 @@ const sincronizarValores = (index, field, value) => {
           {/* Contador de Tarimas y Botón Agregar */}
           <Grid item xs={12} md={6}>
             {initialShippingType === "ftl" ?             <TextField
-              label="Número de Tarimas"
-              value={fields.length}
-              helperText="Pallet, Jaula, etc."
-              onChange={handleTarimaChange}
-              fullWidth
-              sx={inputStyles}
-              type="number"
-            /> : 
+  label="Número de Tarimas"
+  value={fields.length} // Ahora refleja correctamente el número de registros
+  helperText="Número de registros de dimensiones de tarimas"
+  onChange={handleTarimaChange}
+  fullWidth
+  sx={inputStyles}
+  type="number"
+/> : 
             
             <Box>
             <Typography sx={{
@@ -295,7 +288,7 @@ const sincronizarValores = (index, field, value) => {
   {/* Botón Agregar Tarima */}
   <Button
     variant="outlined"
-    onClick={() => append({ width: "", height: "", length: "", weight: "" })}
+    onClick={() => append({ width: "", height: "", length: "", weight: "", cantidad:1 })}
     startIcon={<AddIcon />}
     fullWidth
     sx={{ width: "fit-content", textTransform: "none", borderRadius: "20px" }}
@@ -304,16 +297,6 @@ const sincronizarValores = (index, field, value) => {
   </Button>
             </Box>
             )}
-            
-          {initialShippingType === "ftl" && (
-            <Grid item xs={12} md={6}>
-              <FormControlLabel
-                control={<Checkbox checked={vincularTarimas} onChange={handleVincularTarimas} />}
-                label="Vincular todas las tarimas"
-              />
-            </Grid>
-
-          )}
 <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid red", borderRadius:"20px", gap:1}}>
   {/* Texto debajo del botón */}
   <Typography variant="body2" sx={{ fontSize: "12px", textAlign: "center", ml:1.5 }}>
@@ -376,52 +359,71 @@ const sincronizarValores = (index, field, value) => {
     <Box sx={{ width: "100%", maxHeight: 250, overflowY: "auto", pt: 1 }}>
       {fields.map((pkg, index) => (
         <Grid container spacing={2} key={pkg.id} sx={{ alignItems: "center", mb: 3 }}>
-          {/* Ancho */}
-          <Grid item xs={3}>
-            <Controller
-              name={`packages.${index}.width`}
-              control={control}
-              render={({ field }) => (
-                <TextField {...field} label="Ancho (cm)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'width', e.target.value)} />
-              )}
-            />
-          </Grid>
-
-          {/* Alto */}
-          <Grid item xs={3}>
-            <Controller
-              name={`packages.${index}.height`}
-              control={control}
-              render={({ field }) => (
-                <TextField {...field} label="Alto (cm)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'height', e.target.value)} />
-              )}
-            />
-          </Grid>
-
-          {/* Largo */}
-          <Grid item xs={3}>
-            <Controller
-              name={`packages.${index}.length`}
-              control={control}
-              render={({ field }) => (
-                <TextField {...field} label="Largo (cm)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'length', e.target.value)} />
-              )}
-            />
-          </Grid>
-
-          {/* Peso */}
+          {/* Cantidad */}
           <Grid item xs={2}>
             <Controller
-              name={`packages.${index}.weight`}
+              name={`packages.${index}.cantidad`}
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Peso (kg)" type="number" fullWidth sx={{ ...inputStyles }} onChange={(e) => sincronizarValores(index, 'weight', e.target.value)} />
+                <TextField {...field} label="Cantidad" type="number" fullWidth sx={{ ...inputStyles }} inputProps={{ min: 1 }} />
               )}
             />
           </Grid>
 
+{/* Ancho */}
+<Grid item xs={2}>
+  <Controller
+    name={`packages.${index}.width`}
+    control={control}
+    render={({ field }) => (
+      <TextField {...field} label="Ancho (cm)" type="number" fullWidth sx={{ ...inputStyles }} 
+        onChange={(e) => setValue(`packages.${index}.width`, e.target.value, { shouldValidate: true })}
+      />
+    )}
+  />
+</Grid>
+
+{/* Alto */}
+<Grid item xs={2}>
+  <Controller
+    name={`packages.${index}.height`}
+    control={control}
+    render={({ field }) => (
+      <TextField {...field} label="Alto (cm)" type="number" fullWidth sx={{ ...inputStyles }} 
+        onChange={(e) => setValue(`packages.${index}.height`, e.target.value, { shouldValidate: true })}
+      />
+    )}
+  />
+</Grid>
+
+{/* Largo */}
+<Grid item xs={2}>
+  <Controller
+    name={`packages.${index}.length`}
+    control={control}
+    render={({ field }) => (
+      <TextField {...field} label="Largo (cm)" type="number" fullWidth sx={{ ...inputStyles }} 
+        onChange={(e) => setValue(`packages.${index}.length`, e.target.value, { shouldValidate: true })}
+      />
+    )}
+  />
+</Grid>
+
+{/* Peso */}
+<Grid item xs={2}>
+  <Controller
+    name={`packages.${index}.weight`}
+    control={control}
+    render={({ field }) => (
+      <TextField {...field} label="Peso (kg)" type="number" fullWidth sx={{ ...inputStyles }} 
+        onChange={(e) => setValue(`packages.${index}.weight`, e.target.value, { shouldValidate: true })}
+      />
+    )}
+  />
+</Grid>
+
           {/* Botón de eliminar */}
-          <Grid item xs={1}>
+          <Grid item xs={2}>
             {fields.length > 1 && (
               <IconButton onClick={() => remove(index)}>
                 <DeleteIcon color="error" />
