@@ -4,97 +4,122 @@ import {
   TextField,
   Button,
   MenuItem,
-  Box,
+  Grid,
   CircularProgress,
   Typography,
   Autocomplete,
+  Box,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { contactOptions } from "@/data/data";
 import { tipoServicio } from "@/data/data";
 import useContactType from "@/hooks/useContactType";
 
-/*
-const sucursalOptions = [
-  { value: "Matriz", label: "Matriz" },
-  { value: "Culiacán", label: "Culiacán" },
-  { value: "Hermosillo", label: "Hermosillo" },
-  { value: "Mexicali", label: "Mexicali" },
-  { value: "Tijuana", label: "Tijuana" },
-  { value: "Monterrey", label: "Monterrey" },
-  { value: "Pesquería", label: "Pesquería" },
-  { value: "Cd. Obregón", label: "Cd. Obregón" },
-  { value: "Querétaro", label: "Querétaro" },
-  { value: "Guadalajara", label: "Guadalajara" },
-  { value: "Chihuahua", label: "Chihuahua" },
-  { value: "Torreón", label: "Torreón" },
-  { value: "Ensenada", label: "Ensenada" },
-  { value: "Mazatlán", label: "Mazatlán" },
-]; */
-
+// Regex para código postal (5 dígitos), teléfono, correo y nombre
+const cpRegExp = /^\d{5}$/;
 const phoneRegExp = /^\d{10}$/;
-
 const emailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const nameRegExp = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]+$/;
 
-// Esquema de validación
-const schema = yup
-  .object({
-    Tipo: yup
-      .string()
-      .oneOf(
-        contactOptions.map((option) => option.value),
-        "El tipo de contacto no es válido."
-      )
-      .required("El tipo de contacto es obligatorio."),
-    Servicio: yup
-      .string()
-      .oneOf(
-        tipoServicio.map((option) => option.value),
-        "El tipo de servicio no es válido."
-      )
-      .required("El tipo de servicio es obligatorio."),
-    Nombre: yup
-      .string()
-      .matches(
-        nameRegExp,
-        "Solo puede contener letras, espacios, guiones y apóstrofes."
-      )
-      .required("Es obligatorio.")
-      .min(3, "Debe tener al menos 3 caracteres.")
-      .max(50, "No debe exceder los 50 caracteres."),
-    Correo: yup
-      .string()
-      .matches(emailRegExp, "Debe ser un correo válido.")
-      .required("El correo es obligatorio.")
-      .max(100, "El correo no debe exceder los 100 caracteres."),
-    // Sucursal: yup
-    //  .string()
-    //    .oneOf(
-    //      sucursalOptions.map((option) => option.value),
-    //      "La sucursal no es válida."
-    //    )
-    //   .required("La sucursal es obligatoria."),
-    Telefono: yup
-      .string()
-      .matches(phoneRegExp, "Debe ser un número de teléfono válido.")
-      .required("El teléfono es obligatorio."),
-    Mensaje: yup
-      .string()
-      .required("El mensaje es obligatorio.")
-      .min(20, "El mensaje debe tener al menos 20 caracteres.")
-      .max(500, "El mensaje no debe exceder los 500 caracteres."),
-    Origen: yup
-      .string()
-      .matches(
-        nameRegExp,
-        "Solo puede contener letras, espacios, guiones y apóstrofes."
-      ),
-  })
-  .required();
+// Función auxiliar para el estilo común de los inputs
+const getFieldSx = (isEmpty, hasError) => ({
+  width: "100%",
+  borderRadius: "8px",
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: isEmpty ? "#07417B" : hasError ? "red" : "green",
+      borderRadius: "15px",
+      boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
+    },
+    "&:hover fieldset": { borderColor: isEmpty ? "blue" : hasError ? "red" : "blue" },
+    "&.Mui-focused fieldset": { borderColor: isEmpty ? "gray" : hasError ? "red" : "green" },
+  },
+});
+
+// Esquema de validación condicional
+const schema = yup.object({
+  Tipo: yup
+    .string()
+    .oneOf(contactOptions.map((option) => option.value), "El tipo de contacto no es válido.")
+    .required("El tipo de contacto es obligatorio."),
+  Servicio: yup.string().when("Tipo", {
+    is: "cotizaciones",
+    then: (s) =>
+      s
+        .oneOf(tipoServicio.map((option) => option.value), "El tipo de servicio no es válido.")
+        .required("El tipo de servicio es obligatorio."),
+    otherwise: (s) => s.notRequired(),
+  }),
+  Origen: yup.mixed().when("Tipo", {
+    is: "cotizaciones",
+    then: (s) =>
+      s
+        .test("is-valid-origen", "Debe ser un código postal válido.", (value) => {
+          if (typeof value === "object" && value !== null) {
+            return cpRegExp.test(value.cp);
+          }
+          if (typeof value === "string") {
+            return cpRegExp.test(value);
+          }
+          return false;
+        })
+        .required("El CP de origen es obligatorio."),
+    otherwise: (s) => s.notRequired(),
+  }),
+  Destino: yup.mixed().when("Tipo", {
+    is: "cotizaciones",
+    then: (s) =>
+      s
+        .test("is-valid-destino", "Debe ser un código postal válido.", (value) => {
+          if (typeof value === "object" && value !== null) {
+            return cpRegExp.test(value.cp);
+          }
+          if (typeof value === "string") {
+            return cpRegExp.test(value);
+          }
+          return false;
+        })
+        .required("El CP de destino es obligatorio."),
+    otherwise: (s) => s.notRequired(),
+  }),
+  Nombre: yup.string().when("Tipo", {
+    is: (tipo) => tipo !== "proveedor" && tipo !== "socio",
+    then: (s) =>
+      s
+        .matches(nameRegExp, "Solo puede contener letras, espacios, guiones y apóstrofes.")
+        .required("El nombre es obligatorio.")
+        .min(3, "Debe tener al menos 3 caracteres.")
+        .max(50, "No debe exceder los 50 caracteres."),
+    otherwise: (s) => s.notRequired(),
+  }),
+  RFC: yup.string().when("Tipo", {
+    is: (tipo) => tipo === "proveedor" || tipo === "socio",
+    then: (s) => s.required("El RFC es obligatorio."),
+    otherwise: (s) => s.notRequired(),
+  }),
+  RazonSocial: yup.string().when("Tipo", {
+    is: (tipo) => tipo === "proveedor" || tipo === "socio",
+    then: (s) => s.required("La razón social es obligatoria."),
+    otherwise: (s) => s.notRequired(),
+  }),
+  Correo: yup
+    .string()
+    .matches(emailRegExp, "Debe ser un correo válido.")
+    .required("El correo es obligatorio.")
+    .max(100, "El correo no debe exceder los 100 caracteres."),
+  Telefono: yup
+    .string()
+    .matches(phoneRegExp, "Debe ser un número de teléfono válido.")
+    .required("El teléfono es obligatorio."),
+  Mensaje: yup
+    .string()
+    .required("El mensaje es obligatorio.")
+    .min(20, "El mensaje debe tener al menos 20 caracteres.")
+    .max(500, "El mensaje no debe exceder los 500 caracteres."),
+}).required();
 
 function ContactForm() {
   const [loading, setIsLoading] = useState(false);
@@ -113,75 +138,23 @@ function ContactForm() {
     mode: "onChange",
   });
 
-  const formValues = useWatch({ control });
-  console.log(formValues);
-  console.log(isValid);
-
-  // Detectar el parámetro type en la URL al montar el componente
+  // Detecta el parámetro "type" en la URL al montar el componente
   useContactType(setValue, trigger);
 
-  const selectedTipo = useWatch({
-    control,
-    name: "Tipo",
-  });
+  const selectedTipo = useWatch({ control, name: "Tipo" });
+  const Cotizaciones = selectedTipo === "cotizaciones";
 
-  const selectedServicio = useWatch({
-    control,
-    name: "Servicio",
-  });
-
-  const Cotizaciones =
-    selectedTipo === "cotizaciones" || formValues.Tipo === "cotizaciones";
-  console.log(Cotizaciones);
-
-  // const filteredSucursalOptions =
-  // selectedTipo === "cotizaciones"
-  ///|   ? sucursalOptions.filter((option) => option.value !== "Matriz")
-  // : sucursalOptions;
-
-  const onSubmit = async (data) => {
-    const payload = {
-      tipo: data.Tipo,
-      servicio: data.Servicio,
-      origen: data.Origen, // Nuevo campo agregado
-      destino: data.destino, // Nuevo campo agregado
-      nombre: data.Nombre + (data.RazonSocial ? " " + data.RazonSocial : ""),
-      email: data.Correo,
-      telefono: data.Telefono,
-      mensaje: data.Mensaje,
-    };
-
-    // Mostrar alerta con los datos
-    alert(JSON.stringify(payload, null, 2));
-
-    try {
-      setIsLoading(true);
-      //  await axios.post(
-      //    "https://us-central1-tvn-api-store.cloudfunctions.net/app/contactUs",
-      //    payload
-      //  );
-      reset();
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error enviando el mensaje:", error);
-      reset();
-      setIsLoading(false);
-    }
-  };
-
+  // Para el Autocomplete, si el usuario selecciona una opción, se guarda el objeto completo
   const handleAutocompleteChange = async (field, value, onChange) => {
     if (value && value.length === 5) {
       try {
-        const response = await axios.get(
-          `https://api.pktuno.mx/Api/Cobertura/${value}`
-        );
-
-        if (field === "origen") {
+        const response = await axios.get(`https://api.pktuno.mx/Api/Cobertura/${value}`);
+        if (field === "Origen") {
           setColoniasOrigen(response.data || []);
-          onChange(value);
-        } else if (field === "destino") {
+          onChange(response.data[0]); // opcional: seleccionar el primer resultado
+        } else if (field === "Destino") {
           setColoniasDestino(response.data || []);
-          onChange(value);
+          onChange(response.data[0]); // opcional: seleccionar el primer resultado
         }
       } catch (error) {
         console.error("Error al obtener datos:", error);
@@ -192,377 +165,417 @@ function ContactForm() {
     }
   };
 
+  const onSubmit = async (data) => {
+    const payload = {
+      tipo: data.Tipo,
+      servicio: data.Servicio,
+      origen: data.Origen, // Ahora es el objeto completo
+      destino: data.Destino, // Ahora es el objeto completo
+      nombre:
+        data.Tipo === "proveedor" || data.Tipo === "socio"
+          ? `${data.RFC} ${data.RazonSocial}`
+          : data.Nombre,
+      email: data.Correo,
+      telefono: data.Telefono,
+      mensaje: data.Mensaje,
+    };
+
+    console.log(JSON.stringify(payload, null, 2));
+    alert(JSON.stringify(payload, null, 2));
+
+    try {
+      setIsLoading(true);
+      // await axios.post("URL_DEL_ENDPOINT", payload);
+      reset();
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error enviando el mensaje:", error);
+      reset();
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <Box
-      id="contacto"
+    <Box sx={{width:"80%", display:"flex", margin:"auto"}}>
+
+    <Grid
+      container
       component="form"
       noValidate
       autoComplete="off"
       onSubmit={handleSubmit(onSubmit)}
+      spacing={2}
       sx={{
         backgroundColor: "#FFFFFF",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "16px",
-        overflow: "hidden",
         marginTop: { xs: "30px", md: "40px" },
+        padding: 2,
       }}
     >
-      <Typography
-        sx={{
-          color: "#07417B",
-          fontSize: { xs: "1.5rem", md: "2.25em" },
-          width: { xs: "90%", md: "80%" },
-          margin: "auto",
-          textAlign: "center",
-          fontWeight: 700,
-        }}
-      >
-        Tu satisfacción es nuestra prioridad.
-      </Typography>
-      <Typography
-        sx={{
-          fontWeight: "300",
-          width: {
-            xs: "90%",
-            md: "60%",
-          },
-          fontSize: { xs: "1rem", md: "20px" },
-          textAlign: { xs: "justify", md: "center" },
-        }}
-      >
-        Estamos aquí para responder tus preguntas sobre nuestros servicios,
-        atender tus quejas o proporcionarte cotizaciones. ¡Estamos listos para
-        ayudarte!
-      </Typography>
-      <p style={{fontSize:"14px"}}>Los campos marcados con * son obligatorios.</p>
-      <div
-        style={{
-          width: "85%",
-          display: "flex",
-          justifyContent: "center",
-          gap: 16,
-          flexWrap: "wrap",
-        }}
-      >
-        <Controller
-          name="Tipo"
-          control={control}
-          defaultValue=""
-          render={({ field }) => {
-            const isEmpty = field.value === "";
-            const hasError = !!errors.Tipo;
-
-            return (
-              <TextField
-                {...field}
-                select
-                label="Contacto*"
-                helperText={
-                  hasError
-                    ? errors.Tipo.message
-                    : !isEmpty
-                    ? "✔️"
-                    : "Ingresa tu tipo de contacto"
-                }
-                error={hasError}
-                sx={{
-                  width: {
-                    xs: "100%",
-                    sm: "500px",
-                    md: "367px",
-                    lg: "492px",
-                    xl: "592px",
-                  },
-                  borderRadius: "8px",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: isEmpty
-                        ? "#07417B"
-                        : hasError
-                        ? "red"
-                        : "green",
-                      borderRadius: "15px",
-                      boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: isEmpty ? "blue" : hasError ? "red" : "blue",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: isEmpty
-                        ? "gray"
-                        : hasError
-                        ? "red"
-                        : "green",
-                    },
-                  },
-                }}
-                onChange={(e) => {
-                  field.onChange(e);
-                  if (e.target.value === "c") {
-                    setValue("Sucursal", "Matriz");
-                  }
-                }}
-              >
-                {contactOptions.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            );
+      {/* Header */}
+      <Grid item xs={12}>
+        <Typography
+          sx={{
+            color: "#3DC2CF",
+            fontSize: { xs: "1.5rem", md: "2.25em" },
+            textAlign: "center",
+            fontWeight: 700,
           }}
-        />
-        {Cotizaciones && (
-          <Controller
-            name="Servicio"
-            control={control}
-            defaultValue=""
-            render={({ field }) => {
-              const isEmpty = field.value === "";
-              const hasError = !!errors.Tipo;
+        >
+          Tu satisfacción es nuestra prioridad.
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography
+          sx={{
+            fontWeight: "300",
+            fontSize: { xs: "1rem", md: "20px" },
+            textAlign: { xs: "justify", md: "center" },
+          }}
+        >
+          Estamos aquí para responder tus preguntas sobre nuestros servicios, atender tus quejas o proporcionarte cotizaciones. ¡Estamos listos para ayudarte!
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography sx={{ fontSize: "14px", textAlign: "center" }}>
+          Los campos marcados con * son obligatorios.
+        </Typography>
+      </Grid>
 
-              return (
-                <TextField
-                  {...field}
-                  select
-                  label="Tipo servicio*"
-                  helperText={
-                    hasError
-                      ? errors.Tipo.message
-                      : !isEmpty
-                      ? "✔️"
-                      : "Selecciona tu tipo de servicio"
-                  }
-                  error={hasError}
-                  sx={{
-                    width: {
-                      xs: "100%",
-                      sm: "500px",
-                      md: "367px",
-                      lg: "492px",
-                      xl: "592px",
-                    },
-                    borderRadius: "8px",
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: isEmpty
-                          ? "#07417B"
-                          : hasError
-                          ? "red"
-                          : "green",
-                        borderRadius: "15px",
-                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                      },
-                      "&:hover fieldset": {
-                        borderColor: isEmpty
-                          ? "blue"
-                          : hasError
-                          ? "red"
-                          : "blue",
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: isEmpty
-                          ? "gray"
-                          : hasError
-                          ? "red"
-                          : "green",
-                      },
-                    },
-                  }}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    if (e.target.value === "c") {
-                      setValue("Sucursal", "Matriz");
-                    }
-                  }}
-                >
-                  {tipoServicio.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              );
-            }}
-          />
-        )}
+      {/* Layout según el flujo */}
+      {selectedTipo === "cotizaciones" ? (
         <>
-          {Cotizaciones && selectedServicio && (
-            <div
-              style={{
-                width: "600px",
-                display: "flex",
-                justifyContent: "space-evenly",
-                gap: 16,
-              }}
-            >
-              {/* Campo de origen */}
+          {/* Fila 1: Contacto y Tipo servicio */}
+          <Grid container item xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Tipo"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Tipo;
+                  return (
+                    <TextField
+                      {...field}
+                      select
+                      label="Contacto*"
+                      helperText={
+                        hasError
+                          ? errors.Tipo.message
+                          : !isEmpty
+                          ? "✔️"
+                          : "Ingresa tu tipo de contacto"
+                      }
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                      onChange={(e) => field.onChange(e)}
+                    >
+                      {contactOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Servicio"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Servicio;
+                  return (
+                    <TextField
+                      {...field}
+                      select
+                      label="Tipo servicio*"
+                      helperText={
+                        hasError
+                          ? errors.Servicio.message
+                          : !isEmpty
+                          ? "✔️"
+                          : "Selecciona tu tipo de servicio"
+                      }
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                      onChange={(e) => field.onChange(e)}
+                    >
+                      {tipoServicio.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  );
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Fila 2: CP de Origen y Destino */}
+          <Grid container item xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
               <Controller
                 name="Origen"
                 control={control}
                 defaultValue=""
-                render={({ field: { onChange, value } }) => (
-                  <Autocomplete
-                    freeSolo
-                    options={coloniasOrigen}
-                    value={value}
-                    fullWidth
-                    onInputChange={(e, newValue) => {
-                      if (/^\d+$/.test(newValue) || newValue === "") {
-                        handleAutocompleteChange("origen", newValue, onChange);
+                render={({ field: { onChange, value } }) => {
+                  const isEmpty = !value;
+                  return (
+                    <Autocomplete
+                      freeSolo
+                      options={coloniasOrigen}
+                      value={value}
+                      fullWidth
+                      onInputChange={(e, newValue) => {
+                        if (/^\d+$/.test(newValue) || newValue === "") {
+                          handleAutocompleteChange("Origen", newValue, onChange);
+                        }
+                      }}
+                      onChange={(e, newValue) => {
+                        onChange(newValue); // Guarda el objeto completo
+                      }}
+                      getOptionLabel={(option) =>
+                        typeof option === "string"
+                          ? option
+                          : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
                       }
-                    }}
-                    onChange={(e, newValue) => onChange(newValue)}
-                    getOptionLabel={(option) =>
-                      typeof option === "string"
-                        ? option
-                        : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Origen"
-                        variant="outlined"
-                        fullWidth
-                        helperText="Ingrese CP de origen"
-                        sx={{
-                          width: "280px",
-                          borderRadius: "8px",
-                          "& .MuiOutlinedInput-root": {
-                            "& fieldset": {
-                              borderColor: "#07417B",
-                              borderRadius: "15px",
-                              boxShadow:
-                                "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                            },
-                            "&:hover fieldset": {
-                              borderColor: "blue",
-                            },
-                            "&.Mui-focused fieldset": {
-                              borderColor: "green",
-                            },
-                          },
-                        }}
-                      />
-                    )}
-                  />
-                )}
-              />
-
-              {/* Campo de destino */}
-              <Controller
-                name="destino"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value } }) => (
-                  <Autocomplete
-                    freeSolo
-                    options={coloniasDestino}
-                    value={value}
-                    onInputChange={(e, newValue) => {
-                      if (/^\d+$/.test(newValue) || newValue === "") {
-                        handleAutocompleteChange("destino", newValue, onChange);
-                      }
-                    }}
-                    fullWidth
-                    onChange={(e, newValue) => onChange(newValue)}
-                    getOptionLabel={(option) =>
-                      typeof option === "string"
-                        ? option
-                        : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Destino"
-                        variant="outlined"
-                        fullWidth
-                        helperText="Ingrese CP de destino"
-                        sx={{
-                          width: "290px",
-                          borderRadius: "8px",
-                          "& .MuiOutlinedInput-root": {
-                            "& fieldset": {
-                              borderColor: "#07417B",
-                              borderRadius: "15px",
-                              boxShadow:
-                                "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                            },
-                            "&:hover fieldset": {
-                              borderColor: "blue",
-                            },
-                            "&.Mui-focused fieldset": {
-                              borderColor: "green",
-                            },
-                          },
-                        }}
-                      />
-                    )}
-                  />
-                )}
-              />
-            </div>
-          )}
-        </>
-        <Controller
-          name="Nombre"
-          control={control}
-          defaultValue=""
-          render={({ field }) => {
-            const isEmpty = field.value === "";
-            const hasError = !!errors.Nombre;
-
-            return (
-              <TextField
-                {...field}
-                label={selectedTipo === "socio" ? "RFC*" : "Nombre*"}
-                helperText={
-                  hasError
-                    ? errors.Nombre.message
-                    : !isEmpty
-                    ? "✔️"
-                    : "Ingresa nombre completo"
-                }
-                error={hasError}
-                sx={{
-                  width: {
-                    xs: "100%",
-                    sm: "500px",
-                    md: "367px",
-                    lg: "492px",
-                    xl: selectedServicio && !Cotizaciones ? "800px" : "600px",
-                  },
-                  borderRadius: "8px",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: isEmpty
-                        ? "#07417B"
-                        : hasError
-                        ? "red"
-                        : "green",
-                      borderRadius: "15px",
-                      boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: isEmpty ? "blue" : hasError ? "red" : "blue",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: isEmpty
-                        ? "gray"
-                        : hasError
-                        ? "red"
-                        : "green",
-                    },
-                  },
+                      renderInput={(params) => {
+                        const fieldIsEmpty = !value;
+                        return (
+                          <TextField
+                            {...params}
+                            label="Origen"
+                            variant="outlined"
+                            fullWidth
+                            error={!!errors.Origen}
+                            helperText={
+                              errors.Origen
+                                ? errors.Origen.message
+                                : !fieldIsEmpty
+                                ? "✔️"
+                                : "Ingrese CP de origen"
+                            }
+                            sx={getFieldSx(fieldIsEmpty, !!errors.Origen)}
+                          />
+                        );
+                      }}
+                    />
+                  );
                 }}
               />
-            );
-          }}
-        />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Destino"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value } }) => {
+                  const isEmpty = !value;
+                  return (
+                    <Autocomplete
+                      freeSolo
+                      options={coloniasDestino}
+                      value={value}
+                      fullWidth
+                      onInputChange={(e, newValue) => {
+                        if (/^\d+$/.test(newValue) || newValue === "") {
+                          handleAutocompleteChange("Destino", newValue, onChange);
+                        }
+                      }}
+                      onChange={(e, newValue) => {
+                        onChange(newValue); // Guarda el objeto completo
+                      }}
+                      getOptionLabel={(option) =>
+                        typeof option === "string"
+                          ? option
+                          : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                      }
+                      renderInput={(params) => {
+                        const fieldIsEmpty = !value;
+                        return (
+                          <TextField
+                            {...params}
+                            label="Destino"
+                            variant="outlined"
+                            fullWidth
+                            error={!!errors.Destino}
+                            helperText={
+                              errors.Destino
+                                ? errors.Destino.message
+                                : !fieldIsEmpty
+                                ? "✔️"
+                                : "Ingrese CP de destino"
+                            }
+                            sx={getFieldSx(fieldIsEmpty, !!errors.Destino)}
+                          />
+                        );
+                      }}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Fila 3: Nombre (ocupa todo el ancho) */}
+          <Grid item xs={12}>
+            <Controller
+              name="Nombre"
+              control={control}
+              defaultValue=""
+              render={({ field }) => {
+                const isEmpty = field.value === "";
+                const hasError = !!errors.Nombre;
+                return (
+                  <TextField
+                    {...field}
+                    label="Nombre*"
+                    helperText={
+                      hasError ? errors.Nombre.message : !isEmpty ? "✔️" : "Ingresa tu nombre completo"
+                    }
+                    error={hasError}
+                    sx={getFieldSx(isEmpty, hasError)}
+                  />
+                );
+              }}
+            />
+          </Grid>
+
+          {/* Fila 4: Correo y Teléfono */}
+          <Grid container item xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Correo"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Correo;
+                  return (
+                    <TextField
+                      {...field}
+                      type="email"
+                      label="Correo*"
+                      helperText={hasError ? errors.Correo.message : !isEmpty ? "✔️" : "Ingresa tu correo"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Telefono"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Telefono;
+                  return (
+                    <TextField
+                      {...field}
+                      label="Teléfono*"
+                      helperText={hasError ? errors.Telefono.message : !isEmpty ? "✔️" : "Ingresa tu teléfono"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Fila 5: Mensaje */}
+          <Grid item xs={12}>
+            <Controller
+              name="Mensaje"
+              control={control}
+              defaultValue=""
+              render={({ field }) => {
+                const isEmpty = field.value === "";
+                const hasError = !!errors.Mensaje;
+                const label = 
+                  selectedTipo === "sugerencias" || selectedTipo === "quejas"
+                    ? "Sugerencia*"
+                    : "Mensaje*";
+                return (
+                  <TextField
+                    {...field}
+                    multiline
+                    rows={7}
+                    label={label}
+                    helperText={hasError ? errors.Mensaje.message : !isEmpty ? "✔️" : "Ingresa un mensaje"}
+                    error={hasError}
+                    sx={getFieldSx(isEmpty, hasError)}
+                  />
+                );
+              }}
+            />
+          </Grid>
+        </>
+      ) : selectedTipo === "proveedor" || selectedTipo === "socio" ? (
         <>
-          {selectedTipo === "socio" && (
+          {/* Para Proveedor o Socio */}
+          {/* Fila 1: Contacto y RFC */}
+          <Grid container item xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Tipo"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Tipo;
+                  return (
+                    <TextField
+                      {...field}
+                      select
+                      label="Contacto*"
+                      helperText={hasError ? errors.Tipo.message : !isEmpty ? "✔️" : "Ingresa tu tipo de contacto"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                      onChange={(e) => field.onChange(e)}
+                    >
+                      {contactOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="RFC"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.RFC;
+                  return (
+                    <TextField
+                      {...field}
+                      label="RFC*"
+                      helperText={hasError ? errors.RFC.message : !isEmpty ? "✔️" : "Ingresa tu RFC"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Fila 2: Razón Social */}
+          <Grid item xs={12}>
             <Controller
               name="RazonSocial"
               control={control}
@@ -570,313 +583,220 @@ function ContactForm() {
               render={({ field }) => {
                 const isEmpty = field.value === "";
                 const hasError = !!errors.RazonSocial;
-
                 return (
                   <TextField
                     {...field}
-                    label={"Razon social"}
-                    helperText={
-                      hasError
-                        ? errors.RazonSocial.message
-                        : !isEmpty
-                        ? "✔️"
-                        : "Ingresa tu razón social"
-                    }
+                    label="Razón Social*"
+                    helperText={hasError ? errors.RazonSocial.message : !isEmpty ? "✔️" : "Ingresa tu razón social"}
                     error={hasError}
-                    sx={{
-                      display: {},
-                      width: {
-                        xs: "100%",
-                        sm: "500px",
-                        md: "750px",
-                        lg: "1000px",
-                        xl: "1200px",
-                      },
-                      borderRadius: "8px",
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: isEmpty
-                            ? "#07417B"
-                            : hasError
-                            ? "red"
-                            : "green",
-                          borderRadius: "15px",
-                          boxShadow:
-                            "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                        },
-                        "&:hover fieldset": {
-                          borderColor: isEmpty
-                            ? "blue"
-                            : hasError
-                            ? "red"
-                            : "blue",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: isEmpty
-                            ? "gray"
-                            : hasError
-                            ? "red"
-                            : "green",
-                        },
-                      },
-                    }}
+                    sx={getFieldSx(isEmpty, hasError)}
                   />
                 );
               }}
             />
-          )}
-        </>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 16,
-          flexWrap: "wrap",
-          width: "85%",
-        }}
-      >
-        <Controller
-          name="Correo"
-          control={control}
-          defaultValue=""
-          render={({ field }) => {
-            const isEmpty = field.value === "";
-            const hasError = !!errors.Correo;
+          </Grid>
 
-            return (
-              <TextField
-                {...field}
-                type="email"
-                label="Correo*"
-                helperText={
-                  hasError
-                    ? errors.Correo.message
-                    : !isEmpty
-                    ? "✔️"
-                    : "Ingresa tu correo"
-                }
-                error={hasError}
-                sx={{
-                  width: {
-                    xs: "100%",
-                    sm: "500px",
-                    md: "367px",
-                    lg: "492px",
-                    xl: "592px",
-                  },
-                  borderRadius: "8px",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: isEmpty
-                        ? "#07417B"
-                        : hasError
-                        ? "red"
-                        : "green",
-                      borderRadius: "15px",
-                      boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: isEmpty ? "blue" : hasError ? "red" : "blue",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: isEmpty
-                        ? "gray"
-                        : hasError
-                        ? "red"
-                        : "green",
-                    },
-                  },
+          {/* Fila 3: Correo y Teléfono */}
+          <Grid container item xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Correo"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Correo;
+                  return (
+                    <TextField
+                      {...field}
+                      type="email"
+                      label="Correo*"
+                      helperText={hasError ? errors.Correo.message : !isEmpty ? "✔️" : "Ingresa tu correo"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
                 }}
               />
-            );
-          }}
-        />
-        {/*
-        <Controller
-          name="Sucursal"
-          control={control}
-          defaultValue=""
-          render={({ field }) => {
-            const isEmpty = field.value === "";
-            const hasError = !!errors.Sucursal;
-
-            return (
-              <TextField
-                {...field}
-                select
-                label="Sucursal*"
-                helperText={
-                  hasError
-                    ? errors.Sucursal.message
-                    : !isEmpty
-                    ? "✔️"
-                    : "Ingresa tu sucursal"
-                }
-                error={hasError}
-                disabled={selectedTipo === "proveedor"}
-                sx={{
-                  width: {
-                    xs: "90%",
-                    sm: "500px",
-                    md: "239px",
-                    lg: "322px",
-                    xl: "390px",
-                  },
-                  borderRadius: "8px",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: isEmpty
-                        ? "#07417B"
-                        : hasError
-                        ? "red"
-                        : "green",
-                      borderRadius: "15px",
-                      boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: isEmpty ? "blue" : hasError ? "red" : "blue",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: isEmpty
-                        ? "gray"
-                        : hasError
-                        ? "red"
-                        : "green",
-                    },
-                  },
-                }}
-              >
-                {filteredSucursalOptions.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            );
-          }}
-        />*/}
-        <Controller
-          name="Telefono"
-          control={control}
-          defaultValue=""
-          render={({ field }) => {
-            const isEmpty = field.value === "";
-            const hasError = !!errors.Telefono;
-
-            return (
-              <TextField
-                {...field}
-                label="Telefono*"
-                helperText={
-                  hasError
-                    ? errors.Telefono.message
-                    : !isEmpty
-                    ? "✔️"
-                    : "Ingresa tu telefono"
-                }
-                error={hasError}
-                sx={{
-                  width: {
-                    xs: "100%",
-                    sm: "500px",
-                    md: "367px",
-                    lg: "492px",
-                    xl: "592px",
-                  },
-                  borderRadius: "8px",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: isEmpty
-                        ? "#07417B"
-                        : hasError
-                        ? "red"
-                        : "green",
-                      borderRadius: "15px",
-                      boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: isEmpty ? "blue" : hasError ? "red" : "blue",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: isEmpty
-                        ? "gray"
-                        : hasError
-                        ? "red"
-                        : "green",
-                    },
-                  },
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Telefono"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Telefono;
+                  return (
+                    <TextField
+                      {...field}
+                      label="Teléfono*"
+                      helperText={hasError ? errors.Telefono.message : !isEmpty ? "✔️" : "Ingresa tu teléfono"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
                 }}
               />
-            );
-          }}
-        />
-      </div>
-      <Controller
-        name="Mensaje"
-        control={control}
-        defaultValue=""
-        render={({ field }) => {
-          const isEmpty = field.value === "";
-          const hasError = !!errors.Mensaje;
-          const label =
-            selectedTipo === "sugerencias o sujerencias"
-              ? "Sugerencia*"
-              : "Mensaje*";
+            </Grid>
+          </Grid>
 
-          return (
-            <TextField
-              {...field}
-              multiline
-              rows={7}
-              label={label}
-              helperText={
-                hasError
-                  ? errors.Mensaje.message
-                  : !isEmpty
-                  ? "✔️"
-                  : "Ingresa un mensaje"
-              }
-              error={hasError}
-              sx={{
-                height: "200px",
-                width: {
-                  xs: "85%",
-                  sm: "500px",
-                  md: "750px",
-                  lg: "1000px",
-                  xl: "1200px",
-                },
-                borderRadius: "8px",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: isEmpty
-                      ? "#07417B"
-                      : hasError
-                      ? "red"
-                      : "green",
-                    borderRadius: "15px",
-                    boxShadow: "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: isEmpty ? "blue" : hasError ? "red" : "blue",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: isEmpty ? "gray" : hasError ? "red" : "green",
-                  },
-                },
+          {/* Fila 4: Mensaje */}
+          <Grid item xs={12}>
+            <Controller
+              name="Mensaje"
+              control={control}
+              defaultValue=""
+              render={({ field }) => {
+                const isEmpty = field.value === "";
+                const hasError = !!errors.Mensaje;
+                return (
+                  <TextField
+                    {...field}
+                    multiline
+                    rows={7}
+                    label="Mensaje*"
+                    helperText={hasError ? errors.Mensaje.message : !isEmpty ? "✔️" : "Ingresa un mensaje"}
+                    error={hasError}
+                    sx={getFieldSx(isEmpty, hasError)}
+                  />
+                );
               }}
             />
-          );
-        }}
-      />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-        p={2}
-      >
+          </Grid>
+        </>
+      ) : (
+        // Para Sugerencias, Quejas u otros
+        <>
+          {/* Fila 1: Contacto y Nombre */}
+          <Grid container item xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Tipo"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Tipo;
+                  return (
+                    <TextField
+                      {...field}
+                      select
+                      label="Contacto*"
+                      helperText={hasError ? errors.Tipo.message : !isEmpty ? "✔️" : "Ingresa tu tipo de contacto"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                      onChange={(e) => field.onChange(e)}
+                    >
+                      {contactOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Nombre"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Nombre;
+                  return (
+                    <TextField
+                      {...field}
+                      label="Nombre*"
+                      helperText={hasError ? errors.Nombre.message : !isEmpty ? "✔️" : "Ingresa tu nombre completo"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Fila 2: Correo y Teléfono */}
+          <Grid container item xs={12} spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Correo"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Correo;
+                  return (
+                    <TextField
+                      {...field}
+                      type="email"
+                      label="Correo*"
+                      helperText={hasError ? errors.Correo.message : !isEmpty ? "✔️" : "Ingresa tu correo"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Controller
+                name="Telefono"
+                control={control}
+                defaultValue=""
+                render={({ field }) => {
+                  const isEmpty = field.value === "";
+                  const hasError = !!errors.Telefono;
+                  return (
+                    <TextField
+                      {...field}
+                      label="Teléfono*"
+                      helperText={hasError ? errors.Telefono.message : !isEmpty ? "✔️" : "Ingresa tu teléfono"}
+                      error={hasError}
+                      sx={getFieldSx(isEmpty, hasError)}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/* Fila 3: Mensaje */}
+          <Grid item xs={12}>
+            <Controller
+              name="Mensaje"
+              control={control}
+              defaultValue=""
+              render={({ field }) => {
+                const isEmpty = field.value === "";
+                const hasError = !!errors.Mensaje;
+                const label =
+                  selectedTipo === "sugerencias" || selectedTipo === "quejas"
+                    ? "Sugerencia*"
+                    : "Mensaje*";
+                return (
+                  <TextField
+                    {...field}
+                    multiline
+                    rows={7}
+                    label={label}
+                    helperText={hasError ? errors.Mensaje.message : !isEmpty ? "✔️" : "Ingresa un mensaje"}
+                    error={hasError}
+                    sx={getFieldSx(isEmpty, hasError)}
+                  />
+                );
+              }}
+            />
+          </Grid>
+        </>
+      )}
+
+      {/* Botón de envío */}
+      <Grid item xs={12} sx={{ textAlign: "center" }}>
         <Button
           aria-label="Enviar formularios"
           sx={{
@@ -884,8 +804,6 @@ function ContactForm() {
             borderRadius: "25px",
             marginBottom: "48px",
             backgroundColor: "#002C72",
-
-            width: "auto",
             "&:hover": { backgroundColor: "#021E4A" },
           }}
           type="submit"
@@ -893,13 +811,10 @@ function ContactForm() {
           variant="contained"
           disabled={!isValid}
         >
-          {loading === true ? (
-            <CircularProgress size={24} color="inherit" />
-          ) : (
-            "Enviar"
-          )}
+          {loading ? <CircularProgress size={24} color="inherit" /> : "Enviar"}
         </Button>
-      </Box>
+      </Grid>
+    </Grid>
     </Box>
   );
 }

@@ -43,7 +43,7 @@ const ShippingHero = () => {
       sx={{
         backgroundColor: { xs: "transparent", md: "#fff" },
         backgroundImage: {
-          xs: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/entrega.jpeg')",
+          xs: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/Banners/banners_myllos_web_inicio.png')",
           md: "none",
         },
         backgroundSize: "cover",
@@ -103,7 +103,7 @@ const ShippingHero = () => {
                     background: "linear-gradient(to right, #007bff, #007bff99)",
                     WebkitBackgroundClip: "text",
                     textAlign: "center",
-                    color: "transparent",
+                    color: "#3DC2CF",
                     fontSize: { xs: "1.5rem", md: "2.5rem" },
                   }}
                 >
@@ -213,16 +213,16 @@ const ShippingHero = () => {
                     textTransform: "none",
                     fontSize: { xs: "0.8rem", md: "1.125rem" },
                     padding: "10px 20px",
-                    border: "0.5px solid #007bff",
+                    border: "0.5px solid #3DC2CF",
                     borderRadius: "30px",
                     backgroundColor: "white",
-                    color: "#007bff",
+                    color: "#3DC2CF",
                     fontWeight: "bold",
                     position: "relative",
                     overflow: "hidden",
                     transition: "all 0.3s ease-in-out",
                     "&:hover": {
-                      backgroundColor: "#007bff",
+                      backgroundColor: "#3DC2CF",
                       color: "#FFFFFF",
                       transform: "translateY(-3px)", // Movimiento leve hacia arriba
                       boxShadow: "0 8px 20px rgba(0, 123, 255, 0.5)", // Sombra más intensa
@@ -302,7 +302,7 @@ const ShippingHero = () => {
                 }}
               >
                 <Image
-                  src="/images/entrega.jpeg"
+                  src="/images/Banners/banners_myllos_web_inicio.png"
                   alt="Myllos"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

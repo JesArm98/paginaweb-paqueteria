@@ -424,7 +424,7 @@ const Footer = () => {
                 aria-label="LinkedIn"
                 variant="outlined"
                 component="a"
-                href="https://www.facebook.com/profile.php?id=61569802240206"
+                href="https://www.linkedin.com/company/myllos-soluciones-logisticas/"
                 target="_blank"
                 sx={{
                   textTransform: "none",

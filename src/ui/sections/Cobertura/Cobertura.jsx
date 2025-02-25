@@ -69,7 +69,7 @@ const Cobertura = () => {
         sx={{
           textAlign: "center",
           mb: { xs: 4, md: 6 },
-          background: "linear-gradient(45deg, #007bff, #007bff99)",
+          background: "linear-gradient(45deg, #3DC2CF, #3DC2CF99)",
           WebkitBackgroundClip: "text",
           color: "transparent",
           fontWeight: 700,
@@ -85,11 +85,10 @@ const Cobertura = () => {
           <Box sx={{ height: "90%" }}>
             <Paper
               elevation={3}
+              
               sx={{
-                p: { xs: 2, md: 4 },
                 borderRadius: "15px",
                 height: "100%",
-
                 transition: "transform 0.3s ease-in-out",
                 "&:hover": {
                   transform: "scale(1.02)",
@@ -102,7 +101,9 @@ const Cobertura = () => {
   justifyContent="center"
   alignItems="center"
   position="relative"
-  height={{ xs: "150px", md: "400px" }}
+  margin={"auto"}
+  width={{xs:"100%", sm:"450px", md:"100%", lg:"100%"}}
+  height={{ xs: "200px", sm:"275px", md: "100%", lg:"100%" }}
   sx={{
     "& img": {
       transition: "transform 0.3s ease-in-out",
@@ -113,13 +114,9 @@ const Cobertura = () => {
   }}
 >
   <Image
-    src="/images/cobertura-mundial.webp"
+    src="/images/Banners/banners_myllos_web_cobertura.png"
     alt="Mapa de cobertura"
     fill
-    style={{
-      objectFit: "cover",
-      cursor: "pointer",
-    }}
   />
 </Box>
 
@@ -133,7 +130,7 @@ const Cobertura = () => {
               gutterBottom
               sx={{
                 mt: { xs: 2, md: 0 },
-                background: "linear-gradient(45deg, #007bff, #007bff99)",
+                background: "linear-gradient(45deg, #3DC2CF, #3DC2CF99)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
                 fontWeight: 600,

@@ -32,7 +32,7 @@ const FAQ = () => {
               fontSize: { xs: "1.5rem", md: "2.25rem" },
               fontWeight: "bold",
               mb: 2,
-              background: "linear-gradient(45deg, #007bff, #007bff99)",
+              background: "linear-gradient(45deg, #3DC2CF, #3DC2CF99)",
               WebkitBackgroundClip: "text",
               color: "transparent",
             }}

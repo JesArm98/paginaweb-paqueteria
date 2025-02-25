@@ -475,28 +475,22 @@ const Navbar = () => {
                 </>
               )}
             </Box> */}
-            {/*Botón de LinkedIn
+            
             <Button
               aria-label="LinkedIn"
               variant="outlined"
               component="a"
-              href="https://www.myllos.com.mx/"
+              href="https://www.linkedin.com/company/myllos-soluciones-logisticas/"
               target="_blank"
               sx={{
-                textTransform: "none",
-
                 color: "#FFFFFF",
-                transition: "background-color 0.3s ease",
-                borderColor: "transparent",
+                borderColor: "none",
+                border: "none",
                 borderRadius: "30px",
-                height: "40px",
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.31)",
-                  borderColor: "#FFFFFF",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                  transform: "scale(0.90)",
-                  transition: "transform 0.2s ease, filter 0.2s ease",
+                  transform: "scale(1.2)",
+                  boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)",
                 },
               }}
             >
@@ -508,7 +502,7 @@ const Navbar = () => {
                 style={{ width: "25px", height: "25px" }}
               />
             </Button>
-            */}
+            
             {/*Botón de Contacto*/}
             <Link href="/#contacto" style={{ textDecoration: "none" }} passHref>
               <Button

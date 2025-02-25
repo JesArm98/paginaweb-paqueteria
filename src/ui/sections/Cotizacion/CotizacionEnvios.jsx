@@ -141,6 +141,12 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
   // Monitorea los valores del formulario
 const formValues = watch();
 
+// Calcula el total de tarimas sumando la propiedad "cantidad" de cada paquete
+const totalTarimas = formValues.packages?.reduce(
+  (total, pkg) => total + (Number(pkg.cantidad) || 0),
+  0
+) || 0;
+
 // Función para validar el formulario
 const isFormValid = () => {
   // Verifica que origen y destino no estén vacíos
@@ -267,12 +273,12 @@ const handleAgregarTarima = () => {
             <Typography sx={{
               fontSize:"16px",
             }}>
-              Número de Tarimas: {fields.length}
+              Número de elementos: {totalTarimas}
             </Typography>
               <Typography sx={{
                 fontSize:"11px"
               }}>
-                Ingrese número de tarimas por Pallet, Jaulta, etc.
+                Tipos de mercancia: Tarima, Pallet, Jaula, etc.
               </Typography>
             </Box>
             }
@@ -297,7 +303,7 @@ const handleAgregarTarima = () => {
   </Button>
             </Box>
             )}
-<Box sx={{display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid red", borderRadius:"20px", gap:1}}>
+<Box sx={{display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid gray", borderRadius:"20px", gap:1}}>
   {/* Texto debajo del botón */}
   <Typography variant="body2" sx={{ fontSize: "12px", textAlign: "center", ml:1.5 }}>
     Conocer dimensiones de tarima
@@ -327,7 +333,7 @@ const handleAgregarTarima = () => {
     }}
   >
     <IconButton sx={{ mt: 0.5 }}>
-      <HelpOutlineIcon color="primary" />
+      <HelpOutlineIcon sx={{color:"blue"}} />
     </IconButton>
   </Tooltip>
 
@@ -441,7 +447,7 @@ Servicios adicionales: Acuse de Recibo, Seguro, EAD o RAD con cita y Ocurre (Ent
 </Typography>
 
         <Grid item xs={12} sx={{ textAlign: "center", mt: 4 }}>
-          <Button type="submit" variant="outlined"  endIcon={<ArrowForwardIcon/>} sx={{textTransform:"none", borderRadius:"20px"}}   disabled={!isFormValid()}>
+          <Button type="submit" variant="outlined" color="primary"   endIcon={<ArrowForwardIcon/>} sx={{textTransform:"none", borderRadius:"20px"}}   disabled={!isFormValid()}>
             Continuar cotización
           </Button>
         </Grid>

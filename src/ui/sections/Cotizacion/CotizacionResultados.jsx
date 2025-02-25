@@ -9,6 +9,7 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar }) => {
   const [emailUsuario, setEmailUsuario] = useState("");
@@ -40,7 +41,7 @@ const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar 
   return (
     <Box>
       <Typography variant="h6" sx={{ pb: 3 }}>
-        Confirma tu cotización ingresando tu correo electrónico
+        Envianos tu cotización ingresando tu correo electronico
       </Typography>
       <TextField
         fullWidth
@@ -52,12 +53,13 @@ const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar 
         helperText={emailUsuario !== "" && !emailUsuario.includes("@") ? "Ingresa un correo válido" : ""}
       />
       <Box sx={{ display: "flex", mt: 2, justifyContent: "end", gap: 2 }}>
-        <Button onClick={onModificarCotizacion} variant="outlined" sx={{ width: "fit-content", textTransform: "none", borderRadius: "20px" }}>
-          Volver al formulario
+        <Button onClick={onModificarCotizacion} variant="outlined" color="error" sx={{ width: "fit-content", textTransform: "none", borderRadius: "20px" }} startIcon={<ArrowBackIcon/>}>
+          Volver a cotización
         </Button>
         <Button
           fullWidth
-          variant="contained"
+          color="success"
+          variant="outlined"
           onClick={handleConfirmarEmail}
           disabled={!emailUsuario || !emailUsuario.includes("@")}
           sx={{ textTransform: "none", width: "fit-content", borderRadius: "20px" }}

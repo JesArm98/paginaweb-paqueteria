@@ -7,6 +7,7 @@ import Cobertura from "@/ui/sections/Cobertura/Cobertura";
 import FAQ from "@/ui/sections/FAQ/FAQ";
 import Estadisticas from "@/ui/sections/Estadisticas/Estadisticas";
 import ScrollToContact from "@/ui/components/ScrollToContact/ScrollToContact";
+import Banner from "@/ui/sections/Banner/Banner";
 
 export default function Home() {
   return (
@@ -14,6 +15,8 @@ export default function Home() {
       <ScrollToContact /> {/* Componente cliente para manejar useEffect */}
       <ShippingHero />
       <Servicios />
+      <Banner/>
+
       <Cobertura />
       <FAQ />
       <Contacto />
