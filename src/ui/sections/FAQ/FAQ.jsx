@@ -134,15 +134,15 @@ const FAQ = () => {
         sx={{
           borderRadius: "20px",
           textTransform: "none",
-          borderColor: "#007bff",
+          borderColor: "#3DC2CF",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           margin: "auto",
           marginTop: "30px",
-          color: "#007bff",
+          color: "#3DC2CF",
           "&:hover": {
-            borderColor: "#0056b3",
+            borderColor: "#3DC2CF",
             backgroundColor: "#f0f9ff",
           },
         }}

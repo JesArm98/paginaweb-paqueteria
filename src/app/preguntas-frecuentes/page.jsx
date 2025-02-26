@@ -32,7 +32,7 @@ export default function PreguntasFrecuentes() {
   return (
     <Box
       sx={{
-        py: 8,
+        py: {xs:10,md:8},
         minHeight: "90vh",
         paddingTop: "150px",
         display: "flex",
@@ -46,7 +46,7 @@ export default function PreguntasFrecuentes() {
           variant="h1"
           sx={{
             textAlign: "center",
-            mb: 6,
+            mb:{xs:4,md:6},
             fontSize: { xs: "2rem", md: "3rem" },
             fontWeight: "bold",
             background: "linear-gradient(45deg, #007bff, #007bff99)",
@@ -62,7 +62,7 @@ export default function PreguntasFrecuentes() {
             width: "100%",
             display: "flex",
             justifyContent: "center",
-            mb: 4,
+            mb: {xs:2,md:4},
           }}
         >
           <Tabs

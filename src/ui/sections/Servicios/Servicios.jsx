@@ -14,6 +14,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const servicios = [
   {
@@ -32,7 +33,16 @@ const servicios = [
     titulo: "FTL (Full Truck Load)",
     descripcion:
       "Servicio de camión dedicado para envíos que requieren el espacio completo del vehículo. Máxima seguridad y control total sobre la ruta y tiempos de entrega.",
-    icon: <DeliveryDiningIcon sx={{ fontSize: 60, color: "#007bff" }} />,
+    icon: <Image 
+    src="/images/Icons/ftl-icon.svg" 
+    width={150} 
+    height={100} 
+    alt="FTL Icon"
+    style={{
+      transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
+      objectFit: "contain",
+    }}
+  />,
     caracteristicas: [
       "Camión completo dedicado",
       "Control total de la ruta",
@@ -132,7 +142,7 @@ const Servicios = () => {
                       mb: 2,
                       p: { xs: 1, md: 2 },
                       borderRadius: "50%",
-                      backgroundColor: "#f8fafc",
+                      backgroundColor: "#FFF",
                     }}
                   >
                     {servicio.icon}

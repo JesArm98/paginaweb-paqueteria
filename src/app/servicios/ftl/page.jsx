@@ -14,6 +14,7 @@ import {
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Link from "next/link";
+import Image from "next/image";
 
 const handleCotizacionesClick = () => {
   // Establecer el tipo en localStorage
@@ -90,7 +91,7 @@ function FTLPage() {
                 color: "#6b7280",
                 mb: 4,
                 fontSize: { xs: "1.1rem", md: "1.3rem" },
-                textAlign: "justify",
+                textAlign: "center",
               }}
             >
               Transporte dedicado para cargas completas con máxima seguridad
@@ -172,18 +173,34 @@ function FTLPage() {
                 height: "400px",
                 borderRadius: "20px",
                 overflow: "hidden",
+                margin:"auto",
+                display:"flex",
+                justifyContent:"center",
+                alignItems:"center"
               }}
             >
-              <LocalShippingIcon
-                sx={{
-                  fontSize: "300px",
-                  color: "#007bff22",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
+<Box
+  sx={{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%) scaleX(-1)", // Aplica el efecto espejo
+    width: "400px", // Mantén el tamaño de la imagen
+    height: "300px",
+  }}
+>
+  <Image 
+    src="/images/Icons/ftl-icon.svg" 
+    width={400} 
+    height={300} 
+    alt="FTL Icon"
+    style={{
+      width: "100%", // Asegura que la imagen ocupe todo el `Box`
+      height: "100%",
+    }}
+  />
+</Box>
+
             </Box>
           </Grid>
         </Grid>

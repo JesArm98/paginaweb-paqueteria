@@ -67,8 +67,13 @@ const MobileNav = () => {
   const handleMenuItemClick = useCallback(
     (e, href) => {
       e.preventDefault();
-
-      const scrollToSection = () => {
+  
+      if (href.includes("firebase")) {
+        window.open(href, "_blank");
+        return;
+      }
+  
+      if (href.startsWith("#")) {
         const section = document.querySelector(href);
         if (section) {
           const offsetTop = section.offsetTop;
@@ -77,25 +82,26 @@ const MobileNav = () => {
             top: offsetTop - offset,
             behavior: "smooth",
           });
+          handleCloseMenu();
+        } else if (pathname !== "/") {
+          setTargetSection(href);
+          router.push("/");
         }
-      };
-
+        return;
+      }
+  
       if (href.startsWith("http")) {
         window.location.href = href;
       } else if (href.startsWith("/")) {
         router.push(href);
-      } else {
-        if (pathname !== "/") {
-          setTargetSection(href);
-          router.push("/");
-        } else {
-          scrollToSection();
-        }
-      }
+      } 
+  
       handleCloseMenu();
     },
     [router, pathname]
   );
+  
+  
 
   const handleCloseMenu = useCallback(() => {
     setAnimation("slideOut 0.5s forwards");
@@ -107,15 +113,17 @@ const MobileNav = () => {
   const menuItems = [
     { name: "Nosotros", href: "/" },
     { name: "Servicios", href: "#Servicios" },
-    { name: "Sucursales", href: "#sucursal" },
-    // { name: "Tienda", href: "/tienda" },
+     { name: "Preguntas frecuentes", href: "/preguntas-frecuentes" },
+     { name: "Contrato adhesión", href: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Contrato-adhesion-Myllos.pdf?alt=media&token=3f04bcb4-7d58-4428-9a94-07400a498bb0" },
+     { name: "Terminos y condiciones", href: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/Terminos-y-condiciones-Myllos.pdf?alt=media&token=1733f60b-37be-4ccb-85a4-35ac88145ac5" },
+     { name: "Aviso de privacidad", href: "https://firebasestorage.googleapis.com/v0/b/fir-adminsdk-documents.appspot.com/o/aviso-de-privacidad-myllos.pdf?alt=media&token=0d3db21e-49ae-4186-abec-2a4674dccd97" },
   ];
 
   const menuItems2 = [
     {
       button: (
         <Button
-          variant="outlined"
+          
           href="https://www.facebook.com/profile.php?id=61569802240206"
           target="_blank"
         >
@@ -129,17 +137,24 @@ const MobileNav = () => {
       ),
       href: "https://www.facebook.com/profile.php?id=61569802240206",
       name: "Facebook",
-    },
-    {
-      icon: <Instagram sx={{ fontSize: 20 }} />,
-      href: "https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
-      name: "Instagram",
+    },{
+      button: (
+        <Button
+        
+        href="https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg=="
+        target="_blank"
+      >
+<Instagram sx={{ fontSize: 20, color:"white" }} />
+        </Button>
+      ),
+      href:"https://www.instagram.com/myllos_?igsh=MXRvbWg1Z3p6N2k2dg==",
+      name:"Instagram"
     },
     {
       button: (
         <Button
-          variant="outlined"
-          href="https://www.linkedin.com/company/tuvanosa"
+          
+          href="https://www.linkedin.com/company/myllos-soluciones-logisticas/"
           target="_blank"
         >
           <Image
@@ -150,14 +165,10 @@ const MobileNav = () => {
           />
         </Button>
       ),
-      href: "https://www.linkedin.com/company/tuvanosa",
+      href: "https://www.linkedin.com/company/myllos-soluciones-logisticas/",
       name: "LinkedIn",
     },
-    {
-      icon: <EmailOutlinedIcon sx={{ fontSize: 20 }} />,
-      href: "#contacto",
-      name: "Email",
-    },
+
   ];
 
   return (

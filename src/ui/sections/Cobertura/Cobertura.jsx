@@ -61,7 +61,7 @@ const Cobertura = () => {
       sx={{
         py: { xs: 4, md: 8 },
         px: { xs: 2, md: 4 },
-        backgroundColor: "#fff",
+        backgroundColor: {sx:"red",md:"#fff"},
       }}
     >
       <Typography

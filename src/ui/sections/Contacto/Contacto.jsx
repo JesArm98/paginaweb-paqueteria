@@ -86,7 +86,7 @@ const schema = yup.object({
     otherwise: (s) => s.notRequired(),
   }),
   Nombre: yup.string().when("Tipo", {
-    is: (tipo) => tipo !== "proveedor" && tipo !== "socio",
+    is: (tipo) =>  tipo !== "socio",
     then: (s) =>
       s
         .matches(nameRegExp, "Solo puede contener letras, espacios, guiones y apóstrofes.")
@@ -96,12 +96,12 @@ const schema = yup.object({
     otherwise: (s) => s.notRequired(),
   }),
   RFC: yup.string().when("Tipo", {
-    is: (tipo) => tipo === "proveedor" || tipo === "socio",
+    is: (tipo) =>  tipo === "socio",
     then: (s) => s.required("El RFC es obligatorio."),
     otherwise: (s) => s.notRequired(),
   }),
   RazonSocial: yup.string().when("Tipo", {
-    is: (tipo) => tipo === "proveedor" || tipo === "socio",
+    is: (tipo) =>  tipo === "socio",
     then: (s) => s.required("La razón social es obligatoria."),
     otherwise: (s) => s.notRequired(),
   }),
@@ -172,7 +172,7 @@ function ContactForm() {
       origen: data.Origen, // Ahora es el objeto completo
       destino: data.Destino, // Ahora es el objeto completo
       nombre:
-        data.Tipo === "proveedor" || data.Tipo === "socio"
+         data.Tipo === "socio"
           ? `${data.RFC} ${data.RazonSocial}`
           : data.Nombre,
       email: data.Correo,
@@ -519,7 +519,7 @@ function ContactForm() {
             />
           </Grid>
         </>
-      ) : selectedTipo === "proveedor" || selectedTipo === "socio" ? (
+      ) :  selectedTipo === "socio" ? (
         <>
           {/* Para Proveedor o Socio */}
           {/* Fila 1: Contacto y RFC */}

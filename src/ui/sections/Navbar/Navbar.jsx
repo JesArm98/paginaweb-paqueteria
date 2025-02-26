@@ -68,12 +68,14 @@ const Navbar = () => {
           }}
           className="logNosCoord"
         >
+
+          <Box sx={{display:{xs:"flex", md:"none"}}}>
           <Link href="/" style={{ textDecoration: "none" }}>
             <Image
               className="LogoNavbar"
-              width={50}
-              height={50}
-              src="/images/myllos-logo-notext.png"
+              width={100}
+              height={40}
+              src={"/images/myllos-logo.png"}
               alt="Myllos Logo"
               priority
               style={{
@@ -83,6 +85,24 @@ const Navbar = () => {
               }}
             />
           </Link>
+          </Box>
+          <Box  sx={{display:{xs:"none", md:"flex"}}}>
+          <Link href="/" style={{ textDecoration: "none" }}>
+            <Image
+              className="LogoNavbar"
+              width={50}
+              height={50}
+              src={"/images/myllos-logo-notext.png"}
+              alt="Myllos Logo"
+              priority
+              style={{
+                borderRadius: "20px",
+                transition: "transform 0.3s ease",
+                cursor: "pointer",
+              }}
+            />
+          </Link>
+          </Box>
           <Link href="/" passHref style={{ textDecoration: "none" }}>
             <Button
               onClick={() => handleNavigation("Servicios")}

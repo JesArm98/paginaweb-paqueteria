@@ -13,7 +13,8 @@ import {
   AccordionDetails,
   Typography,
   Tooltip,
-  FormControlLabel,Checkbox
+  FormControlLabel,Checkbox,
+  useMediaQuery, useTheme
 } from "@mui/material";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import axios from "axios";
@@ -31,6 +32,9 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
   const [coloniasOrigen, setColoniasOrigen] = useState([]);
   const [coloniasDestino, setColoniasDestino] = useState([]);
   const [expanded, setExpanded] = useState(true); // Expandido por defecto
+
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
   const { control, handleSubmit, watch, setValue, reset } = useForm({
     defaultValues: {
@@ -259,16 +263,6 @@ const handleAgregarTarima = () => {
 
           {/* Contador de Tarimas y Botón Agregar */}
           <Grid item xs={12} md={6}>
-            {initialShippingType === "ftl" ?             <TextField
-  label="Número de Tarimas"
-  value={fields.length} // Ahora refleja correctamente el número de registros
-  helperText="Número de registros de dimensiones de tarimas"
-  onChange={handleTarimaChange}
-  fullWidth
-  sx={inputStyles}
-  type="number"
-/> : 
-            
             <Box>
             <Typography sx={{
               fontSize:"16px",
@@ -281,38 +275,49 @@ const handleAgregarTarima = () => {
                 Tipos de mercancia: Tarima, Pallet, Jaula, etc.
               </Typography>
             </Box>
-            }
+            
 
 
           </Grid>
 
           <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "roww", alignItems: "center", justifyContent:"space-evenly" }}>
-            {initialShippingType === "ltl" && (
+
 
             <Box>
 
   {/* Botón Agregar Tarima */}
   <Button
-    variant="outlined"
-    onClick={() => append({ width: "", height: "", length: "", weight: "", cantidad:1 })}
-    startIcon={<AddIcon />}
-    fullWidth
-    sx={{ width: "fit-content", textTransform: "none", borderRadius: "20px" }}
-  >
-    Agregar
-  </Button>
+      variant="outlined"
+      onClick={() => append({ width: "", height: "", length: "", weight: "", cantidad: 1 })}
+      startIcon={isMdUp ? <AddIcon /> : null} // Solo usa startIcon en md+
+      fullWidth
+      sx={{
+        width: "fit-content",
+        minWidth: isMdUp ? "auto" : "40px", // Ancho mínimo cuando no hay texto
+        height: "40px", // Mantiene un tamaño adecuado para el botón
+        textTransform: "none",
+        borderRadius: "20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: isMdUp ? "8px" : "0px", // Espacio entre icono y texto solo en md+
+        padding: isMdUp ? "6px 16px" : "6px", // Reduce padding en tamaños pequeños
+      }}
+    >
+      {isMdUp ? "Agregar" : <AddIcon />} {/* Usa el icono solo en sm- */}
+    </Button>
             </Box>
-            )}
+          
 <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid gray", borderRadius:"20px", gap:1}}>
   {/* Texto debajo del botón */}
-  <Typography variant="body2" sx={{ fontSize: "12px", textAlign: "center", ml:1.5 }}>
+  <Typography variant="body2" sx={{ fontSize: "12px", textAlign: "center", ml:1.5, display:{xs:"none", sm :"flex"} }}>
     Conocer dimensiones de tarima
   </Typography>
 
   {/* Tooltip con imagen al hacer hover */}
   <Tooltip
     title={
-      <Box sx={{ textAlign: "center", p: 1 }}>
+      <Box sx={{ textAlign: "center", p: {xs:0,md:1} }}>
         <Image
           src="/images/tarimas.webp"
           alt="Ejemplo de dimensiones"
@@ -355,7 +360,7 @@ const handleAgregarTarima = () => {
     }}
   >
     <Typography sx={{
-      fontSize:"18px"
+      fontSize:{xs:"12px",md:"18px"}
     }} >
       Detalle de tarimas
     </Typography>
@@ -366,7 +371,7 @@ const handleAgregarTarima = () => {
       {fields.map((pkg, index) => (
         <Grid container spacing={2} key={pkg.id} sx={{ alignItems: "center", mb: 3 }}>
           {/* Cantidad */}
-          <Grid item xs={2}>
+          <Grid item xs={6}sm={2}>
             <Controller
               name={`packages.${index}.cantidad`}
               control={control}
@@ -377,7 +382,7 @@ const handleAgregarTarima = () => {
           </Grid>
 
 {/* Ancho */}
-<Grid item xs={2}>
+<Grid item xs={6}sm={2}>
   <Controller
     name={`packages.${index}.width`}
     control={control}
@@ -390,7 +395,7 @@ const handleAgregarTarima = () => {
 </Grid>
 
 {/* Alto */}
-<Grid item xs={2}>
+<Grid item xs={6}sm={2}>
   <Controller
     name={`packages.${index}.height`}
     control={control}
@@ -403,7 +408,7 @@ const handleAgregarTarima = () => {
 </Grid>
 
 {/* Largo */}
-<Grid item xs={2}>
+<Grid item xs={6}sm={2}>
   <Controller
     name={`packages.${index}.length`}
     control={control}
@@ -416,7 +421,7 @@ const handleAgregarTarima = () => {
 </Grid>
 
 {/* Peso */}
-<Grid item xs={2}>
+<Grid item xs={6}sm={2}>
   <Controller
     name={`packages.${index}.weight`}
     control={control}
@@ -429,7 +434,7 @@ const handleAgregarTarima = () => {
 </Grid>
 
           {/* Botón de eliminar */}
-          <Grid item xs={2}>
+          <Grid item xs={6}sm={2}>
             {fields.length > 1 && (
               <IconButton onClick={() => remove(index)}>
                 <DeleteIcon color="error" />
@@ -442,13 +447,13 @@ const handleAgregarTarima = () => {
   </AccordionDetails>
 </Accordion>
 
-<Typography sx={{fontSize:"11px", textAlign:"left", width:"45%"}}>
+<Typography sx={{fontSize:"11px", textAlign:"left", width:{xs:"100%",md:"45%"}}}>
 Servicios adicionales: Acuse de Recibo, Seguro, EAD o RAD con cita y Ocurre (Entrega a domicilio o recolección en sucursal)
 </Typography>
 
         <Grid item xs={12} sx={{ textAlign: "center", mt: 4 }}>
           <Button type="submit" variant="outlined" color="primary"   endIcon={<ArrowForwardIcon/>} sx={{textTransform:"none", borderRadius:"20px"}}   disabled={!isFormValid()}>
-            Continuar cotización
+            {isMdUp ?"Continuar cotización" : ""}
           </Button>
         </Grid>
       </form>
