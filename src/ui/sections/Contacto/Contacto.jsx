@@ -13,7 +13,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { contactOptions } from "@/data/data";
 import { tipoServicio } from "@/data/data";
 import useContactType from "@/hooks/useContactType";
@@ -142,7 +142,18 @@ function ContactForm() {
   useContactType(setValue, trigger);
 
   const selectedTipo = useWatch({ control, name: "Tipo" });
-  const Cotizaciones = selectedTipo === "cotizaciones";
+
+  useEffect(() => {
+    const storedType = localStorage.getItem("contactType");
+  
+    if (storedType) {
+      setValue("Tipo", storedType, { shouldValidate: true });
+  
+      // Disparar validación y actualización en el próximo ciclo de render
+      setTimeout(() => trigger("Tipo"), 100);
+    }
+  }, [setValue, trigger]); // Se ejecuta solo cuando se monta el componente
+  
 
   // Para el Autocomplete, si el usuario selecciona una opción, se guarda el objeto completo
   const handleAutocompleteChange = async (field, value, onChange) => {
@@ -175,7 +186,7 @@ function ContactForm() {
          data.Tipo === "socio"
           ? `${data.RFC} ${data.RazonSocial}`
           : data.Nombre,
-      email: data.Correo,
+      correo: data.Correo,
       telefono: data.Telefono,
       mensaje: data.Mensaje,
     };
@@ -196,7 +207,7 @@ function ContactForm() {
   };
 
   return (
-    <Box sx={{width:"80%", display:"flex", margin:"auto"}}>
+    <Box id="contacto" sx={{width:"80%", display:"flex", margin:"auto"}}>
 
     <Grid
       container
@@ -459,7 +470,7 @@ function ContactForm() {
                   return (
                     <TextField
                       {...field}
-                      type="email"
+                      type="correo"
                       label="Correo*"
                       helperText={hasError ? errors.Correo.message : !isEmpty ? "✔️" : "Ingresa tu correo"}
                       error={hasError}
@@ -501,7 +512,7 @@ function ContactForm() {
                 const isEmpty = field.value === "";
                 const hasError = !!errors.Mensaje;
                 const label = 
-                  selectedTipo === "sugerencias" || selectedTipo === "quejas"
+                  selectedTipo === "quejas" 
                     ? "Sugerencia*"
                     : "Mensaje*";
                 return (
@@ -609,7 +620,7 @@ function ContactForm() {
                   return (
                     <TextField
                       {...field}
-                      type="email"
+                      type="correo"
                       label="Correo*"
                       helperText={hasError ? errors.Correo.message : !isEmpty ? "✔️" : "Ingresa tu correo"}
                       error={hasError}
@@ -733,7 +744,7 @@ function ContactForm() {
                   return (
                     <TextField
                       {...field}
-                      type="email"
+                      type="correo"
                       label="Correo*"
                       helperText={hasError ? errors.Correo.message : !isEmpty ? "✔️" : "Ingresa tu correo"}
                       error={hasError}
@@ -775,7 +786,7 @@ function ContactForm() {
                 const isEmpty = field.value === "";
                 const hasError = !!errors.Mensaje;
                 const label =
-                  selectedTipo === "sugerencias" || selectedTipo === "quejas"
+                  selectedTipo === "quejas"
                     ? "Sugerencia*"
                     : "Mensaje*";
                 return (

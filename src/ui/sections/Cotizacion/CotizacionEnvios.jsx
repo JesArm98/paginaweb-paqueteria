@@ -13,7 +13,6 @@ import {
   AccordionDetails,
   Typography,
   Tooltip,
-  FormControlLabel,Checkbox,
   useMediaQuery, useTheme
 } from "@mui/material";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
@@ -40,8 +39,8 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
     defaultValues: {
       origen: "",
       destino: "",
-      tipoEnvio: initialShippingType || "",
-      packages: [{ width: "", height: "", length: "", weight: "", cantidad: 1 }],
+      servicio: initialShippingType || "",
+      packages: [{ ancho: "", alto: "", largo: "", peso: "", cantidad: 1 }],
     },
   });
   
@@ -53,7 +52,7 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
 
   useEffect(() => {
     if (initialShippingType) {
-      setValue("tipoEnvio", initialShippingType);
+      setValue("servicio", initialShippingType);
     }
   }, [initialShippingType, setValue]);
 
@@ -87,10 +86,10 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
       packages: data.packages.map((pkg) => ({
         ...pkg,
         cantidad:Number(pkg.cantidad) ||0,
-        width: Number(pkg.width) || 0,
-        height: Number(pkg.height) || 0,
-        length: Number(pkg.length) || 0,
-        weight: Number(pkg.weight) || 0,
+        ancho: Number(pkg.ancho) || 0,
+        alto: Number(pkg.alto) || 0,
+        largo: Number(pkg.largo) || 0,
+        peso: Number(pkg.peso) || 0,
       })),
     };
   
@@ -158,7 +157,7 @@ const isFormValid = () => {
 
   // Verifica que al menos un paquete tenga todas sus propiedades llenas
   return formValues.packages.every(pkg => 
-    pkg.width && pkg.height && pkg.length && pkg.weight
+    pkg.ancho && pkg.alto && pkg.largo && pkg.peso
   );
 };
 
@@ -175,17 +174,13 @@ const handleTarimaChange = (event) => {
 
   if (newCount > currentCount) {
     for (let i = currentCount; i < newCount; i++) {
-      append({ width: "", height: "", length: "", weight: "", cantidad: 1 });
+      append({ ancho: "", alto: "", largo: "", peso: "", cantidad: 1 });
     }
   } else if (newCount < currentCount) {
     for (let i = currentCount; i > newCount; i--) {
       remove(i - 1);
     }
   }
-};
-
-const handleAgregarTarima = () => {
-  append({ width: "", height: "", length: "", weight: "", cantidad: 1 });
 };
 
   return (
@@ -288,7 +283,7 @@ const handleAgregarTarima = () => {
   {/* Botón Agregar Tarima */}
   <Button
       variant="outlined"
-      onClick={() => append({ width: "", height: "", length: "", weight: "", cantidad: 1 })}
+      onClick={() => append({ ancho: "", alto: "", largo: "", peso: "", cantidad: 1 })}
       startIcon={isMdUp ? <AddIcon /> : null} // Solo usa startIcon en md+
       fullWidth
       sx={{
@@ -376,7 +371,18 @@ const handleAgregarTarima = () => {
               name={`packages.${index}.cantidad`}
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Cantidad" type="number" fullWidth sx={{ ...inputStyles }} inputProps={{ min: 1 }} />
+                <TextField {...field} label="Cantidad" type="number" fullWidth sx={{ ...inputStyles }}   InputProps={{
+                  inputMode: 'numeric',
+                  
+                  sx: {
+                    '& input[type=number]': {
+                      MozAppearance: 'textfield',
+                      '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+                        opacity: 1, // Hace visibles las flechas siempre
+                      }
+                    }
+                  }
+                }} />
               )}
             />
           </Grid>
@@ -384,11 +390,23 @@ const handleAgregarTarima = () => {
 {/* Ancho */}
 <Grid item xs={6}sm={2}>
   <Controller
-    name={`packages.${index}.width`}
+    name={`packages.${index}.ancho`}
     control={control}
     render={({ field }) => (
       <TextField {...field} label="Ancho (cm)" type="number" fullWidth sx={{ ...inputStyles }} 
-        onChange={(e) => setValue(`packages.${index}.width`, e.target.value, { shouldValidate: true })}
+        onChange={(e) => setValue(`packages.${index}.ancho`, e.target.value, { shouldValidate: true })} placeholder="Ingrese ancho"        InputLabelProps={{
+          shrink: {xs:true, md:false}, // Mantiene la etiqueta siempre arriba
+        }}    InputProps={{
+          inputMode: 'numeric',
+          sx: {
+            '& input[type=number]': {
+              MozAppearance: 'textfield',
+              '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+                opacity: 1, // Hace visibles las flechas siempre
+              }
+            }
+          }
+        }}
       />
     )}
   />
@@ -397,11 +415,23 @@ const handleAgregarTarima = () => {
 {/* Alto */}
 <Grid item xs={6}sm={2}>
   <Controller
-    name={`packages.${index}.height`}
+    name={`packages.${index}.alto`}
     control={control}
     render={({ field }) => (
       <TextField {...field} label="Alto (cm)" type="number" fullWidth sx={{ ...inputStyles }} 
-        onChange={(e) => setValue(`packages.${index}.height`, e.target.value, { shouldValidate: true })}
+        onChange={(e) => setValue(`packages.${index}.alto`, e.target.value, { shouldValidate: true })} placeholder="Ingrese alto"   InputLabelProps={{
+          shrink: {xs:true, md:false}, // Mantiene la etiqueta siempre arriba
+        }}           InputProps={{
+          inputMode: 'numeric',
+          sx: {
+            '& input[type=number]': {
+              MozAppearance: 'textfield',
+              '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+                opacity: 1, // Hace visibles las flechas siempre
+              }
+            }
+          }
+        }}
       />
     )}
   />
@@ -410,11 +440,23 @@ const handleAgregarTarima = () => {
 {/* Largo */}
 <Grid item xs={6}sm={2}>
   <Controller
-    name={`packages.${index}.length`}
+    name={`packages.${index}.largo`}
     control={control}
     render={({ field }) => (
       <TextField {...field} label="Largo (cm)" type="number" fullWidth sx={{ ...inputStyles }} 
-        onChange={(e) => setValue(`packages.${index}.length`, e.target.value, { shouldValidate: true })}
+        onChange={(e) => setValue(`packages.${index}.largo`, e.target.value, { shouldValidate: true })} placeholder="Ingrese largo"      InputLabelProps={{
+          shrink: {xs:true, md:false}, // Mantiene la etiqueta siempre arriba
+        }}        InputProps={{
+          inputMode: 'numeric',
+          sx: {
+            '& input[type=number]': {
+              MozAppearance: 'textfield',
+              '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+                opacity: 1, // Hace visibles las flechas siempre
+              }
+            }
+          }
+        }}
       />
     )}
   />
@@ -423,11 +465,23 @@ const handleAgregarTarima = () => {
 {/* Peso */}
 <Grid item xs={6}sm={2}>
   <Controller
-    name={`packages.${index}.weight`}
+    name={`packages.${index}.peso`}
     control={control}
     render={({ field }) => (
       <TextField {...field} label="Peso (kg)" type="number" fullWidth sx={{ ...inputStyles }} 
-        onChange={(e) => setValue(`packages.${index}.weight`, e.target.value, { shouldValidate: true })}
+        onChange={(e) => setValue(`packages.${index}.peso`, e.target.value, { shouldValidate: true })} placeholder="Ingrese peso"    InputLabelProps={{
+          shrink: {xs:true, md:false}, // Mantiene la etiqueta siempre arriba
+        }}       InputProps={{
+          inputMode: 'numeric',
+          sx: {
+            '& input[type=number]': {
+              MozAppearance: 'textfield',
+              '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+                opacity: 1, // Hace visibles las flechas siempre
+              }
+            }
+          }
+        }}
       />
     )}
   />

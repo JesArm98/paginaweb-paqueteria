@@ -18,6 +18,9 @@ const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar 
   console.log(emailUsuario);
   console.log(cotizacionData);
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
   const handleConfirmarEmail = () => {
     if (emailUsuario && emailUsuario.includes("@")) {
       console.log(
@@ -41,7 +44,7 @@ const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar 
   return (
     <Box>
       <Typography variant="h6" sx={{ pb: 3 }}>
-        Envianos tu cotización ingresando tu correo electronico
+        Envianos tu cotización ingresando tu correo electrónico
       </Typography>
       <TextField
         fullWidth
@@ -49,8 +52,12 @@ const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar 
         type="email"
         value={emailUsuario}
         onChange={(e) => setEmailUsuario(e.target.value)}
-        error={emailUsuario !== "" && !emailUsuario.includes("@")}
-        helperText={emailUsuario !== "" && !emailUsuario.includes("@") ? "Ingresa un correo válido" : ""}
+        error={emailUsuario !== "" && !emailRegex.test(emailUsuario)}
+        helperText={
+          emailUsuario !== "" && !emailRegex.test(emailUsuario)
+            ? "Ingresa un correo válido (ejemplo@dominio.com)"
+            : ""
+        }
       />
       <Box sx={{ display: "flex", mt: 2, justifyContent: "end", gap: 2 }}>
         <Button onClick={onModificarCotizacion} variant="outlined" color="error" sx={{ width: "fit-content", textTransform: "none", borderRadius: "20px" }} startIcon={<ArrowBackIcon/>}>

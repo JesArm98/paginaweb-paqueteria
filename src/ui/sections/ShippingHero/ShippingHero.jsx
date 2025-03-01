@@ -121,7 +121,7 @@ const ShippingHero = () => {
                   }}
                 >
                   Solucionar tus necesidades logísticas es muy fácil con Myllos,
-                  solo compártenos tu requerimiento y nosotros nos encargamos de
+                  solo compártenos tu necesidad y nosotros nos encargamos de
                   encontrar una solución ideal para ti.
                 </Typography>
               </Box>

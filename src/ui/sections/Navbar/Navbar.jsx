@@ -28,20 +28,34 @@ const Navbar = () => {
     }, 600);
   };
 
-  const handleSocioClick = () => {
-    // Primero establecer el tipo en localStorage
+  const handleSocioClick = (e) => {
+    e.preventDefault(); // Previene que Link afecte la navegación
+    
+    // Guarda el estado en localStorage
     localStorage.setItem("contactType", "socio");
-
-    // Usar handleNavigation que ya tiene la lógica de scroll suave
+  
+    // Navega directamente a la sección "contacto"
     handleNavigation("contacto");
-
-    // Disparar el evento después de un pequeño delay para asegurar que el scroll terminó
+  
+    // Dispara el evento después para asegurar que la sección lo detecte
     setTimeout(() => {
-      const event = new Event("contactTypeChange");
-      window.dispatchEvent(event);
-    }, 700); // Un poco más que el timeout de handleNavigation
+      window.dispatchEvent(new Event("contactTypeChange"));
+    }, 200);
   };
 
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    console.log("Clic en Contacto");
+    localStorage.setItem("contactType", "quejas");
+    handleNavigation("contacto");
+    setTimeout(() => {
+      console.log("Evento contactTypeChange disparado");
+      window.dispatchEvent(new Event("contactTypeChange"));
+    }, 500);
+  };
+  
+  
+  
   return (
     <>
       <Box
@@ -527,6 +541,7 @@ const Navbar = () => {
             <Link href="/#contacto" style={{ textDecoration: "none" }} passHref>
               <Button
                 aria-label="Botón para contacto"
+                onClick={handleContactClick}
                 sx={{
                   color: "#FFFFFF",
                   borderColor: "none",

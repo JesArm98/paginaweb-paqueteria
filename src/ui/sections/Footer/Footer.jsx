@@ -466,7 +466,7 @@ const Footer = () => {
                 color:"white"
               }}>
                 
-                WhatsApp: (667) 389 7772 
+                WhatsApp: 667 389 7772 
                 </Typography>
                 </Box>
           </Box>

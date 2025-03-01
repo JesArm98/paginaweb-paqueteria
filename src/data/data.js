@@ -69,7 +69,7 @@ export const preguntasPrincipales = [
   {
     pregunta: "¿Cuál es la diferencia entre FTL y LTL?",
     respuesta:
-      "FTL (Full Truck Load) es cuando rentas el camión completo para tu carga. LTL (Less Than Truck Load) es cuando compartes el espacio del camión con otros clientes, ideal para cargas menores y más económico.",
+      "FTL (Full Truck Load) es cuando rentas el camión completo para tu carga. LTL (Less Than Truck Load) es cuando compartes el espacio del camión con otros clientes, ideal para cargas menores y más económicas.",
   },
   {
     pregunta: "¿Qué documentación necesito para envíos?",
@@ -84,12 +84,12 @@ export const preguntasPrincipales = [
   {
     pregunta: "¿Cuáles son los tiempos estimados de entrega?",
     respuesta:
-      "FTL: 24-72 horas según destino. LTL: 2-5 días hábiles. Paquetería: 24-48 horas en envíos locales, 2-5 días en nacionales. Ofrecemos opciones express para entregas más rápidas.",
+      "FTL: 24-72 horas según destino. LTL: 2-5 días hábiles. Paquetería: 24-48 horas en envíos locales, 2-5 días en nacionales. Ofrecemos opciones exprés para entregas más rápidas.",
   },
 ];
 
 export const contactOptions = [
-  { value: "sugerencia", label: "Sugerencias o quejas" },
+  { value: "quejas", label: "Sugerencias o quejas" },
   {
     value: "socio",
     label: "¿Quieres ser nuestro socio?",

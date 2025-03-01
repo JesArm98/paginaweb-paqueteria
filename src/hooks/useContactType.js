@@ -1,32 +1,34 @@
 import { useEffect } from "react";
 
-const useContactType = (setValue) => {
+const useContactType = (setValue, trigger) => {
   useEffect(() => {
     const handleContactTypeChange = () => {
       try {
         const contactType = localStorage.getItem("contactType");
-        if (contactType === "socio") {
-          setValue("Tipo", "socio", { shouldValidate: true });
-        } else if (contactType === "cotizaciones") {
-          setValue("Tipo", "cotizaciones", { shouldValidate: true });
+
+        if (contactType) {
+          setValue("Tipo", contactType, { shouldValidate: true });
+
+          // Disparar validación y actualización en el próximo ciclo de render
+          setTimeout(() => trigger("Tipo"), 100);
         }
-        
       } catch (error) {
         console.error("Error al manejar el tipo de contacto:", error);
       }
     };
 
-    // Ejecutar la lógica al montar
+    // Ejecutar en el montaje
     handleContactTypeChange();
 
-    // Agregar el event listener
+    // Escuchar eventos para cambios dinámicos
     window.addEventListener("contactTypeChange", handleContactTypeChange);
 
     return () => {
       window.removeEventListener("contactTypeChange", handleContactTypeChange);
-      localStorage.removeItem("contactType");
     };
-  }, [setValue]);
+  }, [setValue, trigger]);
+
+  return null;
 };
 
 export default useContactType;

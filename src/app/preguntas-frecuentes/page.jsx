@@ -131,7 +131,7 @@ export default function PreguntasFrecuentes() {
                     <Typography
                       variant="h6"
                       sx={{
-                        fontWeight: "500",
+                        fontWeight: "5hhhhhh00",
                         color: expandedId === index ? "#007bff" : "#1a1a1a",
                       }}
                     >

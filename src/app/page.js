@@ -8,10 +8,12 @@ import FAQ from "@/ui/sections/FAQ/FAQ";
 import Estadisticas from "@/ui/sections/Estadisticas/Estadisticas";
 import ScrollToContact from "@/ui/components/ScrollToContact/ScrollToContact";
 import Banner from "@/ui/sections/Banner/Banner";
+import ClientInitializer from "@/ui/components/ClientInitializer";
 
 export default function Home() {
   return (
     <main>
+      <ClientInitializer/>
       <ScrollToContact /> {/* Componente cliente para manejar useEffect */}
       <ShippingHero />
       <Servicios />
