@@ -24,6 +24,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CotizacionResultados from "./CotizacionResultados";
+import TarimaTooltip from "@/ui/components/TarimaTooltip";
 
 const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
   const [cotizacionData, setCotizacionData] = useState(null); // Estado para almacenar datos de la cotización
@@ -304,39 +305,7 @@ const handleTarimaChange = (event) => {
             </Box>
           
 <Box sx={{display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid gray", borderRadius:"20px", gap:1}}>
-  {/* Texto debajo del botón */}
-  <Typography variant="body2" sx={{ fontSize: "12px", textAlign: "center", ml:1.5, display:{xs:"none", sm :"flex"} }}>
-    Conocer dimensiones de tarima
-  </Typography>
-
-  {/* Tooltip con imagen al hacer hover */}
-  <Tooltip
-    title={
-      <Box sx={{ textAlign: "center", p: {xs:0,md:1} }}>
-        <Image
-          src="/images/tarimas.webp"
-          alt="Ejemplo de dimensiones"
-          width={200}
-          height={150}
-          style={{ borderRadius: "8px", marginTop: "4px" }}
-        />
-      </Box>
-    }
-    arrow
-    placement="top"
-    sx={{
-      "& .MuiTooltip-tooltip": {
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        borderRadius: "10px",
-        p: 1,
-      },
-    }}
-  >
-    <IconButton sx={{ mt: 0.5 }}>
-      <HelpOutlineIcon sx={{color:"blue"}} />
-    </IconButton>
-  </Tooltip>
-
+<TarimaTooltip/>
 </Box>
 </Grid>
         </Grid>
