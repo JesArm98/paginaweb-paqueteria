@@ -13,46 +13,6 @@ import {
 } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import Link from "next/link";
-
-const handleCotizacionesClick = () => {
-  // Establecer el tipo en localStorage
-  localStorage.setItem("contactType", "cotizaciones");
-
-  // Redirigir a la página principal y luego realizar el scroll
-  const currentPath = window.location.pathname;
-
-  if (currentPath !== "/") {
-    // Redirigir a la página principal
-    const navigateToContact = () => {
-      const contactoSection = document.getElementById("contacto");
-      if (contactoSection) {
-        contactoSection.scrollIntoView({ behavior: "smooth" });
-
-        // Disparar el evento personalizado
-        setTimeout(() => {
-          const event = new Event("contactTypeChange");
-          window.dispatchEvent(event);
-        }, 700);
-      }
-    };
-
-    window.localStorage.setItem("navigateToContact", "true");
-    window.location.href = "/";
-    return;
-  }
-
-  // Si ya estás en la página principal
-  const contactoSection = document.getElementById("contacto");
-  if (contactoSection) {
-    contactoSection.scrollIntoView({ behavior: "smooth" });
-
-    setTimeout(() => {
-      const event = new Event("contactTypeChange");
-      window.dispatchEvent(event);
-    }, 700);
-  }
-};
 
 function LTLPage() {
   const beneficios = [
@@ -64,18 +24,50 @@ function LTLPage() {
     "Documentación y facturación simplificada",
   ];
 
+  const handleCotizacionesClick = () => {
+    localStorage.setItem("contactType", "cotizaciones");
+    const currentPath = window.location.pathname;
+
+    if (currentPath !== "/") {
+      localStorage.setItem("navigateToContact", "true");
+      window.location.href = "/";
+      return;
+    }
+
+    navigateToContactSection();
+  };
+
+  const navigateToContactSection = () => {
+    setTimeout(() => {
+      const contactoSection = document.getElementById("contacto");
+      if (contactoSection) {
+        contactoSection.scrollIntoView({ behavior: "smooth" });
+
+        setTimeout(() => {
+          window.dispatchEvent(new Event("contactTypeChange"));
+        }, 300);
+      }
+    }, 600);
+  };
+
   return (
-    <Box sx={{ minHeight: "100vh", pt: "100px", pb: 8 }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        pt: { xs: "80px", md: "100px" },
+        pb: { xs: 6, md: 8 },
+      }}
+    >
       <Container maxWidth="lg">
-        <Grid container spacing={6}>
-          {/* Sección de encabezado */}
+        {/* Sección de encabezado - Responsive en todos los tamaños */}
+        <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12}>
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: "1.7rem", md: "3rem" },
+                fontSize: { xs: "1.8rem", sm: "2.2rem", md: "3rem" },
                 fontWeight: "bold",
-                mb: 2,
+                mb: { xs: 1.5, md: 2 },
                 background: "linear-gradient(45deg, #007bff, #007bff99)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
@@ -88,27 +80,40 @@ function LTLPage() {
               variant="h5"
               sx={{
                 color: "#6b7280",
-                mb: { xs: 1, md: 4 },
-                fontSize: { xs: "1.1rem", md: "1.3rem" },
+                mb: { xs: 3, md: 4 },
+                fontSize: { xs: "1rem", sm: "1.1rem", md: "1.3rem" },
                 textAlign: "center",
+                px: { xs: 2, md: 0 },
               }}
             >
               Solución eficiente para envíos que no requieren un camión completo
             </Typography>
           </Grid>
+        </Grid>
 
-          {/* Contenido principal */}
+        {/* Contenido principal - Layout responsive */}
+        <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
+          {/* Contenido de texto */}
           <Grid item xs={12} md={6}>
-            <Box sx={{ mb: 4 }}>
+            <Box sx={{ mb: { xs: 3, md: 4 } }}>
               <Typography
                 variant="h6"
-                sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+                sx={{ 
+                  mb: 2, 
+                  fontWeight: "bold", 
+                  textAlign: { xs: "center", md: "left" } 
+                }}
               >
                 ¿Qué es LTL?
               </Typography>
-              <Typography
-                variant="body1"
-                sx={{ color: "#4b5563", mb: 3, textAlign: "justify" }}
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  color: "#4b5563", 
+                  mb: 3,
+                  px: { xs: 2, md: 0 },
+                  textAlign: { xs: "left", md: "justify" }
+                }}
               >
                 El servicio LTL (Less Than Truckload) es ideal para empresas que
                 necesitan transportar cargas que no ocupan un camión completo.
@@ -118,39 +123,49 @@ function LTLPage() {
               </Typography>
             </Box>
 
-            <Box>
+            <Box sx={{ mb: { xs: 3, md: 4 } }}>
               <Typography
                 variant="h6"
-                sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+                sx={{ 
+                  mb: 2, 
+                  fontWeight: "bold", 
+                  textAlign: { xs: "center", md: "left" } 
+                }}
               >
                 Beneficios principales
               </Typography>
-              <List>
+              <List sx={{ px: { xs: 2, md: 0 } }}>
                 {beneficios.map((beneficio, index) => (
-                  <ListItem key={index} sx={{ padding: 1 }}>
-                    <ListItemIcon>
+                  <ListItem key={index} sx={{ padding: { xs: 0.5, md: 1 } }}>
+                    <ListItemIcon sx={{ minWidth: { xs: "40px", md: "56px" } }}>
                       <CheckCircleOutlineIcon sx={{ color: "#007bff" }} />
                     </ListItemIcon>
-                    <ListItemText primary={beneficio} />
+                    <ListItemText 
+                      primary={beneficio} 
+                      primaryTypographyProps={{
+                        fontSize: { xs: "0.9rem", md: "1rem" }
+                      }}
+                    />
                   </ListItem>
                 ))}
               </List>
             </Box>
 
-            <Box sx={{ mt: 4 }}>
+            <Box sx={{ mt: { xs: 3, md: 4 } }}>
               <Button
                 aria-label="Solicitar cotización"
-                onClick={handleCotizacionesClick}
                 variant="contained"
                 size="large"
+                onClick={handleCotizacionesClick}
                 sx={{
                   borderRadius: "30px",
                   textTransform: "none",
-                  fontSize: "1.1rem",
+                  fontSize: { xs: "1rem", md: "1.1rem" },
+                  px: { xs: 3, md: 4 },
+                  py: { xs: 1, md: 1.5 },
                   width: "fit-content",
-                  margin: "auto",
                   display: "flex",
-                  px: 4,
+                  margin: { xs: "auto", md: "0 auto 0 0" }, // Centrado en móvil, alineado a la izquierda en desktop
                 }}
               >
                 Solicitar cotización
@@ -158,29 +173,33 @@ function LTLPage() {
             </Box>
           </Grid>
 
-          {/* Imagen o ilustración */}
+          {/* Icono del camión - Visible en todos los tamaños de pantalla */}
           <Grid
             item
             xs={12}
             md={6}
             sx={{
-              display: { xs: "none", md: "flex" },
+              display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              order: { xs: -1, md: 2 }, // En móvil aparece arriba, en desktop a la derecha
             }}
           >
             <Box
               sx={{
                 position: "relative",
-                width: "100%",
-                height: "400px",
+                width: { xs: "100%", sm: "80%", md: "100%" },
+                height: { xs: "200px", sm: "250px", md: "400px" },
                 borderRadius: "20px",
                 overflow: "hidden",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <LocalShippingIcon
                 sx={{
-                  fontSize: "300px",
+                  fontSize: { xs: "150px", sm: "200px", md: "300px" },
                   color: "#007bff22",
                   position: "absolute",
                   top: "50%",
@@ -195,4 +214,5 @@ function LTLPage() {
     </Box>
   );
 }
+
 export default LTLPage;

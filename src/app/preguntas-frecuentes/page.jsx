@@ -11,6 +11,8 @@ import {
   CardContent,
   IconButton,
   Grid,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -19,6 +21,9 @@ import { categorias } from "@/data/data";
 export default function PreguntasFrecuentes() {
   const [categoria, setCategoria] = useState("general");
   const [expandedId, setExpandedId] = useState(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleCategoriaChange = (event, newValue) => {
     setCategoria(newValue);
@@ -32,9 +37,9 @@ export default function PreguntasFrecuentes() {
   return (
     <Box
       sx={{
-        py: {xs:10,md:8},
-        minHeight: "90vh",
-        paddingTop: "150px",
+        py: { xs: 5, sm: 6, md: 8 },
+        minHeight: { xs: "auto", md: "90vh" },
+        paddingTop: { xs: "100px", sm: "120px", md: "150px" },
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -46,8 +51,8 @@ export default function PreguntasFrecuentes() {
           variant="h1"
           sx={{
             textAlign: "center",
-            mb:{xs:4,md:6},
-            fontSize: { xs: "2rem", md: "3rem" },
+            mb: { xs: 3, sm: 4, md: 6 },
+            fontSize: { xs: "1.75rem", sm: "2rem", md: "3rem" },
             fontWeight: "bold",
             background: "linear-gradient(45deg, #007bff, #007bff99)",
             WebkitBackgroundClip: "text",
@@ -62,23 +67,30 @@ export default function PreguntasFrecuentes() {
             width: "100%",
             display: "flex",
             justifyContent: "center",
-            mb: {xs:2,md:4},
+            mb: { xs: 2, sm: 3, md: 4 },
+            overflow: "hidden",
           }}
         >
           <Tabs
             value={categoria}
             onChange={handleCategoriaChange}
-            variant="scrollable"
-            scrollButtons="auto"
-            centered
+            variant={isMobile ? "scrollable" : "standard"}
+            scrollButtons={isMobile ? "auto" : false}
+            allowScrollButtonsMobile
+            centered={!isMobile}
             sx={{
               "& .MuiTab-root": {
                 textTransform: "none",
-                fontSize: "1.1rem",
-                minWidth: { xs: "auto", md: "150px" },
+                fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+                minWidth: { xs: "80px", sm: "100px", md: "150px" },
+                px: { xs: 1, sm: 2 },
+                py: { xs: 0.5, sm: 1 },
               },
               "& .MuiTabs-flexContainer": {
-                justifyContent: "center",
+                justifyContent: { xs: "flex-start", sm: "center" },
+              },
+              "& .MuiTabs-indicator": {
+                backgroundColor: "#007bff",
               },
             }}
           >
@@ -90,6 +102,7 @@ export default function PreguntasFrecuentes() {
                 sx={{
                   "&.Mui-selected": {
                     color: "#007bff",
+                    fontWeight: "medium",
                   },
                 }}
               />
@@ -99,7 +112,7 @@ export default function PreguntasFrecuentes() {
 
         <Grid
           container
-          spacing={3}
+          spacing={{ xs: 2, sm: 2, md: 3 }}
           sx={{
             width: "100%",
             margin: "0 auto",
@@ -110,7 +123,7 @@ export default function PreguntasFrecuentes() {
             <Grid item xs={12} key={index}>
               <Card
                 sx={{
-                  borderRadius: "15px",
+                  borderRadius: { xs: "10px", md: "15px" },
                   transition: "all 0.3s ease",
                   cursor: "pointer",
                   width: "100%",
@@ -120,7 +133,7 @@ export default function PreguntasFrecuentes() {
                 }}
                 onClick={() => handleExpandClick(index)}
               >
-                <CardContent>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                   <Box
                     sx={{
                       display: "flex",
@@ -131,13 +144,18 @@ export default function PreguntasFrecuentes() {
                     <Typography
                       variant="h6"
                       sx={{
-                        fontWeight: "5hhhhhh00",
+                        fontWeight: "500",
+                        fontSize: { xs: "1rem", sm: "1.1rem", md: "1.25rem" },
                         color: expandedId === index ? "#007bff" : "#1a1a1a",
+                        pr: 2,
                       }}
                     >
                       {pregunta.pregunta}
                     </Typography>
-                    <IconButton>
+                    <IconButton
+                      size={isMobile ? "small" : "medium"}
+                      sx={{ flexShrink: 0 }}
+                    >
                       {expandedId === index ? (
                         <RemoveIcon sx={{ color: "#007bff" }} />
                       ) : (
@@ -147,7 +165,7 @@ export default function PreguntasFrecuentes() {
                   </Box>
                   <Box
                     sx={{
-                      maxHeight: expandedId === index ? "500px" : "0",
+                      maxHeight: expandedId === index ? { xs: "800px", md: "500px" } : "0",
                       overflow: "hidden",
                       transition: "all 0.3s ease-in-out",
                     }}
@@ -157,6 +175,7 @@ export default function PreguntasFrecuentes() {
                       sx={{
                         mt: 2,
                         color: "#6b7280",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
                         opacity: expandedId === index ? 1 : 0,
                         transition: "opacity 0.3s ease-in-out",
                       }}

@@ -49,6 +49,9 @@ const ShippingHero = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        width:{xs:"100%",md:"90%"},
+        margin:"auto"
+
       }}
     >
       <Box
@@ -56,24 +59,25 @@ const ShippingHero = () => {
         flexDirection="column"
         position="relative"
         overflow="hidden"
-        minHeight="100vh"
+        minHeight="100dvh"
         justifyContent="center"
         sx={{
           background:
             "linear-gradient(to bottom, rgba(229, 231, 235, 0.5), #fff)",
+          "@media (min-width: 640px)": {
+            background: "#fff", // O el color que prefieras para pantallas >= sm
+          }
         }}
       >
         <Box
           className="container"
           position="relative"
-          mx={{ xs: "0", md: "5%" }}
         >
           <Grid
             container
             spacing={4}
             py={{ xs: 0, md: 3 }}
             mt={{ xs: 2, md: 0 }}
-            pr={{ xs: 0, md: 0 }}
           >
             {/* Left Column - Content */}
             <Grid

@@ -207,7 +207,7 @@ function ContactForm() {
   };
 
   return (
-    <Box id="contacto" sx={{width:"80%", display:"flex", margin:"auto"}}>
+    <Box id="contacto" sx={{width:{xs: "95%", sm: "90%", md: "90%", lg: "1200px", xl: "1300px"}, display:"flex", margin:"auto"}}>
 
     <Grid
       container

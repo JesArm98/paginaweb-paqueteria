@@ -1,8 +1,16 @@
-/* Estilos globales */
 html,
 body {
-  @apply w-full overflow-x-hidden bg-white font-sans; /* Usa clases de Tailwind */
-  margin: 0; /* Agrega esto manualmente */
-  padding: 0; /* Agrega esto manualmente */
-  min-width: 320px; /* Esta regla sigue específica */
+  @apply w-full overflow-x-hidden bg-white font-sans;
+  margin: 0;
+  padding: 0;
+}
+
+#root, 
+.container, 
+main {
+  width: 100%;
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+
 }

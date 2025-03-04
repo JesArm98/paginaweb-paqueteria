@@ -111,7 +111,7 @@ const Servicios = () => {
 
         <Grid container spacing={4}>
           {servicios.map((servicio, index) => (
-            <Grid item xs={12} md={6} key={index}>
+            <Grid item xs={12} sm={6} md={6} key={index}>
               <Card
                 sx={{
                   height: "100%",
