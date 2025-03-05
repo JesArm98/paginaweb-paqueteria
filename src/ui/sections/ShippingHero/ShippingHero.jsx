@@ -135,7 +135,7 @@ const ShippingHero = () => {
                 <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      backgroundColor: "#f8fafc",
+                      backgroundColor: "#fff",
                       boxShadow: 1,
                       width: { xs: "50%", md: "80%" },
                       margin: "auto",
@@ -149,7 +149,7 @@ const ShippingHero = () => {
                     <CardContent display="flex" alignItems="center" gap={2}>
                       <Box
                         sx={{
-                          backgroundColor: "#007bff1a",
+                          backgroundColor: "#fff",
                           padding: "0.5rem",
                           borderRadius: "0.5rem",
                           width: "fit-content",
@@ -158,7 +158,17 @@ const ShippingHero = () => {
                           margin: "auto",
                         }}
                       >
-                        <Timer sx={{ color: "#007bff" }} />
+                                        <Image 
+                            src="/images/Icons/icon_myllos_calculadora.webp"  
+                                          width={400} 
+                                          height={300} 
+                                          alt="FTL Icon"
+                                          style={{
+                                            width: "35px",
+                                            height: "35px",
+                                          }}
+                                          priority
+                                        />
                       </Box>
                       <Box>
                         <Typography variant="h6" textAlign={"center"}>
@@ -172,7 +182,7 @@ const ShippingHero = () => {
                 <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      backgroundColor: "#f8fafc",
+                      backgroundColor: "#fff",
                       boxShadow: 1,
                       width: { xs: "50%", md: "80%" },
                       margin: "auto",
@@ -182,7 +192,7 @@ const ShippingHero = () => {
                     <CardContent display="flex" alignItems="center" gap={2}>
                       <Box
                         sx={{
-                          backgroundColor: "#007bff1a",
+                          backgroundColor: "#fff",
                           padding: "0.5rem",
                           borderRadius: "0.5rem",
                           display: "flex",
@@ -190,7 +200,17 @@ const ShippingHero = () => {
                           width: "fit-content",
                         }}
                       >
-                        <Shield sx={{ color: "#007bff" }} />
+                                        <Image 
+                            src="/images/Icons/icon_myllos_seguro.webp"  
+                                          width={400} 
+                                          height={300} 
+                                          alt="FTL Icon"
+                                          style={{
+                                            width: "35px",
+                                            height: "35px",
+                                          }}
+                                          priority
+                                        />
                       </Box>
                       <Box>
                         <Typography variant="h6" textAlign={"center"}>
@@ -281,9 +301,9 @@ const ShippingHero = () => {
                   position: "absolute",
                   width: "100%",
                   height: "100%",
-                  background:
-                    "linear-gradient(to bottom right, #007bff33, #ffffff)",
-                  filter: "blur(60px)",
+                  background:{xs:
+                    "linear-gradient(to bottom right, #007bff33, #ffffff)", md:"#fff"},
+                  filter:{xs:"blur(60px)", md:"none"},
                   top: "50%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
@@ -297,11 +317,8 @@ const ShippingHero = () => {
                 sx={{
                   width: "100%",
                   height: "500px",
-                  backgroundColor: "#f8fafc",
-                  boxShadow: 3,
                   overflow: "hidden",
                   position: "relative",
-                  zIndex: 1,
                   borderRadius: "24px", // Rounded corners instead of circle
                 }}
               >
@@ -309,12 +326,11 @@ const ShippingHero = () => {
                   src="/images/Banners/banners_myllos_web_inicio.png"
                   alt="Myllos"
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
                   style={{
-                    display: "flex",
-                    objectFit: "cover",
-                    objectPosition: "center",
+                    objectFit: 'cover',
+                    objectPosition: 'center'
                   }}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </Box>
             </Grid>

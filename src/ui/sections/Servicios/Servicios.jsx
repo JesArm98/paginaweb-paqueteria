@@ -21,7 +21,16 @@ const servicios = [
     titulo: "LTL (Less Than Truckload)",
     descripcion:
       "Servicio ideal para envíos que no ocupan un camión completo. Optimiza costos compartiendo espacio con otros envíos mientras mantiene la seguridad y eficiencia en la entrega.",
-    icon: <LocalShippingIcon sx={{ fontSize: 60, color: "#007bff" }} />,
+    icon: <Image 
+    src="/images/Icons/icon_myllos_pallet.webp" 
+    width={150} 
+    height={100} 
+    alt="FTL Icon"
+    style={{
+      transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
+      objectFit: "contain",
+    }}
+  />,
     caracteristicas: [
       "Envíos desde 1 hasta 10 tarimas",
       "Precios competitivos",
@@ -34,7 +43,7 @@ const servicios = [
     descripcion:
       "Servicio de camión dedicado para envíos que requieren el espacio completo del vehículo. Máxima seguridad y control total sobre la ruta y tiempos de entrega.",
     icon: <Image 
-    src="/images/Icons/ftl-icon.svg" 
+    src="/images/Icons/icon_myllos_fulltruck.webp" 
     width={150} 
     height={100} 
     alt="FTL Icon"

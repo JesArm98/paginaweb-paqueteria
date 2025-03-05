@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Image from "next/image";
 
 function LTLPage() {
   const beneficios = [
@@ -197,16 +198,17 @@ function LTLPage() {
                 alignItems: "center",
               }}
             >
-              <LocalShippingIcon
-                sx={{
-                  fontSize: { xs: "150px", sm: "200px", md: "300px" },
-                  color: "#007bff22",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
+                <Image
+    src="/images/Icons/icon_myllos_pallet.webp"  
+                  width={400} 
+                  height={300} 
+                  alt="FTL Icon"
+                  style={{
+                    width: "320px",
+                    height: "300px",
+                  }}
+                  priority
+                />
             </Box>
           </Grid>
         </Grid>

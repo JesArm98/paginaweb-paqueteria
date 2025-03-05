@@ -13,36 +13,83 @@ import {
   Divider,
 } from "@mui/material";
 import Image from "next/image";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import TrackChangesIcon from "@mui/icons-material/TrackChanges";
-import SecurityIcon from "@mui/icons-material/Security";
 
 const beneficios = [
   {
-    icon: <LocalShippingIcon />,
+    icon:               <Image
+                    width={40}
+                    height={40}
+                    src="/images/Icons/icon_myllos_global.webp"
+                    alt="Cobertura global"
+                    style={{ 
+                      width: "30px",   // Tamaño visual
+                      height: "30px",  // Tamaño visual
+                      objectFit: 'contain', // Mantiene la proporción de la imagen
+                    }}
+                  />,
     titulo: "Cobertura nacional e internacional",
     descripcion:
       "Te apoyamos con cualquier proyecto tanto nacional como global",
   },
   {
-    icon: <AccessTimeIcon />,
+    icon: <Image
+    width={30}
+    height={30}
+    src="/images/Icons/icon_myllos_entrega.webp"
+    alt="Entregas"
+    style={{ 
+      width: "30px",   // Tamaño visual
+      height: "30px",  // Tamaño visual
+      objectFit: 'contain', // Mantiene la proporción de la imagen
+    }}
+  />,
     titulo: "Entregas y recolecciones con cita",
     descripcion: "Coordinamos el servicio para cumplir con tu compromiso",
   },
   {
-    icon: <TrackChangesIcon />,
+    icon:               <Image
+                    width={30}
+                    height={30}
+                    src="/images/Icons/icon_myllos_tracking.webp"
+                    alt="Rastreo de envíos"
+                    style={{ 
+                      width: "30px",   // Tamaño visual
+                      height: "30px",  // Tamaño visual
+                      objectFit: 'contain', // Mantiene la proporción de la imagen
+                    }}
+                  />,
     titulo: "Rastreo en Tiempo Real",
     descripcion: "Monitoreo constante de tus envíos",
   },
   {
-    icon: <SecurityIcon />,
+    icon:               <Image
+                    width={30}
+                    height={30}
+                    src="/images/Icons/icon_myllos_seguro.webp"
+                    alt="Envíos seguros"
+                    style={{ 
+                      width: "30px",   // Tamaño visual
+                      height: "30px",  // Tamaño visual
+                      objectFit: 'contain', // Mantiene la proporción de la imagen
+                    }}
+                  />,
     titulo: "Envíos Seguros",
     descripcion:
       "Aseguramos tu mercancía para darte tranquilidad de inicio a fin",
   },
   {
-    icon: <SecurityIcon />,
+    icon:               <Image
+                    width={30}
+                    height={30}
+                    src="/images/Icons/icon_myllos_check.webp"
+                    alt="Acuse de recibo"
+                    style={{ 
+                      width: "30px",   // Tamaño visual
+                      height: "30px",  // Tamaño visual
+                      objectFit: 'contain', // Mantiene la proporción de la imagen
+                    }}
+                  />,
     titulo: "Acuse de recibo",
     descripcion: "Gestionamos la evidencia de tus entregas",
   },
@@ -136,7 +183,7 @@ const Cobertura = () => {
               >
                 <Image
                   src="/images/Banners/banners_myllos_web_cobertura.png"
-                  alt="Mapa de cobertura"
+                  alt="Banner cobertura"
                   fill
                   priority
                 />
@@ -221,6 +268,7 @@ const Cobertura = () => {
                         transition: "all 0.3s ease-in-out",
                         borderRadius: { xs: "8px", sm: "10px", md: "12px" },
                         backgroundColor: "#ffffff",
+                        gap:2,
                         "&:hover": {
                           transform: "translateY(-5px)",
                           backgroundColor: "#f0f9ff",
@@ -231,7 +279,7 @@ const Cobertura = () => {
                       <ListItemIcon>
                         <Box
                           sx={{
-                            backgroundColor: "#007bff0f",
+                            backgroundColor: "#fff11",
                             borderRadius: "50%",
                             p: { xs: 0.8, sm: 1, md: 1.2 },
                             display: "flex",

@@ -15,8 +15,12 @@ import {
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 function FTLPage() {
+
+  const router = useRouter(); // Inicializa el router de Next.js
+
   const beneficios = [
     "Camión completo dedicado a tu carga",
     "Control total sobre la ruta y tiempos",
@@ -32,7 +36,7 @@ function FTLPage() {
   
     if (currentPath !== "/") {
       localStorage.setItem("navigateToContact", "true");
-      window.location.href = "/";
+      router.push("/"); // Usa router.push en lugar de window.location.href
       return;
     }
   
@@ -138,13 +142,13 @@ function FTLPage() {
                 }}
               >
                 <Image 
-                  src="/images/Icons/ftl-icon.svg" 
+    src="/images/Icons/icon_myllos_fulltruck.webp"  
                   width={400} 
                   height={300} 
                   alt="FTL Icon"
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: "320px",
+                    height: "300px",
                   }}
                   priority
                 />
