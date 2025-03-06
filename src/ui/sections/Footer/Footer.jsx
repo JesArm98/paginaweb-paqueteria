@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Image from "next/image";
@@ -7,8 +7,11 @@ import Link from "next/link";
 
 const Footer = () => {
   const [open, setOpen] = useState(false);
+  const [añoActual, setAñoActual] = useState(null);
 
-  const añoActual = new Date().getFullYear();
+  useEffect(() => {
+    setAñoActual(new Date().getFullYear());
+  }, []);
 
   // const handleClose = useCallback(() => {
   //   setOpen(false);

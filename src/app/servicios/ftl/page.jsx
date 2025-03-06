@@ -105,7 +105,7 @@ function FTLPage() {
         </Grid>
 
         {/* Contenido principal - Layout responsive */}
-        <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
+        <Grid container spacing={{ xs: 4, md: 6 }} >
           {/* Imagen visible en todas las pantallas con tamaño adaptativo */}
           <Grid
             item
@@ -142,10 +142,10 @@ function FTLPage() {
                 }}
               >
                 <Image 
-    src="/images/Icons/icon_myllos_fulltruck.webp"  
+    src="/images/Icons/icon_myllos_fulltruck.svg"  
                   width={400} 
                   height={300} 
-                  alt="FTL Icon"
+                  alt="FTL icono - Fulltruck"
                   style={{
                     width: "320px",
                     height: "300px",

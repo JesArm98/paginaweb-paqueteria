@@ -537,7 +537,7 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
                       >
                         <img
                           src={"/images/google.svg"}
-                          alt="Google Icon"
+                          alt="Icono inicio Google"
                           style={{
                             top: 7,
                             left: 6,

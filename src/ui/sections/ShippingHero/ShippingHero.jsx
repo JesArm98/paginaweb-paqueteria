@@ -3,10 +3,6 @@
 import CustomDialog from "@/ui/components/CustomDialog";
 import {
   ArrowForward,
-  Shield,
-  Timer,
-  Person as PersonIcon,
-  Calculate as CalculateIcon,
 } from "@mui/icons-material";
 import {
   Button,
@@ -19,11 +15,9 @@ import {
 import CotizacionEnvios from "../Cotizacion/CotizacionEnvios";
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import ScrollDown from "@/ui/components/ScrollDown";
 
 const ShippingHero = () => {
-  const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
   const [openSeleccionModal, setOpenSeleccionModal] = useState(false);
   const [selectedShippingType, setSelectedShippingType] = useState("");
@@ -43,7 +37,7 @@ const ShippingHero = () => {
       sx={{
         backgroundColor: { xs: "transparent", md: "#fff" },
         backgroundImage: {
-          xs: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/Banners/banners_myllos_web_inicio.png')",
+          xs: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/Banners/banners_myllos_web_inicio.webp')",
           md: "none",
         },
         backgroundSize: "cover",
@@ -64,7 +58,7 @@ const ShippingHero = () => {
         sx={{
           background:
             "linear-gradient(to bottom, rgba(229, 231, 235, 0.5), #fff)",
-          "@media (min-width: 640px)": {
+          "@media (min-width: 900px)": {
             background: "#fff", // O el color que prefieras para pantallas >= sm
           }
         }}
@@ -146,7 +140,7 @@ const ShippingHero = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    <CardContent display="flex" alignItems="center" gap={2}>
+                    <CardContent sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                       <Box
                         sx={{
                           backgroundColor: "#fff",
@@ -159,10 +153,10 @@ const ShippingHero = () => {
                         }}
                       >
                                         <Image 
-                            src="/images/Icons/icon_myllos_calculadora.webp"  
+                            src="/images/Icons/icon_myllos_calculadora.svg"  
                                           width={400} 
                                           height={300} 
-                                          alt="FTL Icon"
+                                          alt="Cotización Myllos"
                                           style={{
                                             width: "35px",
                                             height: "35px",
@@ -189,7 +183,7 @@ const ShippingHero = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    <CardContent display="flex" alignItems="center" gap={2}>
+                    <CardContent sx={{display:"flex", flexDirection:"column", alignContent:"center"}}>
                       <Box
                         sx={{
                           backgroundColor: "#fff",
@@ -201,10 +195,10 @@ const ShippingHero = () => {
                         }}
                       >
                                         <Image 
-                            src="/images/Icons/icon_myllos_seguro.webp"  
+                            src="/images/Icons/icon_myllos_seguro.svg"  
                                           width={400} 
                                           height={300} 
-                                          alt="FTL Icon"
+                                          alt="Envio seguro"
                                           style={{
                                             width: "35px",
                                             height: "35px",
@@ -323,8 +317,8 @@ const ShippingHero = () => {
                 }}
               >
                 <Image
-                  src="/images/Banners/banners_myllos_web_inicio.png"
-                  alt="Myllos"
+                  src="/images/Banners/banners_myllos_web_inicio.webp"
+                  alt="Imagen inicial Myllos"
                   fill
                   style={{
                     objectFit: 'cover',

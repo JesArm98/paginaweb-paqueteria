@@ -26,7 +26,7 @@ const TarimaTooltip = () => {
           <Box sx={{ textAlign: "center", p: 1 }}>
             <Image
               src="/images/tarimas.webp"
-              alt="Ejemplo de dimensiones"
+              alt="Ejemplo de dimensiones de tarimas"
               width={200}
               height={150}
               style={{ borderRadius: "8px", marginTop: "4px" }}

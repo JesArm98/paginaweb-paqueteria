@@ -11,7 +11,6 @@ import {
   ListItemText,
   Button,
 } from "@mui/material";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Image from "next/image";
 
@@ -93,7 +92,7 @@ function LTLPage() {
         </Grid>
 
         {/* Contenido principal - Layout responsive */}
-        <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
+        <Grid container spacing={{ xs: 4, md: 6 }}>
           {/* Contenido de texto */}
           <Grid item xs={12} md={6}>
             <Box sx={{ mb: { xs: 3, md: 4 } }}>
@@ -199,10 +198,10 @@ function LTLPage() {
               }}
             >
                 <Image
-    src="/images/Icons/icon_myllos_pallet.webp"  
+    src="/images/Icons/icon_myllos_pallet.svg"  
                   width={400} 
                   height={300} 
-                  alt="FTL Icon"
+                  alt="LTL icono - Pallet"
                   style={{
                     width: "320px",
                     height: "300px",

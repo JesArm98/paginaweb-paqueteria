@@ -22,10 +22,10 @@ const servicios = [
     descripcion:
       "Servicio ideal para envíos que no ocupan un camión completo. Optimiza costos compartiendo espacio con otros envíos mientras mantiene la seguridad y eficiencia en la entrega.",
     icon: <Image 
-    src="/images/Icons/icon_myllos_pallet.webp" 
+    src="/images/Icons/icon_myllos_pallet.svg" 
     width={150} 
     height={100} 
-    alt="FTL Icon"
+    alt="FTL icono - Pallet"
     style={{
       transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
       objectFit: "contain",
@@ -43,10 +43,10 @@ const servicios = [
     descripcion:
       "Servicio de camión dedicado para envíos que requieren el espacio completo del vehículo. Máxima seguridad y control total sobre la ruta y tiempos de entrega.",
     icon: <Image 
-    src="/images/Icons/icon_myllos_fulltruck.webp" 
+    src="/images/Icons/icon_myllos_fulltruck.svg" 
     width={150} 
     height={100} 
-    alt="FTL Icon"
+    alt="FTL icono - Fulltruck"
     style={{
       transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
       objectFit: "contain",

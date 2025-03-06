@@ -276,7 +276,7 @@ const handleTarimaChange = (event) => {
 
           </Grid>
 
-          <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "roww", alignItems: "center", justifyContent:"space-evenly" }}>
+          <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent:"space-evenly" }}>
 
 
             <Box>

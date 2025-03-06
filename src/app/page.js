@@ -1,11 +1,8 @@
 import ShippingHero from "@/ui/sections/ShippingHero/ShippingHero";
-import Alianzas from "@/ui/sections/Alianzas/Alianzas";
 import Contacto from "@/ui/sections/Contacto/Contacto";
 import Servicios from "@/ui/sections/Servicios/Servicios";
-import Testimonios from "@/ui/sections/Testimonios/Testimonios";
 import Cobertura from "@/ui/sections/Cobertura/Cobertura";
 import FAQ from "@/ui/sections/FAQ/FAQ";
-import Estadisticas from "@/ui/sections/Estadisticas/Estadisticas";
 import ScrollToContact from "@/ui/components/ScrollToContact/ScrollToContact";
 import Banner from "@/ui/sections/Banner/Banner";
 import ClientInitializer from "@/ui/components/ClientInitializer";
@@ -18,7 +15,6 @@ export default function Home() {
       <ShippingHero />
       <Servicios />
       <Banner/>
-
       <Cobertura />
       <FAQ />
       <Contacto />

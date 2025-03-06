@@ -13,14 +13,13 @@ import {
   Divider,
 } from "@mui/material";
 import Image from "next/image";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 const beneficios = [
   {
     icon:               <Image
                     width={40}
                     height={40}
-                    src="/images/Icons/icon_myllos_global.webp"
+                    src="/images/Icons/icon_myllos_global.svg"
                     alt="Cobertura global"
                     style={{ 
                       width: "30px",   // Tamaño visual
@@ -36,7 +35,7 @@ const beneficios = [
     icon: <Image
     width={30}
     height={30}
-    src="/images/Icons/icon_myllos_entrega.webp"
+    src="/images/Icons/icon_myllos_entrega.svg"
     alt="Entregas"
     style={{ 
       width: "30px",   // Tamaño visual
@@ -51,7 +50,7 @@ const beneficios = [
     icon:               <Image
                     width={30}
                     height={30}
-                    src="/images/Icons/icon_myllos_tracking.webp"
+                    src="/images/Icons/icon_myllos_tracking.svg"
                     alt="Rastreo de envíos"
                     style={{ 
                       width: "30px",   // Tamaño visual
@@ -66,7 +65,7 @@ const beneficios = [
     icon:               <Image
                     width={30}
                     height={30}
-                    src="/images/Icons/icon_myllos_seguro.webp"
+                    src="/images/Icons/icon_myllos_seguro.svg"
                     alt="Envíos seguros"
                     style={{ 
                       width: "30px",   // Tamaño visual
@@ -82,7 +81,7 @@ const beneficios = [
     icon:               <Image
                     width={30}
                     height={30}
-                    src="/images/Icons/icon_myllos_check.webp"
+                    src="/images/Icons/icon_myllos_check.svg"
                     alt="Acuse de recibo"
                     style={{ 
                       width: "30px",   // Tamaño visual
@@ -182,9 +181,10 @@ const Cobertura = () => {
                 }}
               >
                 <Image
-                  src="/images/Banners/banners_myllos_web_cobertura.png"
-                  alt="Banner cobertura"
+                  src="/images/Banners/banners_myllos_web_cobertura.webp"
+                  alt="Cobertura Myllos"
                   fill
+                  sizes="(max-width: 900px) 100vw, (max-width: 1200px) 50vw, 50vw"
                   priority
                 />
               </Box>
@@ -311,6 +311,7 @@ const Cobertura = () => {
                         }
                         secondary={
                           <Typography
+                          component="span"
                             sx={{
                               color: "#6b7280",
                               mt: 0.5,
