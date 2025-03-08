@@ -115,12 +115,10 @@ const ShippingHero = () => {
                     fontSize: { xs: "1rem", md: "1.5rem" },
                     maxWidth: { xs: "80%", md: "100%" },
                     margin: { xs: "auto", md: "0" },
-                    mt: { xs: 2, md: 0 },
+                    mt: { xs: 2, md: 2 },
                   }}
                 >
-                  Solucionar tus necesidades logísticas es muy fácil con Myllos,
-                  solo compártenos tu necesidad y nosotros nos encargamos de
-                  encontrar una solución ideal para ti.
+                  Simplifica tu logística con Myllos. Comparte tus necesidades y deja que nosotros encontremos la solución ideal para ti. ¡Tranquilidad y eficiencia garantizadas!
                 </Typography>
               </Box>
 

@@ -24,7 +24,7 @@ const Footer = () => {
   return (
     <Grid
       container
-      sx={{ padding: 0, margin: 0, height: "100%", backgroundColor: "#3DC2CF" }}
+      sx={{ padding: 0, margin: 0, height: "100%", backgroundColor: "#000" }}
     >
       <Grid
         item
@@ -58,7 +58,7 @@ const Footer = () => {
               }}
             >
               <Image
-                src="/images/myllos-logo.png"
+                src="/images/myllos-logo.webp"
                 alt="Logo Myllos - Volver a Inicio"
                 width={200}
                 height={100}
@@ -77,7 +77,7 @@ const Footer = () => {
             flexDirection: "column",
             justifyContent: "space-evenly",
             alignItems: "center",
-            backgroundColor: "#3DC2CF",
+            backgroundColor: "#000",
             height: "100%",
             padding: { xs: 0, md: 3 },
           }}
@@ -207,7 +207,7 @@ const Footer = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#3DC2CF",
+            backgroundColor: "#",
             height: "100%",
             padding: { xs: 0, md: 3 },
             position: "relative",
@@ -334,7 +334,7 @@ const Footer = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            backgroundColor: "#3DC2CF",
+            backgroundColor: "#000",
             height: "100%",
             padding: { xs: "24px", md: "12px" },
           }}
