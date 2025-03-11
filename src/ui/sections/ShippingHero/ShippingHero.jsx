@@ -349,30 +349,57 @@ const ShippingHero = () => {
           >
             <Button
               onClick={() => handleCotizarAqui("ftl")}
-              variant="contained"
+              variant="outlined"
               sx={{
                 borderRadius: "15px",
                 padding: { xs: "10px", md: "20px" },
                 width: { xs: "100%", sm: "45%" },
                 display: "flex",
                 flexDirection: "column",
+                borderColor: "#3DC2CF",
+                color: "#3DC2CF",
                 gap: 2,
-                backgroundColor: "#007bff",
                 "&:hover": {
-                  backgroundColor: "#0056b3",
                   transform: "scale(1.02)",
                 },
                 transition: "all 0.3s ease",
               }}
             >
+<Box sx={{display:"flex", flexDirection:"column"}}>
+
+<Box sx={{display:"flex" , gap:2, justifyContent:"start", width:"80%"}}>
+
+  <Image 
+      src="/images/Icons/icon_myllos_pallet.svg" 
+      width={30} 
+      height={32} 
+      alt="FTL icono - Fulltruck"
+      style={{
+        transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
+        objectFit: "contain",
+        alignItems:"center",
+        display:"flex"
+      }}
+    />
               <Typography
                 sx={{
                   fontSize: { xs: "1rem", md: "1.5rem" },
                   textTransform: "none",
+                  alignContent:"center"
                 }}
               >
                 FTL
               </Typography>
+</Box>
+<Typography
+  sx={{
+    fontSize: { xs: "0.75rem" },
+    textTransform: "none",
+  }}
+>
+  Camión completamente cargado
+</Typography>
+</Box>
             </Button>
 
             <Button
@@ -385,24 +412,50 @@ const ShippingHero = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-                borderColor: "#007bff",
-                color: "#007bff",
+                borderColor: "#3DC2CF",
+                color: "#3DC2CF",
                 "&:hover": {
-                  borderColor: "#0056b3",
+                  borderColor: "#3DC2CF",
                   backgroundColor: "#f8fafc",
                   transform: "scale(1.02)",
                 },
                 transition: "all 0.3s ease",
               }}
             >
+              <Box sx={{display:"flex", flexDirection:"column", justifyContent:"center", margin:"auto", alignContent:"center"}}>
+<Box sx={{display:"flex" , gap:2, justifyContent:"start"}}>
+
+  <Image 
+      src="/images/Icons/icon_myllos_pallet.svg" 
+      width={30} 
+      height={32} 
+      alt="FTL icono - Fulltruck"
+      style={{
+        transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
+        objectFit: "contain",
+        alignItems:"center",
+        display:"flex"
+      }}
+    />
               <Typography
                 sx={{
                   fontSize: { xs: "1rem", md: "1.5rem" },
                   textTransform: "none",
+                  alignContent:"center"
                 }}
               >
                 LTL
               </Typography>
+</Box>
+              <Typography
+                sx={{
+                  fontSize: { xs: "0.75rem" },
+                  textTransform: "none",
+                }}
+              >
+                Menos de un camión completo
+              </Typography>
+              </Box>
             </Button>
           </Box>
         </CustomDialog>
