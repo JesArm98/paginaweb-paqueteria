@@ -353,7 +353,7 @@ const ShippingHero = () => {
               sx={{
                 borderRadius: "15px",
                 padding: { xs: "10px", md: "20px" },
-                width: { xs: "100%", sm: "45%" },
+                width: { xs: "70%", sm: "45%" },
                 display: "flex",
                 flexDirection: "column",
                 borderColor: "#3DC2CF",
@@ -408,7 +408,7 @@ const ShippingHero = () => {
               sx={{
                 borderRadius: "15px",
                 padding: { xs: "10px", md: "20px" },
-                width: { xs: "100%", sm: "45%" },
+                width: { xs: "70%", sm: "45%" },
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
