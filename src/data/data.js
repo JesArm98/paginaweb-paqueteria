@@ -89,12 +89,12 @@ export const preguntasPrincipales = [
 ];
 
 export const contactOptions = [
-  { value: "quejas", label: "Sugerencias o quejas" },
+  { value: "Queja", label: "Sugerencias o quejas" },
   {
-    value: "socio",
+    value: "Socio",
     label: "¿Quieres ser nuestro socio?",
   },
-  { value: "cotizaciones", label: "Cotizaciones" },
+  { value: "Cotizacion", label: "Cotizaciones" },
 ];
 
 //Estadisticas

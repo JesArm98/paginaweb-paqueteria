@@ -26,7 +26,7 @@ const Navbar = () => {
     e.preventDefault(); // Previene que Link afecte la navegación
     
     // Guarda el estado en localStorage
-    localStorage.setItem("contactType", "socio");
+    localStorage.setItem("contactType", "Socio");
   
     // Navega directamente a la sección "contacto"
     handleNavigation("contacto");
@@ -40,7 +40,7 @@ const Navbar = () => {
   const handleContactClick = (e) => {
     e.preventDefault();
     console.log("Clic en Contacto");
-    localStorage.setItem("contactType", "quejas");
+    localStorage.setItem("contactType", "Queja");
     handleNavigation("contacto");
     setTimeout(() => {
       console.log("Evento contactTypeChange disparado");

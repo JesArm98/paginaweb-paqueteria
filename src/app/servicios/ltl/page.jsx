@@ -25,7 +25,7 @@ function LTLPage() {
   ];
 
   const handleCotizacionesClick = () => {
-    localStorage.setItem("contactType", "cotizaciones");
+    localStorage.setItem("contactType", "Cotizacion");
     const currentPath = window.location.pathname;
 
     if (currentPath !== "/") {

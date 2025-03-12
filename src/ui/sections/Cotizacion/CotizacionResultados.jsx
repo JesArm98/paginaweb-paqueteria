@@ -15,19 +15,22 @@ const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar 
   const [emailUsuario, setEmailUsuario] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false); // Estado del Snackbar
 
-  console.log(emailUsuario);
-  console.log(cotizacionData);
-
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 
   const handleConfirmarEmail = () => {
-    if (emailUsuario && emailUsuario.includes("@")) {
+    if (emailUsuario && emailRegex.test(emailUsuario)) {
+      // Crear un nuevo objeto que incluya toda la data original más el email
+      const cotizacionCompleta = {
+        ...cotizacionData,
+        correo: emailUsuario
+      };
+
+      
+      
       console.log(
         "Se enviará la cotización con estos datos:\n" +
-          JSON.stringify(cotizacionData, null, 2) +
-          "\n" +
-          JSON.stringify({ email: emailUsuario }, null, 2)
+          JSON.stringify(cotizacionCompleta, null, 2)
       );
 
       // 🔹 Muestra el Snackbar de éxito primero

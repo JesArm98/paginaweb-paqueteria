@@ -46,7 +46,7 @@ const schema = yup.object({
     .oneOf(contactOptions.map((option) => option.value), "El tipo de contacto no es válido.")
     .required("El tipo de contacto es obligatorio."),
   Servicio: yup.string().when("Tipo", {
-    is: "cotizaciones",
+    is: "Cotizacion",
     then: (s) =>
       s
         .oneOf(tipoServicio.map((option) => option.value), "El tipo de servicio no es válido.")
@@ -54,7 +54,7 @@ const schema = yup.object({
     otherwise: (s) => s.notRequired(),
   }),
   Origen: yup.mixed().when("Tipo", {
-    is: "cotizaciones",
+    is: "Cotizacion",
     then: (s) =>
       s
         .test("is-valid-origen", "Debe ser un código postal válido.", (value) => {
@@ -70,7 +70,7 @@ const schema = yup.object({
     otherwise: (s) => s.notRequired(),
   }),
   Destino: yup.mixed().when("Tipo", {
-    is: "cotizaciones",
+    is: "Cotizacion",
     then: (s) =>
       s
         .test("is-valid-destino", "Debe ser un código postal válido.", (value) => {
@@ -86,7 +86,7 @@ const schema = yup.object({
     otherwise: (s) => s.notRequired(),
   }),
   Nombre: yup.string().when("Tipo", {
-    is: (tipo) =>  tipo !== "socio",
+    is: (tipo) =>  tipo !== "Socio",
     then: (s) =>
       s
         .matches(nameRegExp, "Solo puede contener letras, espacios, guiones y apóstrofes.")
@@ -96,12 +96,12 @@ const schema = yup.object({
     otherwise: (s) => s.notRequired(),
   }),
   RFC: yup.string().when("Tipo", {
-    is: (tipo) =>  tipo === "socio",
+    is: (tipo) =>  tipo === "Socio",
     then: (s) => s.required("El RFC es obligatorio."),
     otherwise: (s) => s.notRequired(),
   }),
   RazonSocial: yup.string().when("Tipo", {
-    is: (tipo) =>  tipo === "socio",
+    is: (tipo) =>  tipo === "Socio",
     then: (s) => s.required("La razón social es obligatoria."),
     otherwise: (s) => s.notRequired(),
   }),
@@ -183,7 +183,7 @@ function ContactForm() {
       origen: data.Origen, // Ahora es el objeto completo
       destino: data.Destino, // Ahora es el objeto completo
       nombre:
-         data.Tipo === "socio"
+         data.Tipo === "Socio"
           ? `${data.RFC} ${data.RazonSocial}`
           : data.Nombre,
       correo: data.Correo,
@@ -253,7 +253,7 @@ function ContactForm() {
       </Grid>
 
       {/* Layout según el flujo */}
-      {selectedTipo === "cotizaciones" ? (
+      {selectedTipo === "Cotizacion" ? (
         <>
           {/* Fila 1: Contacto y Tipo servicio */}
           <Grid container item xs={12} spacing={2} justifyContent="center">
@@ -512,7 +512,7 @@ function ContactForm() {
                 const isEmpty = field.value === "";
                 const hasError = !!errors.Mensaje;
                 const label = 
-                  selectedTipo === "quejas" 
+                  selectedTipo === "Queja" 
                     ? "Sugerencia*"
                     : "Mensaje*";
                 return (
@@ -530,7 +530,7 @@ function ContactForm() {
             />
           </Grid>
         </>
-      ) :  selectedTipo === "socio" ? (
+      ) :  selectedTipo === "Socio" ? (
         <>
           {/* Para Proveedor o Socio */}
           {/* Fila 1: Contacto y RFC */}
@@ -786,7 +786,7 @@ function ContactForm() {
                 const isEmpty = field.value === "";
                 const hasError = !!errors.Mensaje;
                 const label =
-                  selectedTipo === "quejas"
+                  selectedTipo === "Queja"
                     ? "Sugerencia*"
                     : "Mensaje*";
                 return (
