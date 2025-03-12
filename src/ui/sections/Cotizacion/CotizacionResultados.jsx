@@ -9,78 +9,173 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import axios from "axios";
 
-const CotizacionResultados = ({ cotizacionData, onModificarCotizacion, onCerrar }) => {
-  const [emailUsuario, setEmailUsuario] = useState("");
-  const [openSnackbar, setOpenSnackbar] = useState(false); // Estado del Snackbar
+const validationSchema = yup.object({
+  nombre: yup
+    .string()
+    .required("El nombre es requerido")
+    .min(2, "El nombre debe tener al menos 2 caracteres"),
+  correo: yup
+    .string()
+    .required("El correo electrónico es requerido")
+    .email("Ingresa un correo válido (ejemplo@dominio.com)"),
+  telefono: yup
+    .string()
+    .required("El número de teléfono es requerido")
+    .matches(/^[0-9]+$/, "Solo se permiten números")
+    .min(8, "El número debe tener al menos 8 dígitos")
+    .max(15, "El número no debe exceder los 15 dígitos"),
+});
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const CotizacionResultados = ({
+  cotizacionData,
+  onModificarCotizacion,
+  onCerrar,
+}) => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    mode: "onChange",
+    defaultValues: {
+      nombre: "",
+      correo: "",
+      telefono: "",
+    },
+  });
 
-  const handleConfirmarEmail = () => {
-    if (emailUsuario && emailRegex.test(emailUsuario)) {
-      // Crear un nuevo objeto que incluya toda la data original más el email
-      const cotizacionCompleta = {
-        ...cotizacionData,
-        correo: emailUsuario
-      };
+  const onSubmit = (data) => {
+    // Crear un nuevo objeto que incluya toda la data original más los datos del formulario
+    const cotizacionCompleta = {
+      ...cotizacionData,
+      ...data,
+    };
 
-      
-      
-      console.log(
-        "Se enviará la cotización con estos datos:\n" +
-          JSON.stringify(cotizacionCompleta, null, 2)
-      );
+    // Hacer la petición POST con axios
+    axios
+      .post(
+        "https://mailer-750758869790.us-central1.run.app/api/enviar-correo",
+        cotizacionCompleta
+      )
+      .then((response) => {
+        // Muestra el Snackbar de éxito
+        setOpenSnackbar(true);
 
-      // 🔹 Muestra el Snackbar de éxito primero
-      setOpenSnackbar(true);
-
-      // 🔹 Espera 2 segundos antes de cerrar el modal, asegurando que el Snackbar se muestre
-      setTimeout(() => {
-        onCerrar(); // Cierra el modal después de que el usuario vea el mensaje
-        setEmailUsuario(""); // Resetea el email
-      }, 2000); 
-    }
+        // Espera 2 segundos antes de cerrar el modal
+        setTimeout(() => {
+          onCerrar(); // Cierra el modal después de que el usuario vea el mensaje
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Error al enviar el correo:", error);
+        // Opcional: Manejar el error (por ejemplo, mostrar un mensaje de error)
+        // setOpenErrorSnackbar(true);
+      });
   };
 
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h6" sx={{ pb: 3 }}>
-        Envianos tu cotización ingresando tu correo electrónico
+        Ingresa tus datos para recibir la cotización
       </Typography>
-      <TextField
-        fullWidth
-        label="Correo electrónico"
-        type="email"
-        value={emailUsuario}
-        onChange={(e) => setEmailUsuario(e.target.value)}
-        error={emailUsuario !== "" && !emailRegex.test(emailUsuario)}
-        helperText={
-          emailUsuario !== "" && !emailRegex.test(emailUsuario)
-            ? "Ingresa un correo válido (ejemplo@dominio.com)"
-            : ""
-        }
+
+      <Controller
+        name="nombre"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            fullWidth
+            label="Nombre completo"
+            margin="normal"
+            error={!!errors.nombre}
+            helperText={errors.nombre?.message}
+          />
+        )}
       />
+
+      <Controller
+        name="correo"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            fullWidth
+            label="Correo electrónico"
+            type="email"
+            margin="normal"
+            error={!!errors.correo}
+            helperText={errors.correo?.message}
+          />
+        )}
+      />
+
+      <Controller
+        name="telefono"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            fullWidth
+            label="Número de teléfono"
+            margin="normal"
+            error={!!errors.telefono}
+            helperText={errors.telefono?.message}
+          />
+        )}
+      />
+
       <Box sx={{ display: "flex", mt: 2, justifyContent: "end", gap: 2 }}>
-        <Button onClick={onModificarCotizacion} variant="outlined" color="error" sx={{ width: "fit-content", textTransform: "none", borderRadius: "20px" }} startIcon={<ArrowBackIcon/>}>
+        <Button
+          onClick={onModificarCotizacion}
+          variant="outlined"
+          color="error"
+          sx={{
+            width: "fit-content",
+            textTransform: "none",
+            borderRadius: "20px",
+          }}
+          startIcon={<ArrowBackIcon />}
+        >
           Volver a cotización
         </Button>
+
         <Button
-          fullWidth
+          type="submit"
           color="success"
           variant="outlined"
-          onClick={handleConfirmarEmail}
-          disabled={!emailUsuario || !emailUsuario.includes("@")}
-          sx={{ textTransform: "none", width: "fit-content", borderRadius: "20px" }}
+          disabled={!isValid}
+          sx={{
+            textTransform: "none",
+            width: "fit-content",
+            borderRadius: "20px",
+          }}
         >
           Confirmar
         </Button>
       </Box>
 
       {/* Snackbar de éxito */}
-      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => setOpenSnackbar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "left" }}>
-        <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: "100%" }}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
           Será contactado por nuestro equipo de atención en breve.
         </Alert>
       </Snackbar>

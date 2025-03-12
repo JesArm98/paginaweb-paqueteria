@@ -17,7 +17,6 @@ const RastreoEnvios = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí iría la lógica de rastreo
-    console.log("Rastreando guía:", guia);
   };
 
   return (

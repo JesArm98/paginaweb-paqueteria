@@ -123,7 +123,6 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
       try {
         setIsLoading(true);
         // Tu lógica de login aquí
-        console.log("Login values:", values);
       } catch (error) {
         console.error(error);
         showSnackbar("Error al iniciar sesión", "error");
@@ -146,7 +145,6 @@ const LoginDialog = ({ open, onClose, setOpen }) => {
       try {
         setIsLoading(true);
         // Tu lógica de registro aquí
-        console.log("Register values:", values);
       } catch (error) {
         console.error(error);
         showSnackbar("Error al registrarse", "error");

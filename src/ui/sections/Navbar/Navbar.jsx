@@ -24,13 +24,13 @@ const Navbar = () => {
 
   const handleSocioClick = (e) => {
     e.preventDefault(); // Previene que Link afecte la navegación
-    
+
     // Guarda el estado en localStorage
     localStorage.setItem("contactType", "Socio");
-  
+
     // Navega directamente a la sección "contacto"
     handleNavigation("contacto");
-  
+
     // Dispara el evento después para asegurar que la sección lo detecte
     setTimeout(() => {
       window.dispatchEvent(new Event("contactTypeChange"));
@@ -39,15 +39,13 @@ const Navbar = () => {
 
   const handleContactClick = (e) => {
     e.preventDefault();
-    console.log("Clic en Contacto");
     localStorage.setItem("contactType", "Queja");
     handleNavigation("contacto");
     setTimeout(() => {
-      console.log("Evento contactTypeChange disparado");
       window.dispatchEvent(new Event("contactTypeChange"));
     }, 500);
   };
-  
+
   return (
     <>
       <Box
@@ -74,40 +72,39 @@ const Navbar = () => {
           }}
           className="logNosCoord"
         >
-
-          <Box sx={{display:{xs:"flex", md:"none"}}}>
-          <Link href="/" style={{ textDecoration: "none" }}>
-            <Image
-              className="LogoNavbar"
-              width={100}
-              height={40}
-              src={"/images/myllos-logo.webp"}
-              alt="Myllos Logo Desktop"
-              priority
-              style={{
-                borderRadius: "20px",
-                transition: "transform 0.3s ease",
-                cursor: "pointer",
-              }}
-            />
-          </Link>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <Image
+                className="LogoNavbar"
+                width={100}
+                height={40}
+                src={"/images/myllos-logo.webp"}
+                alt="Myllos Logo Desktop"
+                priority
+                style={{
+                  borderRadius: "20px",
+                  transition: "transform 0.3s ease",
+                  cursor: "pointer",
+                }}
+              />
+            </Link>
           </Box>
-          <Box  sx={{display:{xs:"none", md:"flex"}}}>
-          <Link href="/" style={{ textDecoration: "none" }}>
-            <Image
-              className="LogoNavbar"
-              width={50}
-              height={50}
-              src={"/images/myllos-logo-notext.webp"}
-              alt="Logo Myllos Movil"
-              priority
-              style={{
-                borderRadius: "20px",
-                transition: "transform 0.3s ease",
-                cursor: "pointer",
-              }}
-            />
-          </Link>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <Image
+                className="LogoNavbar"
+                width={50}
+                height={50}
+                src={"/images/myllos-logo-notext.webp"}
+                alt="Logo Myllos Movil"
+                priority
+                style={{
+                  borderRadius: "20px",
+                  transition: "transform 0.3s ease",
+                  cursor: "pointer",
+                }}
+              />
+            </Link>
           </Box>
           <Link href="/" passHref style={{ textDecoration: "none" }}>
             <Button
@@ -246,7 +243,7 @@ const Navbar = () => {
                   display: "flex",
                 }}
               />
-            </Button>        
+            </Button>
             <Button
               aria-label="LinkedIn"
               variant="outlined"
@@ -273,7 +270,7 @@ const Navbar = () => {
                 style={{ width: "25px", height: "25px" }}
               />
             </Button>
-            
+
             {/*Botón de Contacto*/}
             <Link href="/#contacto" style={{ textDecoration: "none" }} passHref>
               <Button
