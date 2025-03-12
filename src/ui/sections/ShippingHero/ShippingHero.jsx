@@ -370,7 +370,7 @@ const ShippingHero = () => {
 <Box sx={{display:"flex" , gap:2, justifyContent:"start", width:"80%"}}>
 
   <Image 
-      src="/images/Icons/icon_myllos_pallet.svg" 
+      src="/images/Icons/icon_myllos_fulltruck.svg" 
       width={30} 
       height={32} 
       alt="FTL icono - Fulltruck"
@@ -397,7 +397,7 @@ const ShippingHero = () => {
     textTransform: "none",
   }}
 >
-  Camión completamente cargado
+  Carga completa de camión
 </Typography>
 </Box>
             </Button>
@@ -453,7 +453,7 @@ const ShippingHero = () => {
                   textTransform: "none",
                 }}
               >
-                Menos de un camión completo
+                Carga parcial de camión
               </Typography>
               </Box>
             </Button>
