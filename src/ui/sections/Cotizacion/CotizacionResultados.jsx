@@ -8,6 +8,7 @@ import {
   Typography,
   Snackbar,
   Alert,
+  Grid,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useForm, Controller } from "react-hook-form";
@@ -82,59 +83,87 @@ const CotizacionResultados = ({
       });
   };
 
+  const inputStyles = {
+    borderRadius: "20px", // Bordes redondeados
+    backgroundColor: "#fff", // Fondo blanco para mejor visibilidad
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "20px", // Aplica a todo el input
+      fontSize: "16px",
+      fontWeight: 500,
+      "& fieldset": {
+        borderColor: "#BDBDBD", // Color de borde en estado normal
+      },
+      "&:hover fieldset": {
+        borderColor: "#1976d2", // Color de borde en hover
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#1976d2", // Color de borde cuando está enfocado
+        boxShadow: "0px 0px 6px rgba(25, 118, 210, 0.3)", // Sombra al enfocar
+      },
+    },
+  };
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h6" sx={{ pb: 3 }}>
         Ingresa tus datos para recibir la cotización
       </Typography>
 
-      <Controller
-        name="nombre"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            fullWidth
-            label="Nombre completo"
-            margin="normal"
-            error={!!errors.nombre}
-            helperText={errors.nombre?.message}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Controller
+            name="nombre"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                sx={{ ...inputStyles }}
+                label="Nombre completo"
+                error={!!errors.nombre}
+                helperText={errors.nombre?.message}
+              />
+            )}
           />
-        )}
-      />
+        </Grid>
 
-      <Controller
-        name="correo"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            fullWidth
-            label="Correo electrónico"
-            type="email"
-            margin="normal"
-            error={!!errors.correo}
-            helperText={errors.correo?.message}
+        <Grid item xs={12} sm={6}>
+          <Controller
+            name="correo"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="Correo electrónico"
+                type="email"
+                sx={{ ...inputStyles }}
+                error={!!errors.correo}
+                helperText={errors.correo?.message}
+              />
+            )}
           />
-        )}
-      />
+        </Grid>
 
-      <Controller
-        name="telefono"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            fullWidth
-            label="Número de teléfono"
-            margin="normal"
-            error={!!errors.telefono}
-            helperText={errors.telefono?.message}
+        <Grid item xs={12}>
+          <Controller
+            name="telefono"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="Número de teléfono"
+                error={!!errors.telefono}
+                helperText={errors.telefono?.message}
+                sx={{ ...inputStyles }}
+              />
+            )}
           />
-        )}
-      />
+        </Grid>
+      </Grid>
 
-      <Box sx={{ display: "flex", mt: 2, justifyContent: "end", gap: 2 }}>
+      <Box sx={{ display: "flex", mt: 3, justifyContent: "end", gap: 2 }}>
         <Button
           onClick={onModificarCotizacion}
           variant="outlined"
