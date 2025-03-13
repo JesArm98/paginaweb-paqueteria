@@ -12,7 +12,6 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-  Tooltip,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -26,8 +25,15 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CotizacionResultados from "./CotizacionResultados";
 import TarimaTooltip from "@/ui/components/TarimaTooltip";
+import StyledTextField from "@/ui/components/StyledTextField";
 
-const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
+const CotizacionEnvios = ({
+  initialShippingType,
+  open,
+  onClose,
+  isResultsMode,
+  setIsResultsMode,
+}) => {
   const [cotizacionData, setCotizacionData] = useState(null); // Estado para almacenar datos de la cotización
   const [mostrarResultados, setMostrarResultados] = useState(false);
   const [coloniasOrigen, setColoniasOrigen] = useState([]);
@@ -37,7 +43,14 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
-  const { control, handleSubmit, watch, setValue, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       origen: "",
       destino: "",
@@ -81,6 +94,7 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
   const handleReset = () => {
     setCotizacionData(null);
     setMostrarResultados(false);
+    setIsResultsMode(false); // Añade esta línea
   };
 
   const handleCerrar = () => {
@@ -108,16 +122,20 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
         peso: Number(pkg.peso) || 0,
         contenido: "Cotización web",
         tipo: "tarima",
-        volumen:
+        volumen: Number(
           (Number(pkg.ancho) / 100) *
-          (Number(pkg.alto) / 100) *
-          (Number(pkg.largo) / 100),
+            (Number(pkg.alto) / 100) *
+            (Number(pkg.largo) / 100)
+        ),
       })),
     };
 
     setCotizacionData(cotizacionDataNormalizada); // Guarda los datos normalizados
     setMostrarResultados(true); // Muestra resultados
+    setIsResultsMode(true);
   };
+
+  console.log(cotizacionData);
 
   const handleAutocompleteChange = async (field, value, onChange) => {
     if (value && value.length === 5) {
@@ -174,8 +192,17 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
 
   // Función para validar el formulario
   const isFormValid = () => {
-    // Verifica que origen y destino no estén vacíos
-    if (!formValues.origen || !formValues.destino) return false;
+    // Verifica que origen y destino sean objetos con "cp" (opción seleccionada)
+    if (
+      !formValues.origen ||
+      typeof formValues.origen !== "object" ||
+      !formValues.origen.cp ||
+      !formValues.destino ||
+      typeof formValues.destino !== "object" ||
+      !formValues.destino.cp
+    ) {
+      return false;
+    }
 
     // Verifica que al menos un paquete tenga todas sus propiedades llenas
     return formValues.packages.every(
@@ -233,33 +260,83 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
               <Controller
                 name="origen"
                 control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Autocomplete
-                    freeSolo
-                    options={coloniasOrigen}
-                    value={value}
-                    onInputChange={(e, newValue) => {
-                      if (/^\d+$/.test(newValue) || newValue === "") {
-                        handleAutocompleteChange("origen", newValue, onChange);
+                render={({ field: { onChange, value } }) => {
+                  // Solo es válido si es un objeto con "cp" (seleccionado de la lista)
+                  const isValid =
+                    typeof value === "object" && value && value.cp;
+                  const isEmpty = !value;
+                  const hasError = errors?.origen;
+
+                  return (
+                    <Autocomplete
+                      freeSolo
+                      options={coloniasOrigen}
+                      getOptionLabel={(option) =>
+                        typeof option === "string"
+                          ? option
+                          : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
                       }
-                    }}
-                    onChange={(e, newValue) => onChange(newValue)}
-                    getOptionLabel={(option) =>
-                      typeof option === "string"
-                        ? option
-                        : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Origen"
-                        fullWidth
-                        helperText="Ingrese CP origen"
-                        sx={inputStyles}
-                      />
-                    )}
-                  />
-                )}
+                      value={value}
+                      onInputChange={(e, newValue) => {
+                        if (/^\d*$/.test(newValue)) {
+                          handleAutocompleteChange(
+                            "origen",
+                            newValue,
+                            onChange
+                          );
+                        }
+                      }}
+                      onChange={(e, newValue) => onChange(newValue)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Origen"
+                          fullWidth
+                          error={!!hasError}
+                          helperText={
+                            hasError
+                              ? errors.origen.message
+                              : isValid
+                              ? "✔️" // Solo aparece si se ha seleccionado una opción
+                              : "Ingrese CP origen"
+                          }
+                          sx={{
+                            ...inputStyles,
+                            "& .MuiOutlinedInput-root": {
+                              ...inputStyles["& .MuiOutlinedInput-root"],
+                              "& fieldset": {
+                                borderColor: isValid
+                                  ? "green"
+                                  : isEmpty
+                                  ? "#07417B"
+                                  : "#BDBDBD",
+                                borderRadius: "15px",
+                                boxShadow:
+                                  "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
+                              },
+                              "&:hover fieldset": {
+                                borderColor: isEmpty
+                                  ? "blue"
+                                  : hasError
+                                  ? "red"
+                                  : "blue",
+                              },
+                              "&.Mui-focused fieldset": {
+                                borderColor: isValid
+                                  ? "green"
+                                  : hasError
+                                  ? "red"
+                                  : "gray",
+                                boxShadow:
+                                  "0px 0px 6px rgba(25, 118, 210, 0.3)",
+                              },
+                            },
+                          }}
+                        />
+                      )}
+                    />
+                  );
+                }}
               />
             </Grid>
 
@@ -268,33 +345,83 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
               <Controller
                 name="destino"
                 control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Autocomplete
-                    freeSolo
-                    options={coloniasDestino}
-                    value={value}
-                    onInputChange={(e, newValue) => {
-                      if (/^\d+$/.test(newValue) || newValue === "") {
-                        handleAutocompleteChange("destino", newValue, onChange);
+                render={({ field: { onChange, value } }) => {
+                  // Solo es válido si es un objeto con "cp" (seleccionado de la lista)
+                  const isValid =
+                    typeof value === "object" && value && value.cp;
+                  const isEmpty = !value;
+                  const hasError = errors?.destino;
+
+                  return (
+                    <Autocomplete
+                      freeSolo
+                      options={coloniasDestino}
+                      getOptionLabel={(option) =>
+                        typeof option === "string"
+                          ? option
+                          : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
                       }
-                    }}
-                    onChange={(e, newValue) => onChange(newValue)}
-                    getOptionLabel={(option) =>
-                      typeof option === "string"
-                        ? option
-                        : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Destino"
-                        fullWidth
-                        helperText="Ingrese CP destino"
-                        sx={inputStyles}
-                      />
-                    )}
-                  />
-                )}
+                      value={value}
+                      onInputChange={(e, newValue) => {
+                        if (/^\d*$/.test(newValue)) {
+                          handleAutocompleteChange(
+                            "destino",
+                            newValue,
+                            onChange
+                          );
+                        }
+                      }}
+                      onChange={(e, newValue) => onChange(newValue)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Destino"
+                          fullWidth
+                          error={!!hasError}
+                          helperText={
+                            hasError
+                              ? errors.destino.message
+                              : isValid
+                              ? "✔️" // Solo aparece si se ha seleccionado una opción
+                              : "Ingrese CP destino"
+                          }
+                          sx={{
+                            ...inputStyles,
+                            "& .MuiOutlinedInput-root": {
+                              ...inputStyles["& .MuiOutlinedInput-root"],
+                              "& fieldset": {
+                                borderColor: isValid
+                                  ? "green"
+                                  : isEmpty
+                                  ? "#07417B"
+                                  : "#BDBDBD",
+                                borderRadius: "15px",
+                                boxShadow:
+                                  "rgba(100, 100, 111, 0.2) 0px 4px 14px 0px",
+                              },
+                              "&:hover fieldset": {
+                                borderColor: isEmpty
+                                  ? "blue"
+                                  : hasError
+                                  ? "red"
+                                  : "blue",
+                              },
+                              "&.Mui-focused fieldset": {
+                                borderColor: isValid
+                                  ? "green"
+                                  : hasError
+                                  ? "red"
+                                  : "gray",
+                                boxShadow:
+                                  "0px 0px 6px rgba(25, 118, 210, 0.3)",
+                              },
+                            },
+                          }}
+                        />
+                      )}
+                    />
+                  );
+                }}
               />
             </Grid>
 
@@ -423,191 +550,66 @@ const CotizacionEnvios = ({ initialShippingType, open, onClose }) => {
                   >
                     {/* Cantidad */}
                     <Grid item xs={6} sm={2}>
-                      <Controller
+                      <StyledTextField
                         name={`packages.${index}.cantidad`}
                         control={control}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            label="Cantidad"
-                            type="number"
-                            fullWidth
-                            sx={{ ...inputStyles }}
-                            InputProps={{
-                              inputMode: "numeric",
-
-                              sx: {
-                                "& input[type=number]": {
-                                  MozAppearance: "textfield",
-                                  "&::-webkit-inner-spin-button, &::-webkit-outer-spin-button":
-                                    {
-                                      opacity: 1, // Hace visibles las flechas siempre
-                                    },
-                                },
-                              },
-                            }}
-                          />
-                        )}
+                        errors={errors}
+                        label="Cantidad"
+                        type="number"
+                        helperTextEmpty="Ingrese cantidad requerida"
+                        placeholder="Ingrese cantidad"
                       />
                     </Grid>
 
                     {/* Ancho */}
                     <Grid item xs={6} sm={2}>
-                      <Controller
+                      <StyledTextField
                         name={`packages.${index}.ancho`}
                         control={control}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            label="Ancho (cm)"
-                            type="number"
-                            fullWidth
-                            sx={{ ...inputStyles }}
-                            onChange={(e) =>
-                              setValue(
-                                `packages.${index}.ancho`,
-                                e.target.value,
-                                { shouldValidate: true }
-                              )
-                            }
-                            placeholder="Ingrese ancho"
-                            InputLabelProps={{
-                              shrink: { xs: true, md: false }, // Mantiene la etiqueta siempre arriba
-                            }}
-                            InputProps={{
-                              inputMode: "numeric",
-                              sx: {
-                                "& input[type=number]": {
-                                  MozAppearance: "textfield",
-                                  "&::-webkit-inner-spin-button, &::-webkit-outer-spin-button":
-                                    {
-                                      opacity: 1, // Hace visibles las flechas siempre
-                                    },
-                                },
-                              },
-                            }}
-                          />
-                        )}
+                        errors={errors}
+                        label="Ancho (cm)"
+                        type="number"
+                        helperTextEmpty=""
+                        placeholder="Ingrese ancho"
                       />
                     </Grid>
 
                     {/* Alto */}
                     <Grid item xs={6} sm={2}>
-                      <Controller
+                      <StyledTextField
                         name={`packages.${index}.alto`}
                         control={control}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            label="Alto (cm)"
-                            type="number"
-                            fullWidth
-                            sx={{ ...inputStyles }}
-                            onChange={(e) =>
-                              setValue(
-                                `packages.${index}.alto`,
-                                e.target.value,
-                                { shouldValidate: true }
-                              )
-                            }
-                            placeholder="Ingrese alto"
-                            InputLabelProps={{
-                              shrink: { xs: true, md: false }, // Mantiene la etiqueta siempre arriba
-                            }}
-                            InputProps={{
-                              inputMode: "numeric",
-                              sx: {
-                                "& input[type=number]": {
-                                  MozAppearance: "textfield",
-                                  "&::-webkit-inner-spin-button, &::-webkit-outer-spin-button":
-                                    {
-                                      opacity: 1, // Hace visibles las flechas siempre
-                                    },
-                                },
-                              },
-                            }}
-                          />
-                        )}
+                        errors={errors}
+                        label="Alto (cm)"
+                        type="number"
+                        helperTextEmpty=""
+                        placeholder="Ingrese alto"
                       />
                     </Grid>
 
                     {/* Largo */}
                     <Grid item xs={6} sm={2}>
-                      <Controller
+                      <StyledTextField
                         name={`packages.${index}.largo`}
                         control={control}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            label="Largo (cm)"
-                            type="number"
-                            fullWidth
-                            sx={{ ...inputStyles }}
-                            onChange={(e) =>
-                              setValue(
-                                `packages.${index}.largo`,
-                                e.target.value,
-                                { shouldValidate: true }
-                              )
-                            }
-                            placeholder="Ingrese largo"
-                            InputLabelProps={{
-                              shrink: { xs: true, md: false }, // Mantiene la etiqueta siempre arriba
-                            }}
-                            InputProps={{
-                              inputMode: "numeric",
-                              sx: {
-                                "& input[type=number]": {
-                                  MozAppearance: "textfield",
-                                  "&::-webkit-inner-spin-button, &::-webkit-outer-spin-button":
-                                    {
-                                      opacity: 1, // Hace visibles las flechas siempre
-                                    },
-                                },
-                              },
-                            }}
-                          />
-                        )}
+                        errors={errors}
+                        label="Largo (cm)"
+                        type="number"
+                        helperTextEmpty=""
+                        placeholder="Ingrese largo"
                       />
                     </Grid>
 
                     {/* Peso */}
                     <Grid item xs={6} sm={2}>
-                      <Controller
+                      <StyledTextField
                         name={`packages.${index}.peso`}
                         control={control}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            label="Peso (kg)"
-                            type="number"
-                            fullWidth
-                            sx={{ ...inputStyles }}
-                            onChange={(e) =>
-                              setValue(
-                                `packages.${index}.peso`,
-                                e.target.value,
-                                { shouldValidate: true }
-                              )
-                            }
-                            placeholder="Ingrese peso"
-                            InputLabelProps={{
-                              shrink: { xs: true, md: false }, // Mantiene la etiqueta siempre arriba
-                            }}
-                            InputProps={{
-                              inputMode: "numeric",
-                              sx: {
-                                "& input[type=number]": {
-                                  MozAppearance: "textfield",
-                                  "&::-webkit-inner-spin-button, &::-webkit-outer-spin-button":
-                                    {
-                                      opacity: 1, // Hace visibles las flechas siempre
-                                    },
-                                },
-                              },
-                            }}
-                          />
-                        )}
+                        errors={errors}
+                        label="Peso (kg)"
+                        type="number"
+                        helperTextEmpty=""
+                        placeholder="Ingrese peso"
                       />
                     </Grid>
 

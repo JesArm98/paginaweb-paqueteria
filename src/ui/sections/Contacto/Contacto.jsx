@@ -66,20 +66,22 @@ const schema = yup
       otherwise: (s) => s.notRequired(),
     }),
     Origen: yup.mixed().when("Tipo", {
-      is: "Cotizacion",
+      is: (tipo) =>
+        tipo === "Cotizacion" || tipo === "Queja" || tipo === "Socio",
       then: (s) =>
         s
           .test(
             "is-valid-origen",
-            "Debe ser un código postal válido.",
+            "Debe seleccionar una opción válida de la lista.",
             (value) => {
-              if (typeof value === "object" && value !== null) {
-                return cpRegExp.test(value.cp);
-              }
-              if (typeof value === "string") {
-                return cpRegExp.test(value);
-              }
-              return false;
+              // Verificar que sea un objeto completo con los datos necesarios
+              return (
+                typeof value === "object" &&
+                value !== null &&
+                value.cp &&
+                value.colonia &&
+                value.ciudad
+              );
             }
           )
           .required("El CP de origen es obligatorio."),
@@ -91,15 +93,16 @@ const schema = yup
         s
           .test(
             "is-valid-destino",
-            "Debe ser un código postal válido.",
+            "Debe seleccionar una opción válida de la lista.",
             (value) => {
-              if (typeof value === "object" && value !== null) {
-                return cpRegExp.test(value.cp);
-              }
-              if (typeof value === "string") {
-                return cpRegExp.test(value);
-              }
-              return false;
+              // Verificar que sea un objeto completo con los datos necesarios
+              return (
+                typeof value === "object" &&
+                value !== null &&
+                value.cp &&
+                value.colonia &&
+                value.ciudad
+              );
             }
           )
           .required("El CP de destino es obligatorio."),
@@ -374,6 +377,8 @@ function ContactForm() {
                   defaultValue=""
                   render={({ field: { onChange, value } }) => {
                     const isEmpty = !value;
+                    const isValid =
+                      typeof value === "object" && value && value.cp;
                     return (
                       <Autocomplete
                         freeSolo
@@ -409,9 +414,9 @@ function ContactForm() {
                               helperText={
                                 errors.Origen
                                   ? errors.Origen.message
-                                  : !fieldIsEmpty
+                                  : isValid
                                   ? "✔️"
-                                  : "Ingrese CP de origen"
+                                  : "Ingrese CP de origen y seleccione una opción"
                               }
                               sx={getFieldSx(fieldIsEmpty, !!errors.Origen)}
                             />
@@ -429,6 +434,8 @@ function ContactForm() {
                   defaultValue=""
                   render={({ field: { onChange, value } }) => {
                     const isEmpty = !value;
+                    const isValid =
+                      typeof value === "object" && value && value.cp;
                     return (
                       <Autocomplete
                         freeSolo
@@ -464,7 +471,7 @@ function ContactForm() {
                               helperText={
                                 errors.Destino
                                   ? errors.Destino.message
-                                  : !fieldIsEmpty
+                                  : isValid
                                   ? "✔️"
                                   : "Ingrese CP de destino"
                               }
@@ -753,6 +760,8 @@ function ContactForm() {
                   defaultValue=""
                   render={({ field: { onChange, value } }) => {
                     const isEmpty = !value;
+                    const isValid =
+                      typeof value === "object" && value && value.cp;
                     return (
                       <Autocomplete
                         freeSolo
@@ -788,7 +797,7 @@ function ContactForm() {
                               helperText={
                                 errors.Origen
                                   ? errors.Origen.message
-                                  : !fieldIsEmpty
+                                  : isValid
                                   ? "✔️"
                                   : "Ingrese su Código Postal"
                               }
@@ -962,6 +971,8 @@ function ContactForm() {
                   defaultValue=""
                   render={({ field: { onChange, value } }) => {
                     const isEmpty = !value;
+                    const isValid =
+                      typeof value === "object" && value && value.cp;
                     return (
                       <Autocomplete
                         freeSolo
@@ -997,7 +1008,7 @@ function ContactForm() {
                               helperText={
                                 errors.Origen
                                   ? errors.Origen.message
-                                  : !fieldIsEmpty
+                                  : isValid
                                   ? "✔️"
                                   : "Ingrese su Código Postal"
                               }

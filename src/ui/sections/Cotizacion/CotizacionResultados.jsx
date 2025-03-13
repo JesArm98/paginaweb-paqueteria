@@ -3,18 +3,21 @@
 import React, { useState } from "react";
 import {
   Box,
-  TextField,
   Button,
   Typography,
   Snackbar,
   Alert,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import StyledTextField from "@/ui/components/StyledTextField";
+
+const emailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const validationSchema = yup.object({
   nombre: yup
@@ -23,6 +26,7 @@ const validationSchema = yup.object({
     .min(2, "El nombre debe tener al menos 2 caracteres"),
   correo: yup
     .string()
+    .matches(emailRegExp, "Debe ser un correo válido.")
     .required("El correo electrónico es requerido")
     .email("Ingresa un correo válido (ejemplo@dominio.com)"),
   telefono: yup
@@ -39,6 +43,7 @@ const CotizacionResultados = ({
   onCerrar,
 }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const {
     control,
@@ -55,6 +60,8 @@ const CotizacionResultados = ({
   });
 
   const onSubmit = (data) => {
+    setIsSubmit(true);
+
     // Crear un nuevo objeto que incluya toda la data original más los datos del formulario
     const cotizacionCompleta = {
       ...cotizacionData,
@@ -70,7 +77,7 @@ const CotizacionResultados = ({
       .then((response) => {
         // Muestra el Snackbar de éxito
         setOpenSnackbar(true);
-
+        setIsSubmit(false);
         // Espera 2 segundos antes de cerrar el modal
         setTimeout(() => {
           onCerrar(); // Cierra el modal después de que el usuario vea el mensaje
@@ -78,29 +85,10 @@ const CotizacionResultados = ({
       })
       .catch((error) => {
         console.error("Error al enviar el correo:", error);
+        setIsSubmit(false);
         // Opcional: Manejar el error (por ejemplo, mostrar un mensaje de error)
         // setOpenErrorSnackbar(true);
       });
-  };
-
-  const inputStyles = {
-    borderRadius: "20px", // Bordes redondeados
-    backgroundColor: "#fff", // Fondo blanco para mejor visibilidad
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "20px", // Aplica a todo el input
-      fontSize: "16px",
-      fontWeight: 500,
-      "& fieldset": {
-        borderColor: "#BDBDBD", // Color de borde en estado normal
-      },
-      "&:hover fieldset": {
-        borderColor: "#1976d2", // Color de borde en hover
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#1976d2", // Color de borde cuando está enfocado
-        boxShadow: "0px 0px 6px rgba(25, 118, 210, 0.3)", // Sombra al enfocar
-      },
-    },
   };
 
   return (
@@ -110,55 +98,34 @@ const CotizacionResultados = ({
       </Typography>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Controller
+        <Grid item xs={12} sm={4}>
+          <StyledTextField
             name="nombre"
             control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                sx={{ ...inputStyles }}
-                label="Nombre completo"
-                error={!!errors.nombre}
-                helperText={errors.nombre?.message}
-              />
-            )}
+            errors={errors}
+            label="Nombre completo"
+            helperTextEmpty="Ingresa tu nombre completo"
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
-          <Controller
+        <Grid item xs={12} sm={4}>
+          <StyledTextField
             name="correo"
             control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                label="Correo electrónico"
-                type="email"
-                sx={{ ...inputStyles }}
-                error={!!errors.correo}
-                helperText={errors.correo?.message}
-              />
-            )}
+            errors={errors}
+            label="Correo electrónico"
+            type="email"
+            helperTextEmpty="Ingresa tu correo electrónico"
           />
         </Grid>
 
-        <Grid item xs={12}>
-          <Controller
+        <Grid item xs={12} sm={4}>
+          <StyledTextField
             name="telefono"
             control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                label="Número de teléfono"
-                error={!!errors.telefono}
-                helperText={errors.telefono?.message}
-                sx={{ ...inputStyles }}
-              />
-            )}
+            errors={errors}
+            label="Número de teléfono"
+            helperTextEmpty="Ingresa tu número de teléfono"
           />
         </Grid>
       </Grid>
@@ -182,14 +149,17 @@ const CotizacionResultados = ({
           type="submit"
           color="success"
           variant="outlined"
-          disabled={!isValid}
+          disabled={!isValid || isSubmit}
+          startIcon={
+            isSubmit ? <CircularProgress size={20} color="inherit" /> : null
+          }
           sx={{
             textTransform: "none",
             width: "fit-content",
             borderRadius: "20px",
           }}
         >
-          Confirmar
+          {isSubmit ? "Confirmando..." : "Confirmar"}
         </Button>
       </Box>
 

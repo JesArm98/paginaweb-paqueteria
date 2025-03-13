@@ -1,9 +1,7 @@
 "use client";
 
 import CustomDialog from "@/ui/components/CustomDialog";
-import {
-  ArrowForward,
-} from "@mui/icons-material";
+import { ArrowForward } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -21,6 +19,7 @@ const ShippingHero = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openSeleccionModal, setOpenSeleccionModal] = useState(false);
   const [selectedShippingType, setSelectedShippingType] = useState("");
+  const [isResultsMode, setIsResultsMode] = useState(false);
 
   const handleCotizarClick = () => {
     setOpenSeleccionModal(true);
@@ -43,9 +42,8 @@ const ShippingHero = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        width:{xs:"100%",md:"90%"},
-        margin:"auto"
-
+        width: { xs: "100%", md: "90%" },
+        margin: "auto",
       }}
     >
       <Box
@@ -60,13 +58,10 @@ const ShippingHero = () => {
             "linear-gradient(to bottom, rgba(229, 231, 235, 0.5), #fff)",
           "@media (min-width: 900px)": {
             background: "#fff", // O el color que prefieras para pantallas >= sm
-          }
+          },
         }}
       >
-        <Box
-          className="container"
-          position="relative"
-        >
+        <Box className="container" position="relative">
           <Grid
             container
             spacing={4}
@@ -118,7 +113,9 @@ const ShippingHero = () => {
                     mt: { xs: 2, md: 2 },
                   }}
                 >
-                  Simplifica tu logística con Myllos. Comparte tus necesidades y deja que nosotros encontremos la solución ideal para ti. ¡Tranquilidad y eficiencia garantizadas!
+                  Simplifica tu logística con Myllos. Comparte tus necesidades y
+                  deja que nosotros encontremos la solución ideal para ti.
+                  ¡Tranquilidad y eficiencia garantizadas!
                 </Typography>
               </Box>
 
@@ -138,7 +135,13 @@ const ShippingHero = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    <CardContent sx={{display:"flex", alignItems:"center", flexDirection:"column"}}>
+                    <CardContent
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
                       <Box
                         sx={{
                           backgroundColor: "#fff",
@@ -150,17 +153,17 @@ const ShippingHero = () => {
                           margin: "auto",
                         }}
                       >
-                                        <Image 
-                            src="/images/Icons/icon_myllos_calculadora.svg"  
-                                          width={400} 
-                                          height={300} 
-                                          alt="Cotización Myllos"
-                                          style={{
-                                            width: "35px",
-                                            height: "35px",
-                                          }}
-                                          priority
-                                        />
+                        <Image
+                          src="/images/Icons/icon_myllos_calculadora.svg"
+                          width={400}
+                          height={300}
+                          alt="Cotización Myllos"
+                          style={{
+                            width: "35px",
+                            height: "35px",
+                          }}
+                          priority
+                        />
                       </Box>
                       <Box>
                         <Typography variant="h6" textAlign={"center"}>
@@ -181,7 +184,13 @@ const ShippingHero = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    <CardContent sx={{display:"flex", flexDirection:"column", alignContent:"center"}}>
+                    <CardContent
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignContent: "center",
+                      }}
+                    >
                       <Box
                         sx={{
                           backgroundColor: "#fff",
@@ -192,17 +201,17 @@ const ShippingHero = () => {
                           width: "fit-content",
                         }}
                       >
-                                        <Image 
-                            src="/images/Icons/icon_myllos_seguro.svg"  
-                                          width={400} 
-                                          height={300} 
-                                          alt="Envio seguro"
-                                          style={{
-                                            width: "35px",
-                                            height: "35px",
-                                          }}
-                                          priority
-                                        />
+                        <Image
+                          src="/images/Icons/icon_myllos_seguro.svg"
+                          width={400}
+                          height={300}
+                          alt="Envio seguro"
+                          style={{
+                            width: "35px",
+                            height: "35px",
+                          }}
+                          priority
+                        />
                       </Box>
                       <Box>
                         <Typography variant="h6" textAlign={"center"}>
@@ -262,7 +271,9 @@ const ShippingHero = () => {
                     },
                     "@keyframes pulse": {
                       "0%": { boxShadow: "0 0 0 0 rgba(0, 123, 255, 0.8)" },
-                      "50%": { boxShadow: "0 0 10px 10px rgba(0, 123, 255, 0.3)" },
+                      "50%": {
+                        boxShadow: "0 0 10px 10px rgba(0, 123, 255, 0.3)",
+                      },
                       "100%": { boxShadow: "0 0 0 0 rgba(0, 123, 255, 0)" },
                     },
                     animation: "pulse 3.5s infinite", // Efecto pulsante
@@ -293,9 +304,11 @@ const ShippingHero = () => {
                   position: "absolute",
                   width: "100%",
                   height: "100%",
-                  background:{xs:
-                    "linear-gradient(to bottom right, #007bff33, #ffffff)", md:"#fff"},
-                  filter:{xs:"blur(60px)", md:"none"},
+                  background: {
+                    xs: "linear-gradient(to bottom right, #007bff33, #ffffff)",
+                    md: "#fff",
+                  },
+                  filter: { xs: "blur(60px)", md: "none" },
                   top: "50%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
@@ -319,8 +332,8 @@ const ShippingHero = () => {
                   alt="Imagen inicial Myllos"
                   fill
                   style={{
-                    objectFit: 'cover',
-                    objectPosition: 'center'
+                    objectFit: "cover",
+                    objectPosition: "center",
                   }}
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
@@ -365,41 +378,46 @@ const ShippingHero = () => {
                 transition: "all 0.3s ease",
               }}
             >
-<Box sx={{display:"flex", flexDirection:"column"}}>
-
-<Box sx={{display:"flex" , gap:2, justifyContent:"start", width:"80%"}}>
-
-  <Image 
-      src="/images/Icons/icon_myllos_fulltruck.svg" 
-      width={30} 
-      height={32} 
-      alt="FTL icono - Fulltruck"
-      style={{
-        transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
-        objectFit: "contain",
-        alignItems:"center",
-        display:"flex"
-      }}
-    />
-              <Typography
-                sx={{
-                  fontSize: { xs: "1rem", md: "1.5rem" },
-                  textTransform: "none",
-                  alignContent:"center"
-                }}
-              >
-                FTL
-              </Typography>
-</Box>
-<Typography
-  sx={{
-    fontSize: { xs: "0.75rem" },
-    textTransform: "none",
-  }}
->
-  Carga completa de camión
-</Typography>
-</Box>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    justifyContent: "start",
+                    width: "80%",
+                  }}
+                >
+                  <Image
+                    src="/images/Icons/icon_myllos_fulltruck.svg"
+                    width={30}
+                    height={32}
+                    alt="FTL icono - Fulltruck"
+                    style={{
+                      transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
+                      objectFit: "contain",
+                      alignItems: "center",
+                      display: "flex",
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.5rem" },
+                      textTransform: "none",
+                      alignContent: "center",
+                    }}
+                  >
+                    FTL
+                  </Typography>
+                </Box>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "0.75rem" },
+                    textTransform: "none",
+                  }}
+                >
+                  Carga completa de camión
+                </Typography>
+              </Box>
             </Button>
 
             <Button
@@ -422,39 +440,46 @@ const ShippingHero = () => {
                 transition: "all 0.3s ease",
               }}
             >
-              <Box sx={{display:"flex", flexDirection:"column", justifyContent:"center", margin:"auto", alignContent:"center"}}>
-<Box sx={{display:"flex" , gap:2, justifyContent:"start"}}>
-
-  <Image 
-      src="/images/Icons/icon_myllos_pallet.svg" 
-      width={30} 
-      height={32} 
-      alt="FTL icono - Fulltruck"
-      style={{
-        transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
-        objectFit: "contain",
-        alignItems:"center",
-        display:"flex"
-      }}
-    />
-              <Typography
+              <Box
                 sx={{
-                  fontSize: { xs: "1rem", md: "1.5rem" },
-                  textTransform: "none",
-                  alignContent:"center"
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  margin: "auto",
+                  alignContent: "center",
                 }}
               >
-                LTL
-              </Typography>
-</Box>
-              <Typography
-                sx={{
-                  fontSize: { xs: "0.75rem" },
-                  textTransform: "none",
-                }}
-              >
-                Carga parcial de camión
-              </Typography>
+                <Box sx={{ display: "flex", gap: 2, justifyContent: "start" }}>
+                  <Image
+                    src="/images/Icons/icon_myllos_pallet.svg"
+                    width={30}
+                    height={32}
+                    alt="FTL icono - Fulltruck"
+                    style={{
+                      transform: "scaleX(-1)", // Intenta aplicarlo nuevamente aquí
+                      objectFit: "contain",
+                      alignItems: "center",
+                      display: "flex",
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1rem", md: "1.5rem" },
+                      textTransform: "none",
+                      alignContent: "center",
+                    }}
+                  >
+                    LTL
+                  </Typography>
+                </Box>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "0.75rem" },
+                    textTransform: "none",
+                  }}
+                >
+                  Carga parcial de camión
+                </Typography>
               </Box>
             </Button>
           </Box>
@@ -464,12 +489,17 @@ const ShippingHero = () => {
           open={openDialog}
           onClose={() => setOpenDialog(false)}
           title={`Cotización de envío ${selectedShippingType.toUpperCase()}`}
-          width={"auto"}
+          width={isResultsMode ? "md" : "auto"} // Cambia el tamaño según el modo
           onPdfPreview={true}
           paddingContent={4}
         >
-          <CotizacionEnvios initialShippingType={selectedShippingType}
-          open={openDialog} onClose={()=> setOpenDialog(false)} />
+          <CotizacionEnvios
+            initialShippingType={selectedShippingType}
+            open={openDialog}
+            onClose={() => setOpenDialog(false)}
+            isResultsMode={isResultsMode}
+            setIsResultsMode={setIsResultsMode}
+          />
         </CustomDialog>
 
         {/* Background decoration */}
