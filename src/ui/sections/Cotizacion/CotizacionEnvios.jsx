@@ -123,9 +123,11 @@ const CotizacionEnvios = ({
         contenido: "Cotización web",
         tipo: "tarima",
         volumen: Number(
-          (Number(pkg.ancho) / 100) *
+          (
+            (Number(pkg.ancho) / 100) *
             (Number(pkg.alto) / 100) *
             (Number(pkg.largo) / 100)
+          ).toFixed(4)
         ),
       })),
     };

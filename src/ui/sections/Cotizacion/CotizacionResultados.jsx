@@ -79,9 +79,9 @@ const CotizacionResultados = ({
         setOpenSnackbar(true);
         setIsSubmit(false);
         // Espera 2 segundos antes de cerrar el modal
-        setTimeout(() => {
+
           onCerrar(); // Cierra el modal después de que el usuario vea el mensaje
-        }, 2000);
+
       })
       .catch((error) => {
         console.error("Error al enviar el correo:", error);
