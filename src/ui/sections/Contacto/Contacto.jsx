@@ -225,7 +225,7 @@ function ContactForm() {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        "https://mailer-750758869790.us-central1.run.app/api/enviar-correo",
+        "https://api.myllos.com.mx/api/contactos",
         payload
       );
       reset();

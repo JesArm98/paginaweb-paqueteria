@@ -71,7 +71,7 @@ const CotizacionResultados = ({
     // Hacer la petición POST con axios
     axios
       .post(
-        "https://mailer-750758869790.us-central1.run.app/api/enviar-correo",
+        "https://api.myllos.com.mx/api/contactos",
         cotizacionCompleta
       )
       .then((response) => {
