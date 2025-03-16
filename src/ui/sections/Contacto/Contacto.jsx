@@ -13,7 +13,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { contactOptions } from "@/data/data";
 import { tipoServicio } from "@/data/data";
 import useContactType from "@/hooks/useContactType";
@@ -151,8 +151,14 @@ const schema = yup
 function ContactForm() {
   const [loading, setIsLoading] = useState(false);
   const [coloniasOrigen, setColoniasOrigen] = useState([]);
+  const [coloniaOrigen, setColoniaOrigen] = useState([]);
   const [coloniasDestino, setColoniasDestino] = useState([]);
+  const [coloniaDestino, setColoniaDestino] = useState([]);
   const { showSnackbar, SnackbarComponent } = useSnackbar();
+  const [updatedOrigen, setUpdatedOrigen] = useState(null); // Estado local para almacenar el nuevo destino
+
+  // Inside your component, add this
+  const debounceTimer = useRef(null);
 
   const {
     control,
@@ -171,6 +177,10 @@ function ContactForm() {
 
   const selectedTipo = useWatch({ control, name: "Tipo" });
 
+  // Agregar este watch para ver todos los valores del formulario
+  const formValues = useWatch({ control });
+  console.log("Valores del formulario:", formValues);
+
   useEffect(() => {
     const storedType = localStorage.getItem("contactType");
 
@@ -182,28 +192,153 @@ function ContactForm() {
     }
   }, [setValue, trigger]); // Se ejecuta solo cuando se monta el componente
 
-  // Para el Autocomplete, si el usuario selecciona una opción, se guarda el objeto completo
-  const handleAutocompleteChange = async (field, value, onChange) => {
-    if (value && value.length === 5) {
-      try {
-        const response = await axios.get(
-          `https://api.pktuno.mx/Api/Cobertura/${value}`
-        );
-        if (field === "Origen") {
-          setColoniasOrigen(response.data || []);
-        } else if (field === "Destino") {
-          setColoniasDestino(response.data || []);
-        }
+  const handleAutocompleteChange = (field, value, onChange) => {
+    // Update the input value immediately for responsiveness
+    onChange(value || "");
 
-        onChange(value);
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-        onChange("");
-      }
+    // Clear any existing timer
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
+
+    // Only make API call if we have enough characters
+    if (value && value.length >= 3) {
+      // Debounce the API call to prevent too many requests
+      debounceTimer.current = setTimeout(async () => {
+        try {
+          const response = await axios.get(
+            `https://web.pktuno.mx/PKT1/index.php/CatCodigosPostales/ajax_list_mexico_str/?pais=MX&query=${value}`
+          );
+
+          // Transformar la respuesta al formato deseado
+          const colonias = response.data
+            .map((item) => {
+              try {
+                const parts = item.data.split(" - ");
+
+                if (parts.length < 2) return null;
+
+                const cp = parts[0];
+                const locationParts = parts[1].split(", ");
+                const locationParts2 = parts[2].split(", ");
+
+                return {
+                  cp: cp,
+                  colonia: locationParts[0] || "",
+                  ciudad: locationParts2[0] || "",
+                  municipio: locationParts[1] || "",
+                  pais: locationParts2[1] || "",
+                };
+              } catch (e) {
+                console.error("Error procesando item:", item);
+                return null;
+              }
+            })
+            .filter((item) => item !== null);
+
+          if (field === "Origen") {
+            setColoniasOrigen(colonias);
+          } else if (field === "Destino") {
+            setColoniasDestino(colonias);
+          }
+        } catch (error) {
+          console.error("Error al obtener datos:", error);
+        }
+      }, 300); // Wait 300ms after user stops typing
     } else {
-      onChange(value || "");
+      // Clear the options if input is too short
+      if (field === "Origen") {
+        setColoniasOrigen([]);
+      } else if (field === "Destino") {
+        setColoniasDestino([]);
+      }
     }
   };
+
+  console.log(formValues.Origen);
+
+  //Origen
+  useEffect(() => {
+    const fetchOrigenData = async () => {
+      if (!formValues?.Origen?.cp || !formValues?.Origen?.colonia) return; // Validar que CP y colonia existan
+
+      try {
+        const response = await axios.get(
+          `https://api.pktuno.mx/Api/Cobertura/${formValues.Origen.cp}`
+        );
+
+        const data = response.data; // Suponiendo que devuelve un array de objetos con cp, colonia y ciudad
+
+        if (Array.isArray(data) && data.length > 0) {
+          // Buscar coincidencia exacta de CP y colonia
+          const match = data.find(
+            (item) =>
+              item.cp === formValues.Origen.cp &&
+              item.colonia.toLowerCase() ===
+                formValues.Origen.colonia.toLowerCase()
+          );
+
+          // Si encontramos una coincidencia, actualizamos el formulario
+          if (match) {
+            setValue("Origen", match, { shouldValidate: true });
+          } else {
+            console.warn(
+              "No se encontró coincidencia exacta para CP y colonia."
+            );
+          }
+        }
+      } catch (error) {
+        console.error("Error al obtener la información del origen:", error);
+      }
+    };
+
+    fetchOrigenData();
+  }, [formValues.Origen?.cp, formValues.Origen?.colonia]);
+
+  //Destino
+  useEffect(() => {
+    const fetchDestinoData = async () => {
+      if (!formValues?.Destino?.cp || !formValues?.Destino?.colonia) return; // Validar que CP y colonia existan
+
+      try {
+        const response = await axios.get(
+          `https://api.pktuno.mx/Api/Cobertura/${formValues.Destino.cp}`
+        );
+
+        const data = response.data; // Suponiendo que devuelve un array de objetos con cp, colonia y ciudad
+
+        if (Array.isArray(data) && data.length > 0) {
+          // Buscar coincidencia exacta de CP y colonia
+          const match = data.find(
+            (item) =>
+              item.cp === formValues.Destino.cp &&
+              item.colonia.toLowerCase() ===
+                formValues.Destino.colonia.toLowerCase()
+          );
+
+          // Si encontramos una coincidencia, actualizamos el formulario
+          if (match) {
+            setValue("Destino", match, { shouldValidate: true });
+          } else {
+            console.warn(
+              "No se encontró coincidencia exacta para CP y colonia."
+            );
+          }
+        }
+      } catch (error) {
+        console.error("Error al obtener la información del origen:", error);
+      }
+    };
+
+    fetchDestinoData();
+  }, [formValues.Destino?.cp, formValues.Destino?.colonia]);
+
+  // UseEffect para actualizar el formValue una vez que el estado local cambie
+  useEffect(() => {
+    if (updatedOrigen) {
+      setValue("Origen", updatedOrigen, { shouldValidate: true });
+    }
+  }, [updatedOrigen]); // Se ejecuta cuando updatedOrigen cambia
 
   const onSubmit = async (data) => {
     const payload = {
@@ -386,7 +521,10 @@ function ContactForm() {
                         value={value}
                         fullWidth
                         onInputChange={(e, newValue) => {
-                          if (/^\d+$/.test(newValue) || newValue === "") {
+                          if (
+                            /^[a-zA-Z0-9]+$/.test(newValue) ||
+                            newValue === ""
+                          ) {
                             handleAutocompleteChange(
                               "Origen",
                               newValue,
@@ -400,7 +538,7 @@ function ContactForm() {
                         getOptionLabel={(option) =>
                           typeof option === "string"
                             ? option
-                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.pais}`
                         }
                         renderInput={(params) => {
                           const fieldIsEmpty = !value;
@@ -416,7 +554,7 @@ function ContactForm() {
                                   ? errors.Origen.message
                                   : isValid
                                   ? "✔️"
-                                  : "Ingrese CP de origen y seleccione una opción"
+                                  : "Ingrese CP de origen o colonia, y seleccione una opción"
                               }
                               sx={getFieldSx(fieldIsEmpty, !!errors.Origen)}
                             />
@@ -443,7 +581,10 @@ function ContactForm() {
                         value={value}
                         fullWidth
                         onInputChange={(e, newValue) => {
-                          if (/^\d+$/.test(newValue) || newValue === "") {
+                          if (
+                            /^[a-zA-Z0-9]+$/.test(newValue) ||
+                            newValue === ""
+                          ) {
                             handleAutocompleteChange(
                               "Destino",
                               newValue,
@@ -457,7 +598,7 @@ function ContactForm() {
                         getOptionLabel={(option) =>
                           typeof option === "string"
                             ? option
-                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.pais}`
                         }
                         renderInput={(params) => {
                           const fieldIsEmpty = !value;
@@ -473,7 +614,7 @@ function ContactForm() {
                                   ? errors.Destino.message
                                   : isValid
                                   ? "✔️"
-                                  : "Ingrese CP de destino"
+                                  : "Ingrese CP de destino o colonia"
                               }
                               sx={getFieldSx(fieldIsEmpty, !!errors.Destino)}
                             />
@@ -769,7 +910,10 @@ function ContactForm() {
                         value={value}
                         fullWidth
                         onInputChange={(e, newValue) => {
-                          if (/^\d+$/.test(newValue) || newValue === "") {
+                          if (
+                            /^[a-zA-Z0-9]+$/.test(newValue) ||
+                            newValue === ""
+                          ) {
                             handleAutocompleteChange(
                               "Origen",
                               newValue,
@@ -783,7 +927,7 @@ function ContactForm() {
                         getOptionLabel={(option) =>
                           typeof option === "string"
                             ? option
-                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.pais}`
                         }
                         renderInput={(params) => {
                           const fieldIsEmpty = !value;
@@ -799,7 +943,7 @@ function ContactForm() {
                                   ? errors.Origen.message
                                   : isValid
                                   ? "✔️"
-                                  : "Ingrese su Código Postal"
+                                  : "Ingrese su Código Postal o Colonia"
                               }
                               sx={getFieldSx(fieldIsEmpty, !!errors.Origen)}
                             />
@@ -980,7 +1124,10 @@ function ContactForm() {
                         value={value}
                         fullWidth
                         onInputChange={(e, newValue) => {
-                          if (/^\d+$/.test(newValue) || newValue === "") {
+                          if (
+                            /^[a-zA-Z0-9]+$/.test(newValue) ||
+                            newValue === ""
+                          ) {
                             handleAutocompleteChange(
                               "Origen",
                               newValue,
@@ -994,7 +1141,7 @@ function ContactForm() {
                         getOptionLabel={(option) =>
                           typeof option === "string"
                             ? option
-                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.estado}`
+                            : `${option.cp}, ${option.colonia}, ${option.ciudad}, ${option.pais}`
                         }
                         renderInput={(params) => {
                           const fieldIsEmpty = !value;
@@ -1010,7 +1157,7 @@ function ContactForm() {
                                   ? errors.Origen.message
                                   : isValid
                                   ? "✔️"
-                                  : "Ingrese su Código Postal"
+                                  : "Ingrese su Código Postal o Colonia"
                               }
                               sx={getFieldSx(fieldIsEmpty, !!errors.Origen)}
                             />

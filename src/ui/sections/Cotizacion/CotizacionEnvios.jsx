@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Box,
   Button,
@@ -15,7 +15,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import { useForm, Controller, useFieldArray, useWatch } from "react-hook-form";
 import axios from "axios";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -42,6 +42,8 @@ const CotizacionEnvios = ({
 
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  // Luego dentro del componente, añade esta línea:
+  const debounceTimer = useRef(null);
 
   const {
     control,
@@ -49,7 +51,7 @@ const CotizacionEnvios = ({
     watch,
     setValue,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       origen: "",
@@ -76,6 +78,9 @@ const CotizacionEnvios = ({
     control,
     name: "packages",
   });
+
+  const formValues = useWatch({ control });
+  console.log("Valores del formulario:", formValues);
 
   useEffect(() => {
     if (initialShippingType) {
@@ -137,30 +142,161 @@ const CotizacionEnvios = ({
     setIsResultsMode(true);
   };
 
-  console.log(cotizacionData);
+  const handleAutocompleteChange = (field, value, onChange) => {
+    // Update the input value immediately for responsiveness
+    onChange(value || "");
 
-  const handleAutocompleteChange = async (field, value, onChange) => {
-    if (value && value.length === 5) {
-      try {
-        const response = await axios.get(
-          `https://api.pktuno.mx/Api/Cobertura/${value}`
-        );
+    // Clear any existing timer
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
 
-        if (field === "origen") {
-          setColoniasOrigen(response.data || []);
-        } else if (field === "destino") {
-          setColoniasDestino(response.data || []);
+    // Only make API call if we have enough characters
+    if (value && value.length >= 3) {
+      // Debounce the API call to prevent too many requests
+      debounceTimer.current = setTimeout(async () => {
+        try {
+          const response = await axios.get(
+            `https://web.pktuno.mx/PKT1/index.php/CatCodigosPostales/ajax_list_mexico_str/?pais=MX&query=${value}`
+          );
+
+          // Transformar la respuesta al formato deseado
+          const colonias = response.data
+            .map((item) => {
+              try {
+                const parts = item.data.split(" - ");
+
+                if (parts.length < 2) return null;
+
+                const cp = parts[0];
+                const locationParts = parts[1].split(", ");
+                const locationParts2 = parts[2].split(", ");
+
+                return {
+                  cp: cp,
+                  colonia: locationParts[0] || "",
+                  ciudad: locationParts2[0] || "",
+                  municipio: locationParts[1] || "",
+                  pais: locationParts2[1] || "",
+                };
+              } catch (e) {
+                console.error("Error procesando item:", item);
+                return null;
+              }
+            })
+            .filter((item) => item !== null);
+
+          if (field === "origen") {
+            setColoniasOrigen(colonias);
+          } else if (field === "destino") {
+            setColoniasDestino(colonias);
+          }
+        } catch (error) {
+          console.error("Error al obtener datos:", error);
         }
-
-        onChange(value);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        onChange("");
-      }
+      }, 300); // Wait 300ms after user stops typing
     } else {
-      onChange(value || "");
+      // Clear the options if input is too short
+      if (field === "origen") {
+        setColoniasOrigen([]);
+      } else if (field === "destino") {
+        setColoniasDestino([]);
+      }
     }
   };
+
+  //Origen
+  useEffect(() => {
+    const fetchOrigenData = async () => {
+      if (!formValues?.origen?.cp || !formValues?.origen?.colonia) return; // Validar que CP y colonia existan
+
+      try {
+        const response = await axios.get(
+          `https://api.pktuno.mx/Api/Cobertura/${formValues.origen.cp}`
+        );
+
+        const data = response.data; // Suponiendo que devuelve un array de objetos con cp, colonia y ciudad
+
+        if (Array.isArray(data) && data.length > 0) {
+          // Buscar coincidencia exacta de CP y colonia
+          const match = data.find(
+            (item) =>
+              item.cp === formValues.origen.cp &&
+              item.colonia.toLowerCase() ===
+                formValues.origen.colonia.toLowerCase()
+          );
+
+          // Si encontramos una coincidencia, actualizamos el formulario
+          if (match) {
+            setValue("origen", match, { shouldValidate: true });
+          } else {
+            console.warn(
+              "No se encontró coincidencia exacta para CP y colonia."
+            );
+          }
+        }
+      } catch (error) {
+        console.error("Error al obtener la información del origen:", error);
+      }
+    };
+
+    fetchOrigenData();
+  }, [formValues.origen?.cp, formValues.origen?.colonia]);
+
+  //Destino
+  useEffect(() => {
+    console.log("Ejecutando useEffect - Dependencias:", {
+      cp: formValues?.destino?.cp,
+      colonia: formValues?.destino?.colonia,
+    });
+
+    if (!formValues?.destino?.cp || !formValues?.destino?.colonia) {
+      console.warn("⛔ No hay CP o colonia definidos, se cancela la petición.");
+      return;
+    }
+
+    const fetchDestinoData = async () => {
+      try {
+        console.log("🔄 Haciendo petición a la API...");
+        const response = await axios.get(
+          `https://api.pktuno.mx/Api/Cobertura/${formValues.destino.cp}`
+        );
+
+        console.log("✅ Respuesta de la API:", response.data);
+
+        const data = response.data;
+        if (!Array.isArray(data) || data.length === 0) {
+          console.warn("⛔ No se encontraron datos en la API.");
+          return;
+        }
+
+        // Función para comparar colonias con tolerancia de similitud
+        const getSimilarity = (a = "", b = "") => {
+          a = a.toLowerCase().trim();
+          b = b.toLowerCase().trim();
+          return a.includes(b) || b.includes(a);
+        };
+
+        // Buscar coincidencia basada en CP y colonia con tolerancia
+        const match = data.find(
+          (item) =>
+            item.cp === formValues.destino.cp &&
+            getSimilarity(item.colonia, formValues.destino.colonia)
+        );
+
+        if (match) {
+          console.log("🎯 Coincidencia encontrada:", match);
+          setValue("destino", match, { shouldValidate: true });
+        } else {
+          console.warn("⚠️ No se encontró coincidencia exacta.");
+        }
+      } catch (error) {
+        console.error("❌ Error al obtener la información del destino:", error);
+      }
+    };
+
+    fetchDestinoData();
+  }, [formValues.destino?.cp, formValues.destino?.colonia]);
 
   const inputStyles = {
     borderRadius: "20px", // Bordes redondeados
@@ -181,9 +317,6 @@ const CotizacionEnvios = ({
       },
     },
   };
-
-  // Monitorea los valores del formulario
-  const formValues = watch();
 
   // Calcula el total de tarimas sumando la propiedad "cantidad" de cada paquete
   const totalTarimas =
@@ -280,7 +413,10 @@ const CotizacionEnvios = ({
                       }
                       value={value}
                       onInputChange={(e, newValue) => {
-                        if (/^\d*$/.test(newValue)) {
+                        if (
+                          /^[a-zA-Z0-9]+$/.test(newValue) ||
+                          newValue === ""
+                        ) {
                           handleAutocompleteChange(
                             "origen",
                             newValue,
@@ -300,7 +436,7 @@ const CotizacionEnvios = ({
                               ? errors.origen.message
                               : isValid
                               ? "✔️" // Solo aparece si se ha seleccionado una opción
-                              : "Ingrese CP origen"
+                              : "Ingrese CP origen o colonia"
                           }
                           sx={{
                             ...inputStyles,
@@ -365,7 +501,10 @@ const CotizacionEnvios = ({
                       }
                       value={value}
                       onInputChange={(e, newValue) => {
-                        if (/^\d*$/.test(newValue)) {
+                        if (
+                          /^[a-zA-Z0-9]+$/.test(newValue) ||
+                          newValue === ""
+                        ) {
                           handleAutocompleteChange(
                             "destino",
                             newValue,
@@ -385,7 +524,7 @@ const CotizacionEnvios = ({
                               ? errors.destino.message
                               : isValid
                               ? "✔️" // Solo aparece si se ha seleccionado una opción
-                              : "Ingrese CP destino"
+                              : "Ingrese CP destino o colonia"
                           }
                           sx={{
                             ...inputStyles,
